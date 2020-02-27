@@ -1,0 +1,16 @@
+.login  {
+    /* max-width: '100vw'; */
+    /* max-height: '80vh'; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 40px;
+}
+.form{
+    width: 50%;
+    margin: 4px;
+    padding: 4px;
+    max-width: 50%;
+}
