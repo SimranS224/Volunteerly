@@ -50,17 +50,39 @@ class HomePage extends React.Component {
    componentDidMount() {
     let events =  userService.getEvents(null);
     console.log("events", events)
-    this.setState({data: events})
+    this.setState({data: events, filtered: events})
   }
-
+  handleSearch = (e) =>{
+    e = e.target.value
+    let filtered = this.state.data.filter(event => {
+      let keys = Object.keys(event)
+      for(let i = 0; i < keys.length; i++){
+        if(event[keys[i]].toLowerCase().indexOf(e.toLowerCase()) > -1){
+          console.log("found")
+          return true
+        }
+      }
+      return false
+    })
+    this.setState({filtered: filtered})
+  } 
   render() {
-     let { data } = this.state
+     let { filtered } = this.state
 
       return (
           <div>
               <h1>Current Available Opportunities</h1>
+              <div style={{width: "500px"}}>
+            <input style={{
+  width: "300px",
+  borderRadius: "5px",
+  height: "40px",
+  border: "1px solid black",
+  margin: "20px"
+}} ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
+          </div>
               <List>
-              {data.length > 0 && data.map((event, i) =>{
+              {filtered.length > 0 && filtered.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
                 <Card style={{width: "80%"}} onClick={() =>{this.setState({dialog_open: true})}}>
       <CardHeader
