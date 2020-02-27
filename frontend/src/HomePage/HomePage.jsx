@@ -23,6 +23,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import MapContainer from '../components/Maps/MapContainer'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     title: {
       flexGrow: 1,
     },
+    dialogTitle:{marginTop: "10vh", fontSize: "40px"}
   }));
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -44,7 +47,8 @@ class HomePage extends React.Component {
     this.state = {
       data: [],
       dialog_open: false,
-      filtered: []
+      filtered: [],
+      selected: null
     }
   }
    componentDidMount() {
@@ -84,7 +88,7 @@ class HomePage extends React.Component {
               <List>
               {filtered.length > 0 && filtered.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
-                <Card style={{width: "80%"}} onClick={() =>{this.setState({dialog_open: true})}}>
+                <Card style={{width: "80%"}} onClick={() =>{this.setState({dialog_open: true, selected: i})}}>
       <CardHeader
         title={event.title}
         subheader={event.date}
@@ -94,26 +98,36 @@ class HomePage extends React.Component {
       {event.desc}
       </CardContent>
       </Card>
-      <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false})}} TransitionComponent={Transition}>
+      <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
       <AppBar >
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false})}} aria-label="close">
+            <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
               <CloseIcon />
             </IconButton>
-            <Typography variant="h4" style={{margin: "0 auto"}}>
-              {event.title}
-            </Typography>
             </Toolbar>
         </AppBar>
+
         <DialogContent>
- 
         <Typography  style={{paddingTop: "10vh", fontSize: "30px"}}> 
+        {this.state.selected !== null ? filtered[this.state.selected].title : null}
+        </Typography>
+        <Typography  style={{paddingTop: "1vh", fontSize: "25px"}}> 
         Description
         </Typography>
         <Typography style={{ paddingTop: "5vh", fontSize: "20px"}}> 
-        {event.desc}
+        {this.state.selected !== null ? filtered[this.state.selected].desc : null}
         </Typography>
-
+        <Typography style={{ paddingTop: "2vh", fontSize: "20px"}}> 
+        Event date: {this.state.selected !== null ? filtered[this.state.selected].date : null} 
+        <br/>
+        Event start time: 1pm
+        <br/>
+        Location:
+        </Typography>
+        <MapContainer selectedPlace={filtered[this.state.selected]}/>
+        <Button variant="contained" color="primary" disableElevation>
+      Enroll
+    </Button>
         </DialogContent>
       </Dialog>
                 </ListItem>
