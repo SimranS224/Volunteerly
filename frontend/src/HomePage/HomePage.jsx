@@ -6,41 +6,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {userService} from '../_services/UserService.js'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import MapContainer from '../components/Maps/MapContainer'
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    dialogTitle:{marginTop: "10vh", fontSize: "40px"}
-  }));
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 class HomePage extends React.Component {
   constructor(props){
     super(props)
@@ -111,6 +92,9 @@ class HomePage extends React.Component {
         <Typography  style={{paddingTop: "10vh", fontSize: "30px"}}> 
         {this.state.selected !== null ? filtered[this.state.selected].title : null}
         </Typography>
+        <Button variant="contained" color="primary" disableElevation>
+      Enroll
+    </Button>
         <Typography  style={{paddingTop: "1vh", fontSize: "25px"}}> 
         Description
         </Typography>
@@ -125,9 +109,7 @@ class HomePage extends React.Component {
         Location:
         </Typography>
         <MapContainer selectedPlace={filtered[this.state.selected]}/>
-        <Button variant="contained" color="primary" disableElevation>
-      Enroll
-    </Button>
+        
         </DialogContent>
       </Dialog>
                 </ListItem>

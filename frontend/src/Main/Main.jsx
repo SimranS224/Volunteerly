@@ -13,6 +13,27 @@ import { browserHistory } from '../_helpers';
 import { ProfilePage } from '../ProfilePage';
 import { AdminPage } from '../AdminPage'
 import "./General.css";
+import store from 'store'
+
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        store.get('auth') === true ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 class Main extends React.Component {
   constructor(props) {
@@ -27,9 +48,13 @@ class Main extends React.Component {
                 <div className="container">
                     <Switch>
                         <Route path="/home" component={HomePage} />
+                        <PrivateRoute path="/profile">
+                          <ProfilePage />
+                        </PrivateRoute>
                         <Route path="/login" component={LoginPage} />
-                        <Route path="/profile" component={ProfilePage} />
-                        <Route path="/admin" component={AdminPage} />
+=                        <PrivateRoute path="/admin">
+                          <AdminPage />
+                        </PrivateRoute>
                         <Redirect from="*" to="/home" />
                         
                     </Switch>
