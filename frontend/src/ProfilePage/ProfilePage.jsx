@@ -35,7 +35,7 @@ class ProfilePage extends React.Component {
           <div className="profile">
             <h1>User Statistics</h1>
             <UserStatistics rows={statsRows}></UserStatistics>
-            <h1>Custom Achievements</h1>
+            <h1>Achievements</h1>
             <UserStatistics rows={achievementRows}></UserStatistics>
             <div>
                 <h1>Future Events</h1>
