@@ -78,8 +78,8 @@ function Navbar(props) {
             </h4>
             <IconButton>
                 <Link to="/profile"><AccountCircle /></Link>
-                <PreferencesModal/>
             </IconButton>
+            <Button ><PreferencesModal/></Button>
             <Button className="Login" onClick={() => {store.set('auth', false); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
         </AppBar>
       </div>
