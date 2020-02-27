@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 
-import { createBrowserHistory } from 'history';
+import { browserHistory } from '../_helpers';
 
-class App extends React.Component {
+class Main extends React.Component {
   constructor(props) {
       super(props);
   }
 
   render() {
       return (
-          <div className="App">
+          <div className="Main">
               <div className="container">
-                      <Router history={createBrowserHistory()}>
+                      <Router history={browserHistory}>
                           <Switch>
                               <Route path="/home" component={HomePage} />
                               <Route path="/login" component={LoginPage} />
@@ -33,5 +33,5 @@ class App extends React.Component {
 const mapDispatchToProps = null;
 const mapState = null;
 
-const Appconnected =  connect(mapState, mapDispatchToProps)(App);
-export { Appconnected as App};
+const Mainconnected =  connect(mapState, mapDispatchToProps)(Main);
+export { Mainconnected as Main};

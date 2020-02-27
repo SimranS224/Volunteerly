@@ -17,9 +17,9 @@ C. You can access the app at port: ``` http://localhost:3000/```
 
 ```bash
   ├── src
-  │   ├── App
+  │   ├── Main
   │   │   ├── index.js
-  │   │   ├── App.jsx
+  │   │   ├── Main.jsx
   │   ├── HomePage
   │   │   ├── index.js
   │   │   ├── HomePage.jsx
@@ -40,13 +40,13 @@ C. You can access the app at port: ``` http://localhost:3000/```
   │   │   ├── UserService.js
   │   ├── _redux
   |   |   ├── _reducers
-  |   |       ├-- index.js
-  |   |       ├-- .....
-  |   |       ├-- .....
+  |   |   |   ├-- index.js
+  |   |   |   ├-- .....
+  |   |   |   ├-- .....
   |   |   ├── _actions
-  |   |       ├-- index.js
-  |   |       ├-- .....
-  |   |       ├-- .....
+  |   |   |   ├-- index.js
+  |   |   |   ├-- .....
+  |   |   |   ├-- .....
   │   ├── index.html
   │   ├── index.jsx
   ├── .babelrc
@@ -57,7 +57,7 @@ C. You can access the app at port: ``` http://localhost:3000/```
 ## Code strucure: 
 - All main layout pages have their own folder.
 - The corresponding css files can be found in the same folder as the Page or Component.
-- Entry point to the app is ```App.jsx```, located in ```src/App``` folder 
+- Entry point to the app is ```Main.jsx```, located in ```src/Main``` folder 
 - Current routes are ``/home`` and ```/login```
 
   ### _services 

@@ -25,7 +25,13 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) => {
+      dispatch(login(username, password))
+    }
+  } 
+}
 const mapState = null;
 
 const Loginconnected =  connect(mapState, mapDispatchToProps)(LoginPage);
