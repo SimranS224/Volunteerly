@@ -1,0 +1,33 @@
+.Navbar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.AppBar {
+    flex-direction: row !important;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.AppBar button {
+    color: white;
+}
+.AppBar h4 {
+    flex-grow: 1;
+    font-size: 20px;
+}
+.AppBar h4 a {
+    vertical-align: middle;
+}
+.AppBar .MuiSvgIcon-root {
+    width: 24px;
+    height: 24px;
+}
+
+.Sidebar {
+    width: 250px;
+    font-size: 16px;
+}
+
+

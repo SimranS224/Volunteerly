@@ -7,6 +7,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom';
+
+import Drawer from '@material-ui/core/Drawer';
+import './Navbar.css';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,21 +28,45 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-  
+
 function Navbar() {
     const classes = useStyles();
+    const [state, setState] = React.useState({
+        showNav: false
+      });
+
+    const toggleSidebar = function() {
+        setState({
+            showNav: !state.showNav
+        })
+    }
+    
     return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+      <div className="Navbar">
+        <Drawer open={state.showNav} onClose={toggleSidebar}>
+            <div className={"Sidebar"} onClick={toggleSidebar}>
+                <List>
+                    <ListItem button key={"hello world"}>
+                        <Link to="/home">Home</Link>
+                    </ListItem>
+                    <ListItem button key={"hello world"}>
+                        <Link to="/profile">Profile</Link>
+                    </ListItem>
+                </List>
+            </div>
+        </Drawer>
+
+        <AppBar className="AppBar" position="static">
+            <IconButton onClick={toggleSidebar} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Volunteer App
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
+            <h4>
+                <Link to="/home">Volunteer App</Link>
+            </h4>
+            <IconButton>
+                <Link to="/profile"><AccountCircle /></Link>
+            </IconButton>
+            <Button className="Login"><Link to="/login">Login</Link></Button>
         </AppBar>
       </div>
     );

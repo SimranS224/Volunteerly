@@ -1,0 +1,8 @@
+/* General Styling for basic compononets like headers and paragraphs */
+.App {
+   font-size: 16px; 
+}
+
+.MuiButton-label {
+    font-size: 14px;
+}

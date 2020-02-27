@@ -11,7 +11,7 @@ import { createBrowserHistory } from 'history';
   
 import { browserHistory } from '../_helpers';
 import { ProfilePage } from '../ProfilePage';
-
+import "./General.css";
 
 class Main extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class Main extends React.Component {
                         <Route path="/profile" component={ProfilePage} />
                         
                         <Redirect from="*" to="/home" />
+                        
                     </Switch>
                 </div>
             </div>
