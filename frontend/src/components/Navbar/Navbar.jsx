@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import store from 'store'
 import Drawer from '@material-ui/core/Drawer';
 import './Navbar.css';
+import { PreferencesModal } from '../Modals/PreferencesModal';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -76,6 +77,7 @@ function Navbar(props) {
             </h4>
             <IconButton>
                 <Link to="/profile"><AccountCircle /></Link>
+                <PreferencesModal/>
             </IconButton>
             <Button className="Login" onClick={() => {store.set('auth', false); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
         </AppBar>
