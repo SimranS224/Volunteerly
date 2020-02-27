@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD
+=======
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -41,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+>>>>>>> 3aa5d403d14c290cba4ec77df6830a0584cce92f
 class HomePage extends React.Component {
   constructor(props){
     super(props)

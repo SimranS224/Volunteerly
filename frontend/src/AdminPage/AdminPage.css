@@ -1,0 +1,22 @@
+.AdminPage {
+
+}
+
+.AdminPage .AddEvent .group{
+    margin-bottom: 16px;
+}
+
+.AdminPage .MuiInputLabel-root {
+    font-size: 14px;
+}
+.AdminPage form input, textarea {
+    font-size: 16px !important;
+}
+
+.AdminPage h2 {
+    margin-top: 48px;
+}
+.AdminPage .MuiCard-root {
+    padding: 16px;
+    margin-top: 8px;
+}
