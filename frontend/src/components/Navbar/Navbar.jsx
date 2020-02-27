@@ -37,12 +37,13 @@ function Navbar(props) {
     console.log(props);
 
     const toggleSidebar = function() {
+        console.log("toggle sidebar")
         setState({
             showNav: !state.showNav
         })
     }
     if(store.get('auth') === true && state.loggedIn !== true){
-        setState({loggedIn: true})
+        setState({loggedIn: true, showNav: state.showNav})
     }
     return (
       <div className="Navbar">
