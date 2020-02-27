@@ -11,6 +11,7 @@ import { createBrowserHistory } from 'history';
   
 import { browserHistory } from '../_helpers';
 import { ProfilePage } from '../ProfilePage';
+import { AdminPage } from '../AdminPage'
 import "./General.css";
 
 class Main extends React.Component {
@@ -28,7 +29,7 @@ class Main extends React.Component {
                         <Route path="/home" component={HomePage} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/profile" component={ProfilePage} />
-                        
+                        <Route path="/admin" component={AdminPage} />
                         <Redirect from="*" to="/home" />
                         
                     </Switch>

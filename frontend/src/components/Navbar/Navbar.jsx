@@ -2,16 +2,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Drawer from '@material-ui/core/Drawer';
 import './Navbar.css';
@@ -29,11 +27,12 @@ const useStyles = makeStyles(theme => ({
   }));
 
 
-function Navbar() {
+function Navbar(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         showNav: false
       });
+    console.log(props);
 
     const toggleSidebar = function() {
         setState({
@@ -46,12 +45,21 @@ function Navbar() {
         <Drawer open={state.showNav} onClose={toggleSidebar}>
             <div className={"Sidebar"} onClick={toggleSidebar}>
                 <List>
-                    <ListItem button key={"hello world"}>
-                        <Link to="/home">Home</Link>
-                    </ListItem>
-                    <ListItem button key={"hello world"}>
-                        <Link to="/profile">Profile</Link>
-                    </ListItem>
+                    <Link to="/home">
+                        <ListItem button key={"Home"}>
+                            Home
+                        </ListItem>
+                    </Link>
+                    <Link to="/profile">
+                        <ListItem button key={"Profile"}>
+                            <Link to="/profile">Profile</Link>
+                        </ListItem>
+                    </Link>
+                    <Link to="/admin">
+                        <ListItem button key={"Admin"}>
+                            <Link to="/admin">Admin</Link>
+                        </ListItem>
+                    </Link>
                 </List>
             </div>
         </Drawer>
@@ -72,4 +80,10 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+const mapDispatchToProps = null
+
+const mapStateToProps = (state, ownProps) => ({
+    the_state: state
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
