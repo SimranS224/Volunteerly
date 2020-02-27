@@ -6,6 +6,7 @@ import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 
 import { browserHistory } from '../_helpers';
+import { ProfilePage } from '../ProfilePage';
 
 class Main extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class Main extends React.Component {
                           <Switch>
                               <Route path="/home" component={HomePage} />
                               <Route path="/login" component={LoginPage} />
+                              <Route path="/profile" component={ProfilePage} />
                               
                               <Redirect from="*" to="/home" />
                           </Switch>
