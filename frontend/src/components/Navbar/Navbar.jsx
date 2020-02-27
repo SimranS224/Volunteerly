@@ -10,7 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import store from 'store'
 import Drawer from '@material-ui/core/Drawer';
 import './Navbar.css';
 import { PreferencesModal } from '../Modals/PreferencesModal';
@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
 function Navbar(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        showNav: false
+        showNav: false,
+        loggedIn: false
       });
     console.log(props);
 
@@ -40,7 +41,9 @@ function Navbar(props) {
             showNav: !state.showNav
         })
     }
-    
+    if(store.get('auth') === true && state.loggedIn !== true){
+        setState({loggedIn: true})
+    }
     return (
       <div className="Navbar">
         <Drawer open={state.showNav} onClose={toggleSidebar}>
@@ -76,7 +79,7 @@ function Navbar(props) {
                 <Link to="/profile"><AccountCircle /></Link>
                 <PreferencesModal/>
             </IconButton>
-            <Button className="Login"><Link to="/login">Login</Link></Button>
+            <Button className="Login" onClick={() => {store.set('auth', false); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
         </AppBar>
       </div>
     );
