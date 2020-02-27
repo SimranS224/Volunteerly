@@ -111,6 +111,9 @@ class HomePage extends React.Component {
         <Typography  style={{paddingTop: "10vh", fontSize: "30px"}}> 
         {this.state.selected !== null ? filtered[this.state.selected].title : null}
         </Typography>
+        <Button variant="contained" color="primary" disableElevation>
+      Enroll
+    </Button>
         <Typography  style={{paddingTop: "1vh", fontSize: "25px"}}> 
         Description
         </Typography>
@@ -125,9 +128,7 @@ class HomePage extends React.Component {
         Location:
         </Typography>
         <MapContainer selectedPlace={filtered[this.state.selected]}/>
-        <Button variant="contained" color="primary" disableElevation>
-      Enroll
-    </Button>
+        
         </DialogContent>
       </Dialog>
                 </ListItem>

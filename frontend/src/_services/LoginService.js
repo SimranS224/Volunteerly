@@ -25,7 +25,7 @@ const login = async (userName, password) => {
   //     console.error(error);
   // }
   await new Promise(resolve => setTimeout(resolve, 3000));
-
+  console.log("login service")
   let res = {
     user: `${userName}`, 
     password: `${password}`, // return password for now for testing purposes 
