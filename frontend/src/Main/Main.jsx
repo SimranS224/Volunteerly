@@ -9,27 +9,31 @@ import Navbar from '../components/Navbar/Navbar.jsx';
 
 import { createBrowserHistory } from 'history';
   
+import { browserHistory } from '../_helpers';
+import { ProfilePage } from '../ProfilePage';
 
-class App extends React.Component {
+
+class Main extends React.Component {
   constructor(props) {
       super(props);
   }
 
   render() {
       return (
-        <Router history={createBrowserHistory()}>
+        <Router history={browserHistory}>
             <div className="App">   
                 <Navbar />
                 <div className="container">
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <Route path="/login" component={LoginPage} />
+                        <Route path="/profile" component={ProfilePage} />
                         
                         <Redirect from="*" to="/home" />
                     </Switch>
                 </div>
             </div>
-          </Router>
+        </Router>
       );
   }
 }
@@ -37,5 +41,5 @@ class App extends React.Component {
 const mapDispatchToProps = null;
 const mapState = null;
 
-const Appconnected =  connect(mapState, mapDispatchToProps)(App);
-export { Appconnected as App};
+const Mainconnected =  connect(mapState, mapDispatchToProps)(Main);
+export { Mainconnected as Main};
