@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 
+import Navbar from '../components/Navbar/Navbar.jsx';
+
 import { createBrowserHistory } from 'history';
+  
 
 class App extends React.Component {
   constructor(props) {
@@ -14,18 +17,19 @@ class App extends React.Component {
 
   render() {
       return (
-          <div className="App">
-              <div className="container">
-                      <Router history={createBrowserHistory()}>
-                          <Switch>
-                              <Route path="/home" component={HomePage} />
-                              <Route path="/login" component={LoginPage} />
-                              
-                              <Redirect from="*" to="/home" />
-                          </Switch>
-                      </Router>
-              </div>
-          </div>
+        <Router history={createBrowserHistory()}>
+            <div className="App">   
+                <Navbar />
+                <div className="container">
+                    <Switch>
+                        <Route path="/home" component={HomePage} />
+                        <Route path="/login" component={LoginPage} />
+                        
+                        <Redirect from="*" to="/home" />
+                    </Switch>
+                </div>
+            </div>
+          </Router>
       );
   }
 }
