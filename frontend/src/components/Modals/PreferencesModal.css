@@ -1,0 +1,18 @@
+#root { 
+  display: 'flex';
+}
+
+#formControl {
+  margin: spacing(3);
+}
+
+#container {
+  display: 'flex';
+  flex-wrap: 'wrap';
+}
+
+#textField {
+  margin-left: spacing(1);
+  margin-right: spacing(1);
+  width: 200,
+}

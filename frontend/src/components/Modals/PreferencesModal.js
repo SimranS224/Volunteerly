@@ -3,10 +3,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -14,34 +11,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
-
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  formControl: {
-    margin: theme.spacing(3),
-  },
-}));
-
-
-const dateuseStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
+import './PreferencesModal.css';
 
 
 export const PreferencesModal = () => {
-  const classes = useStyles();
-  const dateclasses = dateuseStyles();
+
   const [state, setState] = React.useState({
     openModal: false, 
     planting: false,
@@ -49,8 +23,6 @@ export const PreferencesModal = () => {
     communityBuilding: false,
   });
 
-  
-  const theme = useTheme();
 
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
@@ -65,7 +37,7 @@ export const PreferencesModal = () => {
   };
 
   const { planting, cleanUp, communityBuilding } = state;
-  const error = [planting, cleanUp, communityBuilding].filter(v => v).length !== 2;
+  const error = [planting, cleanUp, communityBuilding].filter(v => v).length !== 1;
 
 
   return (
@@ -80,9 +52,9 @@ export const PreferencesModal = () => {
       >
         <DialogTitle id="responsive-dialog-title">{"Choose what type of volunteer oppurtunities you would like to see"}</DialogTitle>
         <DialogContent>
-        <div className={classes.root}>
-            <FormControl required error={error} component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend">Pick two</FormLabel>
+        <div className="root">
+            <FormControl required error={error} component="fieldset" className="formControl">
+              <FormLabel component="legend">Pick one</FormLabel>
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox checked={cleanUp} onChange={handleChange('cleanUp')} value="Clean up" />}
@@ -99,13 +71,13 @@ export const PreferencesModal = () => {
                   label="Planting"
                 />
               </FormGroup>
-              <form className={dateclasses.container} noValidate>
+              <form className="container" noValidate>
                 <TextField
                   id="date"
                   label="Birthday"
                   type="date"
                   defaultValue="2017-05-24"
-                  className={dateclasses.textField}
+                  className="textField"
                   InputLabelProps={{
                     shrink: true,
                   }}
