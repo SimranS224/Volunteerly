@@ -1,9 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-
-=======
->>>>>>> 46f9e0c1f883993d0bdae34eecc74021aff15969
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
