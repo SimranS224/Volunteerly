@@ -25,7 +25,7 @@ class AdminPage extends React.Component {
     }
     addEvent(){
         console.log(userService.getEvents('admin'))
-        userService.addEvent({user: 'admin', title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate} )
+        userService.addEvent({user: 'admin', title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate}, 'admin' )
         console.log(userService.getEvents('admin'))
     }
 

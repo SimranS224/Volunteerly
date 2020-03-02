@@ -38,8 +38,9 @@ const getEvents = (user) => {
 	}
 }
 
-const addEvent = (event) => {
+const addEvent = (event, user) => {
 	data.push(event);
+	return getEvents(user)
 }
 export const userService = {
 	getEvents, addEvent
