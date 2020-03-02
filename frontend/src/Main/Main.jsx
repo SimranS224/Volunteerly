@@ -6,8 +6,6 @@ import { LoginPage } from '../LoginPage';
 import { HomePage } from '../HomePage';
 
 import Navbar from '../components/Navbar/Navbar.jsx';
-
-import { createBrowserHistory } from 'history';
   
 import { browserHistory } from '../_helpers';
 import { ProfilePage } from '../ProfilePage';
@@ -15,12 +13,14 @@ import { AdminPage } from '../AdminPage'
 import "./General.css";
 import store from 'store'
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ loggedIn, children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        store.get('auth') === true ? (
+      render={({ location, loggedIn }) => {
+        console.log("here")
+        console.log(loggedIn)
+        loggedIn === true ? ( // issue
           children
         ) : (
           <Redirect
@@ -31,6 +31,7 @@ function PrivateRoute({ children, ...rest }) {
           />
         )
       }
+      }
     />
   );
 }
@@ -38,9 +39,12 @@ function PrivateRoute({ children, ...rest }) {
 class Main extends React.Component {
   constructor(props) {
       super(props);
+     
+      
   }
 
   render() {
+      console.log(this.props.loggedIn);
       return (
         <Router history={browserHistory}>
             <div className="App">   
@@ -66,7 +70,12 @@ class Main extends React.Component {
 }
 
 const mapDispatchToProps = null;
-const mapState = null;
 
-const Mainconnected =  connect(mapState, mapDispatchToProps)(Main);
+
+const mapStateToProps = state => {
+  return {
+      loggedIn: state
+    }
+}
+const Mainconnected =  connect(mapStateToProps, mapDispatchToProps)(Main);
 export { Mainconnected as Main};

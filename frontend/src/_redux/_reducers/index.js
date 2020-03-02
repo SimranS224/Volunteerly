@@ -1,11 +1,8 @@
 import { combineReducers } from 'redux';
-// import other reducers from files in this folder
-// syntax : import { sampleReducer } from './sampleReducer';
+import userReducer from './userReducer';
 
-const sampleReducer = null;
-
-const mainReducer = combineReducers({ 
-  sampleReducer
-});
+const mainReducer = combineReducers(Object.assign({ 
+  userReducer
+}));
 
 export default mainReducer;

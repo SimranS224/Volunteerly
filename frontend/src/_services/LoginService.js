@@ -4,7 +4,7 @@ const register = () => {
   // cannot implement until we have a backend 
 }
 
-const login = async (userName, password) => {
+const login = (userName, password) => {
   // api login calls 
   // try {
   //     let body = {}
@@ -24,7 +24,7 @@ const login = async (userName, password) => {
   //     toast.error("An error occured!");
   //     console.error(error);
   // }
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  // await new Promise(resolve => setTimeout(resolve, 3000));
   console.log("login service")
   let res = {
     user: `${userName}`, 

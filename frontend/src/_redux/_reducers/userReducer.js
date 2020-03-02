@@ -1,8 +1,8 @@
 import { allConstants } from '../_actions/constants';
 
-const initialState = { loggedIn: false, curUser: null }
+const initialState = { loggedIn: false, isAdmin: false, curUser: null , preferences: null }
 
-function loginReducer(state = initialState, action) {
+function userReducer(state = initialState, action) {
   switch (action.type) {
     case allConstants.REGISTER:
       return {
@@ -12,11 +12,18 @@ function loginReducer(state = initialState, action) {
     case allConstants.LOGIN:
       const updatedUser = updateUser(action.success, action.curUser)
       return Object.assign({}, state, {
+        isAdmin: updatedUser.user == "admin",
         loggedIn: action.success,
-        curUser: updatedUser
+        curUser: updatedUser,
+        preferences: {}
       });
     case allConstants.LOGOUT:
       return { loggedIn: false, curUser: null };
+    case allConstants.SET_PREFERENCES:
+      return {
+        ...state,
+        preferences: action.newPreferenceState
+      };
     default:
       return state;
   }
@@ -30,4 +37,4 @@ const updateUser = (success, newUser) => {
   }
 }
 
-export default loginReducer
+export default userReducer;
