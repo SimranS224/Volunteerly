@@ -30,4 +30,18 @@
     font-size: 16px;
 }
 
+.Navbar .AppBar {
+    background-color: white;
+    box-shadow: none;
+}
+.Navbar .AppBar .logo {
+    color: #D28D25;
+    font-size: 24px;
+}
+.Navbar .AppBar .MenuIcon {
+    margin-left: 86px;
+    color: black;
+    margin-right: 8px;
+}
+
 

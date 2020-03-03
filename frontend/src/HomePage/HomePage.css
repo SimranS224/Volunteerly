@@ -1,0 +1,110 @@
+.HomePage {
+
+}
+
+.HomePage .hero-section {
+    display: flex;
+    flex-direction: row;
+    width: 1024px;
+    margin: 0 auto;
+    height: 375px;
+    display: flex;
+    flex-direction: row;
+}
+.HomePage  .hero-section .hero-container {
+    align-self: center;
+}
+
+.hero-section .hero-content, img {
+    display: inline-block;
+}
+
+.hero-section img {
+    width: 100px;
+    height: auto;
+    margin-left: 68px;
+    width: 172px;
+    height: 220px;
+    vertical-align: top;
+}
+
+.hero-section .hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 0;
+}
+
+.hero-section .hero-content h3 {
+    margin-top: 4px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.hero-section .hero-content input[type='text'] {
+    width: 578px;
+    margin-bottom: 0;
+    margin-top: 10px;
+
+    border: 1px solid #DADADA;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(145, 145, 145, 0.25);
+    border-radius: 4px;
+    padding-left: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.HomePage .volunteering-opportunities {
+    background-color: #F5F3FA;
+    padding-top: 24px;
+}
+.HomePage .volunteering-opportunities ul {
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.HomePage .opp-card {
+    width: 100%;
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border: 1px solid #E8DDFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(163, 124, 244, 0.17);
+    border-radius: 4px;
+    margin-top: 28px;
+}
+.HomePage .opp-card-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0px !important;
+}
+.HomePage .opp-card-content .info {
+    margin-left: 16px;
+    color: #120431;
+}
+.HomePage .opp-card-content .info h3 {
+   margin: 0;
+   font-size: 24px;
+   margin-bottom: 9px;
+   font-weight: 500;
+}
+.HomePage .opp-card-content .info p {
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 400;
+ }
+.HomePage .opp-card-content .date {
+    color: #A37CF4;
+    text-align: center;
+}
+.HomePage .opp-card-content .month {
+    font-size: 16px;
+}
+.HomePage .opp-card-content .day {
+    font-size: 24px;
+}
+.HomePage .MuiListItem-gutters {
+    margin: 0 !important;
+    padding: 0 !important;
+}

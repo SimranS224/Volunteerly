@@ -49,7 +49,6 @@ class Main extends React.Component {
         <Router history={browserHistory}>
             <div className="App">   
                 <Navbar />
-                <div className="container">
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <PrivateRoute path="/profile">
@@ -62,7 +61,6 @@ class Main extends React.Component {
                         <Redirect from="*" to="/home" />
                         
                     </Switch>
-                </div>
             </div>
         </Router>
       );

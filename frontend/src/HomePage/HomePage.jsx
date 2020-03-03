@@ -17,6 +17,8 @@ import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from '@material-ui/core/DialogContent';
 import MapContainer from '../components/Maps/MapContainer'
+import HeroImage from './welcome-2.png';
+import './HomePage.css';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -55,28 +57,34 @@ class HomePage extends React.Component {
      let { filtered } = this.state
 
       return (
-          <div>
-              <h1>Current Available Opportunities</h1>
-              <div style={{width: "500px"}}>
-            <input style={{
-  width: "300px",
-  borderRadius: "5px",
-  height: "40px",
-  border: "1px solid black",
-  margin: "20px"
-}} ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
-          </div>
-              <List>
+          <div className="HomePage">
+              <div className="hero-section">
+                <div className="hero-container">
+                  <div className="hero-content">
+                    <h1> Volunteer </h1>
+                    <h3>Make friends, find purpose, and help out</h3>
+                    <input style={{
+                    }} ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
+                  </div>
+                  <img src={HeroImage} />
+                </div>
+              </div>
+      
+      <div className="volunteering-opportunities">
+        <List>
               {filtered.length > 0 && filtered.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
-                <Card style={{width: "80%"}} onClick={() =>{this.setState({dialog_open: true, selected: i})}}>
-      <CardHeader
-        title={event.title}
-        subheader={event.date}
-      />
+                <Card className="opp-card" onClick={() =>{this.setState({dialog_open: true, selected: i})}}>
 
-      <CardContent>
-      {event.desc}
+      <CardContent className="opp-card-content">
+        <div className="date">
+          <div className="month">{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(new Date(event.date).getMonth())]}</div>
+          <div className="day"> {new Date(event.date).getDay() + 1}</div>
+        </div>
+        <div className="info">
+          <h3 className>{event.title}</h3>
+          <p className>{event.desc}</p>
+        </div>
       </CardContent>
       </Card>
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
@@ -116,6 +124,7 @@ class HomePage extends React.Component {
               })}
               </List>
           </div>
+        </div>
       );
   }
 }
