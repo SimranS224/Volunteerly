@@ -14,7 +14,6 @@ class LoginPage extends React.Component {
     this.state = {
         username: '',
         password: '',
-        provided: false
     };
   }
 
@@ -28,22 +27,6 @@ class LoginPage extends React.Component {
             <TextField id="password"  type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
             <Button variant="contained" color="primary"  value="Submit" onClick={() => {
               this.props.login(this.state.username, this.state.password)
-              // console.log(this.state.curUser)
-              // console.log("logging in", this.state.username, this.state.password)
-              // if(this.state.username == 'user' && this.state.password == 'user'){
-              //   console.log("logged in as user")
-              //   store.set('auth', true)
-              //   store.set('level', 0)
-              //   window.location.href = '/home'
-              // }
-              // else if(this.state.username == 'admin' && this.state.password == 'admin'){
-              // console.log("logged in as admin")
-
-              //   store.set('auth', true)
-              //   store.set('level', 1)
-              //   window.location.href = '/home'
-
-              // }
             }}>
                 Login
             </Button>
