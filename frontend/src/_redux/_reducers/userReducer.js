@@ -12,7 +12,7 @@ function userReducer(state = initialState, action) {
     case allConstants.LOGIN:
       const updatedUser = updateUser(action.success, action.curUser)
       return Object.assign({}, state, {
-        isAdmin: updatedUser.user == "admin",
+        isAdmin: action.isAdmin,
         loggedIn: action.success,
         curUser: updatedUser,
         preferences: {}

@@ -109,19 +109,19 @@
     padding: 0 !important;
 }
 
-.HomePage .event-title {
+.event-title {
     padding-top: 10vh;
     font-size: 30px;
 }
-.HomePage .desc {
+ .desc {
     padding-top: 1vh;
     font-size: 25px;
 }
-.HomePage .event-desc {
+.event-desc {
     padding-top: 5vh;
     font-size: 20px;
 }
-.HomePage .event-date {
+ .event-date {
     padding-top: 2vh;
     font-size: 20px;
 }

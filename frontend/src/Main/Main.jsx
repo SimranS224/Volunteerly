@@ -13,28 +13,16 @@ import { AdminPage } from '../AdminPage'
 import "./General.css";
 import store from 'store'
 
-function PrivateRoute({ loggedIn, children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location, loggedIn }) => {
-        console.log("here")
-        console.log(loggedIn)
-        loggedIn === true ? ( // issue
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-      }
-    />
-  );
-}
+const PrivateRoute = ({ admin, userReducer, component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+      (userReducer.loggedIn === true && ((userReducer.isAdmin === true && admin === true) || (admin === false))) ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -44,20 +32,18 @@ class Main extends React.Component {
   }
 
   render() {
-      console.log(this.props.loggedIn);
+      console.log("main.jsx", this.props.userReducer);
       return (
         <Router history={browserHistory}>
             <div className="App">   
                 <Navbar />
                     <Switch>
                         <Route path="/home" component={HomePage} />
-                        <PrivateRoute path="/profile">
-                          <ProfilePage />
-                        </PrivateRoute>
+                        <PrivateRoute admin={false} userReducer={this.props.userReducer} path="/profile" component={ProfilePage} />
+
                         <Route path="/login" component={LoginPage} />
-=                        <PrivateRoute path="/admin">
-                          <AdminPage />
-                        </PrivateRoute>
+                        <PrivateRoute admin={true} userReducer={this.props.userReducer} path="/admin" component={AdminPage} />
+                  
                         <Redirect from="*" to="/home" />
                         
                     </Switch>
@@ -72,7 +58,7 @@ const mapDispatchToProps = null;
 
 const mapStateToProps = state => {
   return {
-      loggedIn: state
+      userReducer: state.userReducer
     }
 }
 const Mainconnected =  connect(mapStateToProps, mapDispatchToProps)(Main);

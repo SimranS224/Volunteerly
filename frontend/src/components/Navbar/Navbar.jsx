@@ -14,6 +14,8 @@ import store from 'store'
 import Drawer from '@material-ui/core/Drawer';
 import './Navbar.css';
 import { PreferencesModal } from '../Modals/PreferencesModal';
+import { userActions } from "../../_redux/_actions";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,15 +36,13 @@ function Navbar(props) {
         showNav: false,
         loggedIn: false
       });
-    console.log(props);
 
     const toggleSidebar = function() {
-        console.log("toggle sidebar")
         setState({
             showNav: !state.showNav
         })
     }
-    if(store.get('auth') === true && state.loggedIn !== true){
+    if(props.userReducer.loggedIn === true && state.loggedIn !== true){
         setState({loggedIn: true, showNav: state.showNav})
     }
     return (
@@ -80,16 +80,23 @@ function Navbar(props) {
                 <Link to="/profile"><AccountCircle /></Link>
             </IconButton>
             <Button ><PreferencesModal/></Button>
-            <Button className="Login" onClick={() => {store.set('auth', false); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
+            <Button className="Login" onClick={() => {props.logout(); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
         </AppBar>
       </div>
     );
 }
 
-const mapDispatchToProps = null
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => {
+        dispatch(userActions.logout())
+    }
+  } 
+}
 
-const mapStateToProps = (state, ownProps) => ({
-    the_state: state
-});
-  
+const mapStateToProps = state => {
+  return {
+      userReducer: state.userReducer
+    }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

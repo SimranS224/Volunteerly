@@ -81,8 +81,8 @@ class HomePage extends React.Component {
           <div className="day"> {new Date(event.date).getDay() + 1}</div>
         </div>
         <div className="info">
-          <h3 className>{event.title}</h3>
-          <p className>{event.desc}</p>
+          <h3 >{event.title}</h3>
+          <p >{event.desc}</p>
         </div>
       </CardContent>
       </Card>
@@ -96,19 +96,19 @@ class HomePage extends React.Component {
         </AppBar>
 
         <DialogContent>
-        <Typography className="event-title"> 
+        <Typography className="event-title" variant="h2"> 
         {this.state.selected !== null ? filtered[this.state.selected].title : null}
         </Typography>
         <Button variant="contained" color="primary" disableElevation>
       Enroll
     </Button>
-        <Typography className="desc"> 
+        <Typography className="desc" variant="h3"> 
         Description
         </Typography>
-        <Typography className="event-desc"> 
+        <Typography className="event-desc" variant="h4"> 
         {this.state.selected !== null ? filtered[this.state.selected].desc : null}
         </Typography>
-        <Typography className="event-date"> 
+        <Typography className="event-date" variant="h4"> 
         Event date: {this.state.selected !== null ? filtered[this.state.selected].date : null} 
         <br/>
         Event start time: 1pm
