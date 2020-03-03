@@ -63,8 +63,7 @@ class HomePage extends React.Component {
                   <div className="hero-content">
                     <h1> Volunteer </h1>
                     <h3>Make friends, find purpose, and help out</h3>
-                    <input style={{
-                    }} ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
+                    <input ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
                   </div>
                   <img src={HeroImage} />
                 </div>
@@ -97,19 +96,19 @@ class HomePage extends React.Component {
         </AppBar>
 
         <DialogContent>
-        <Typography  style={{paddingTop: "10vh", fontSize: "30px"}}> 
+        <Typography className="event-title"> 
         {this.state.selected !== null ? filtered[this.state.selected].title : null}
         </Typography>
         <Button variant="contained" color="primary" disableElevation>
       Enroll
     </Button>
-        <Typography  style={{paddingTop: "1vh", fontSize: "25px"}}> 
+        <Typography className="desc"> 
         Description
         </Typography>
-        <Typography style={{ paddingTop: "5vh", fontSize: "20px"}}> 
+        <Typography className="event-desc"> 
         {this.state.selected !== null ? filtered[this.state.selected].desc : null}
         </Typography>
-        <Typography style={{ paddingTop: "2vh", fontSize: "20px"}}> 
+        <Typography className="event-date"> 
         Event date: {this.state.selected !== null ? filtered[this.state.selected].date : null} 
         <br/>
         Event start time: 1pm
