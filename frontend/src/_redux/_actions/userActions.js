@@ -28,16 +28,18 @@ const logout = () => {
   return { type: allConstants.LOGOUT }
 }
 
-const deleteEvent = () => {
-
+const deleteEvent = (event) => {
+  return {type: allConstants.DELETE_EVENT, event: event} 
 }
 
-const addEvent = () => {
-
-}
-
-const getEvents = () => {
+const addEvent = (event) => {
+  console.log({event});
   
+  return {type: allConstants.ADD_EVENT, event: event} 
+}
+
+const updateEvents = (events) => {
+  return {type: allConstants.UPDATE_EVENTS, event: events} 
 }
 
 const setPreferences = (preferencesState) => {
@@ -49,5 +51,8 @@ export const userActions = {
   setPreferences, 
   register, 
   login, 
-  logout
+  logout,
+  updateEvents,
+  addEvent,
+  deleteEvent
 }
