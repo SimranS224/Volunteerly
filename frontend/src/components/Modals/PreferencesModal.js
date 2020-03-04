@@ -47,7 +47,6 @@ const PreferencesModal = ({ setPreferences }) => {
       communityBuilding: state.communityBuilding,
       selectedDate: state.selectedDate
     }
-    console.log(preferenceState);
     
     setPreferences(preferenceState);
     setState({ ...state, modalOpen: false });

@@ -5,8 +5,6 @@ const register = () => {
 }
 
 const login = (userName, password) => {
-
-  console.log("login service")
   let res = {
     user: `${userName}`, 
     password: `${password}`, // return password for now for testing purposes 
@@ -16,11 +14,9 @@ const login = (userName, password) => {
   // mock database stub
   let level = null
   if(userName== 'user' && password == 'user'){
-    console.log("logged in as user")
     level = 0
   }
   else if(userName == 'admin' && password == 'admin'){
-    console.log("logged in as admin")
     level = 1
   }
   res.level = level

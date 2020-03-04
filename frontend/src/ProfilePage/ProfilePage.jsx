@@ -34,9 +34,7 @@ class ProfilePage extends React.Component {
 
     render() {
         let pastEvents =  userService.getEvents('past');
-        console.log('past events are: ', pastEvents);
         let futureEvents =  userService.getEvents('future');
-        console.log('future events are: ', futureEvents);
       return (
           <div className="profile">
             <div className="profile-header">

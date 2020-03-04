@@ -6,7 +6,6 @@ import CustomCard from './CustomCard'
 class CardList extends React.Component {
     constructor(props) {
       super(props);
-      console.log("mounting card list");
     }
 
     render() {

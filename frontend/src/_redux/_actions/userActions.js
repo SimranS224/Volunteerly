@@ -8,12 +8,10 @@ const register = () => {
 
 const login = (userName, password) => {
   // try to login with loginService
-  console.log("here");
   
   try {
     const res = loginService.login(userName, password);
     if (res.success) {
-      console.log("login success", res);
       
       browserHistory.push("/home")
       return {type: allConstants.LOGIN, success: true, curUser: res.response, isAdmin: res.response.level === 1} 
@@ -33,8 +31,6 @@ const deleteEvent = (event) => {
 }
 
 const addEvent = (event) => {
-  console.log({event});
-  
   return {type: allConstants.ADD_EVENT, event: event} 
 }
 
@@ -43,7 +39,6 @@ const updateEvents = (events) => {
 }
 
 const setPreferences = (preferencesState) => {
-  console.log({preferencesState});
   return {type: allConstants.SET_PREFERENCES, newPreferenceState: preferencesState} 
 }
 

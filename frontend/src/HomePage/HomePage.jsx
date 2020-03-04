@@ -51,7 +51,6 @@ class HomePage extends React.Component {
       let keys = Object.keys(event)
       for(let i = 0; i < keys.length; i++){
         if(event[keys[i]].toLowerCase().indexOf(e.toLowerCase()) > -1){
-          console.log("found")
           return true
         }
       }
