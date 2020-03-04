@@ -21,7 +21,6 @@ class AdminPage extends React.Component {
             eventDescription: '',
             eventDate:'2019-05-24'
         };
-        this.addEvent = this.addEvent.bind(this)
     }
     addEvent(){
         console.log(userService.getEvents('admin'))
@@ -58,7 +57,7 @@ class AdminPage extends React.Component {
                             <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
                         </div>
                         <div className="group">
-                            <Button variant="contained" color="primary" onClick={this.addEvent}>
+                            <Button variant="contained" color="primary" onClick={this.addEvent.bind(this)}>
                                 Add event
                             </Button>
                         </div>
@@ -71,7 +70,7 @@ class AdminPage extends React.Component {
                     <List className="events">
                         {userService.getEvents('admin').length > 0 && userService.getEvents('admin').map((event, i) =>{
                             return <ListItem key={'event' + i.toString()} >
-                                <CardWithButton event={event} buttonText="test" buttonFunc={console.log("test")} ></CardWithButton>
+                                <CardWithButton event={event} buttonText="Delete" buttonFunc={console.log("test")} ></CardWithButton>
                             </ListItem>
                             })}
                     </List> 
