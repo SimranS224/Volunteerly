@@ -48,7 +48,7 @@ function Navbar(props) {
     return (
       <div className="Navbar">
         <Drawer open={state.showNav} onClose={toggleSidebar}>
-            <div className={"Sidebar"} onClick={toggleSidebar}>
+            <div className="Sidebar" onClick={toggleSidebar}>
                 <List>
                     <Link to="/home">
                         <ListItem button key={"Home"}>
@@ -57,12 +57,12 @@ function Navbar(props) {
                     </Link>
                     <Link to="/profile">
                         <ListItem button key={"Profile"}>
-                            <Link to="/profile">Profile</Link>
+                            Profile
                         </ListItem>
                     </Link>
                     <Link to="/admin">
                         <ListItem button key={"Admin"}>
-                            <Link to="/admin">Admin</Link>
+                            Admin
                         </ListItem>
                     </Link>
                 </List>

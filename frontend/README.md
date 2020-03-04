@@ -1,5 +1,6 @@
 # team48
-
+# Features
+Users can view events on the homepage and also search for specific events
 # Usage 
 A. Run  the below commands to use in development. 
   ```
