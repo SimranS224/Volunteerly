@@ -17,17 +17,34 @@ class AdminPage extends React.Component {
         super(props);
     
         this.state = {
+            data: [],
             eventTitle: '',
             eventDescription: '',
             eventDate:'2019-05-24'
         };
     }
-    addEvent(event){
+
+    componentDidMount() {
+        let events =  userService.getEvents(null);
+        this.props.updateEvents(events)
+        console.log("events", events)
+        console.log("events",this.props.globalEvents);
+        if (this.props.globalEvents) {
+          this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
+        } else {
+          this.setState({data: events, filtered: events})
+        }
+    }
+
+    addEvent(){
         console.log(userService.getEvents('admin'))
         this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate})
     }
 
     deleteEvent(event){
+        console.log("wefoinweoiewfnwefie")
+        console.log({event});
+        
         this.props.deleteEvent(event)
     }
 
@@ -44,6 +61,9 @@ class AdminPage extends React.Component {
     }   
 
   render() {
+      console.log("fwieofwoijnioejwifow")
+      console.log(this.state.data);
+      
       return (
           <div className="AdminPage">
               <div className="AddEvent-Section">
@@ -71,7 +91,7 @@ class AdminPage extends React.Component {
               <div className="ManageEvents-Section">
                     <h2 className="header">Manage Events</h2>
                     <List className="events">
-                        {userService.getEvents('admin').length > 0 && userService.getEvents('admin').map((event, i) =>{
+                        {this.state.data.length > 0 && this.state.data.map((event, i) =>{
                             return <ListItem key={'event' + i.toString()} >
                                 <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
                             </ListItem>
@@ -91,6 +111,9 @@ const mapDispatchToProps = dispatch => {
         addEvent: (event) => {
             dispatch(userActions.addEvent(event))
         },
+        updateEvents: (curUser, events) => {
+            dispatch(userActions.updateEvents(curUser, events))
+        }
     } 
   }
   

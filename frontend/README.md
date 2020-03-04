@@ -61,7 +61,7 @@ Admin users will have access to http://localhost:3000/admin and all authenticate
   │   ├── LoginPage
   │   │   ├── index.js
   │   │   ├── LoginPage.jsx
-  │   ├── _components
+  │   ├── components
   │   │   ├── index.js 
   │   │   ├── ....
   │   │   ├── ....

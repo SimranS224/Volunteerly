@@ -7,7 +7,7 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
-  events: []
+  events: userService.getEvents(null)
 }
 
 function userReducer(state = initialState, action) {
