@@ -28,12 +28,13 @@ Login with the following to be a regular user:
 username: user
 password: user
 ```
-Admin users will have access to http://localhost:3000/admin and all authenticated users can access their profile at http://localhost:3000/profile. Redirected to login if users are not authenticated.
   
 
 # Features
 
 Users can view events on the homepage and also search for specific events. Clicking on an event will show event details and a google maps component of the event's location. To become authenticated, users will have to login at http://localhost:3000/login, which stores the user's status and data in React Redux.
+
+Admin users will have access to http://localhost:3000/admin and all authenticated users can access their profile at http://localhost:3000/profile. Redirected to login if users are not authenticated.
 
 ## User 
 
