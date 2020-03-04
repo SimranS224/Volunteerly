@@ -44,35 +44,37 @@ class AdminPage extends React.Component {
   render() {
       return (
           <div className="AdminPage">
-              <h2>Add Event</h2>
-              <Divider />
-              <div className="AddEvent">
-                <form noValidate autoComplete="off">
-                    <div className="group">
-                        <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
-                    </div>
-                    <div className="group">
-                        <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
-                    </div>
-                    <div className="group">
-                        <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
-                    </div>
-                    <div className="group">
-                        <Button variant="contained" color="primary" onClick={this.addEvent}>
-                            Add event
-                        </Button>
-                    </div>
-                </form>
+              <div className="AddEvent-Section">
+                <h2 className="header">Add Event</h2>
+                <div className="AddEvent">
+                    <form noValidate autoComplete="off">
+                        <div className="group">
+                            <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
+                        </div>
+                        <div className="group">
+                            <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
+                        </div>
+                        <div className="group">
+                            <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
+                        </div>
+                        <div className="group">
+                            <Button variant="contained" color="primary" onClick={this.addEvent}>
+                                Add event
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+              </div>
 
-                <h2>Manage Events</h2>
-                <Divider />
-                <List>
-                    {userService.getEvents('admin').length > 0 && userService.getEvents('admin').map((event, i) =>{
-                        return <ListItem key={'event' + i.toString()} >
-                            <CardWithButton event={event} buttonText="test" buttonFunc={console.log("test")} ></CardWithButton>
-                        </ListItem>
-                        })}
-                </List> 
+              <div className="ManageEvents-Section">
+                    <h2 className="header">Manage Events</h2>
+                    <List className="events">
+                        {userService.getEvents('admin').length > 0 && userService.getEvents('admin').map((event, i) =>{
+                            return <ListItem key={'event' + i.toString()} >
+                                <CardWithButton event={event} buttonText="test" buttonFunc={console.log("test")} ></CardWithButton>
+                            </ListItem>
+                            })}
+                    </List> 
               </div>
           </div>
       );

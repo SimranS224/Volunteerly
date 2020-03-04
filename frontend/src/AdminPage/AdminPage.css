@@ -2,6 +2,31 @@
 
 }
 
+.AdminPage .AddEvent-Section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.AdminPage .ManageEvents-Section {
+    background-color: #F5F3FA;
+    padding-bottom: 64px;
+    padding-top: 40px;
+}
+.AdminPage .header {
+    margin-top: 0px;
+    width: 1024px; 
+    margin: 0 auto;
+    font-size: 32px;
+}
+
+.AdminPage .AddEvent {
+    width: 1024px; 
+    margin: 0 auto;
+}
+.AdminPage .events {
+    width: 1024px; 
+    margin: 0 auto;
+}
+
 .AdminPage .AddEvent .group{
     margin-bottom: 16px;
 }

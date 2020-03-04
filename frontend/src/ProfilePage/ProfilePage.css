@@ -1,3 +1,68 @@
-.profile {
-    margin: 20px;
+.profile .profile-header {
+    display: flex;
+    flex-direction: row;
+    height: 284px;
+}
+
+.profile .profile-stats {
+    padding-bottom: 96px;
+}
+
+.profile .profile-header .profile-header-container {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+}
+
+.profile .profile-header h2 {
+    font-size: 40px;
+    color: #A37CF4;
+}
+
+.profile .profile-header .profile-info {
+    margin-left: 20px;
+}
+.profile .profile-header p {
+    font-size: 24px;
+    color: #A37CF4;
+}
+
+.profile .profile-header .profile-picture {
+    width: 128px;
+    height: 128px;
+    background-color: #A37CF4;
+    border-radius: 100%;
+}
+
+.profile .profile-stats {
+    background-color: #F5F3FA;
+}
+.profile .profile-header-container {
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.profile .stat-row {
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.profile .stat-row .StatCard {
+    height: 100%;
+}
+
+.profile .stat-row .col-md-4:first-child {
+    padding-left: 0;
+}
+
+.profile .header {
+    width: 1024px;
+    margin: 0 auto;
+    font-size: 24px;
+    margin-bottom: 22px;
+    padding-top: 60px;
+}
+
+.profile .stat-row .AchivementCard {
+    height: 100%;
 }

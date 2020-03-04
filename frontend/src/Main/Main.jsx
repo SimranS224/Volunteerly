@@ -14,18 +14,18 @@ import "./General.css";
 import store from 'store'
 
 function PrivateRoute({ loggedIn, children, ...rest }) {
+  console.log(children);
   return (
     <Route
       {...rest}
       render={({ location, loggedIn }) => {
-        console.log("here")
-        console.log(loggedIn)
-        loggedIn === true ? ( // issue
+        loggedIn = true;
+        return loggedIn === true ? ( // issue
           children
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: "/logivn",
               state: { from: location }
             }}
           />

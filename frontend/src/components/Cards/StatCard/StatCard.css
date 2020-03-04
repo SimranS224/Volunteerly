@@ -1,0 +1,14 @@
+.StatCard .number {
+    font-size: 48px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.StatCard .description {
+    font-size: 16px;
+    margin: 0 auto;
+}
+
+.StatCard .icon img {
+    margin-bottom: 14px;
+}

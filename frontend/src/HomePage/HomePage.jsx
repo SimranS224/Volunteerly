@@ -16,6 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from '@material-ui/core/DialogContent';
+import OppCard from '../components/OppCard/OppCard';
 import MapContainer from '../components/Maps/MapContainer'
 import HeroImage from './welcome-2.png';
 import './HomePage.css';
@@ -74,19 +75,12 @@ class HomePage extends React.Component {
         <List>
               {filtered.length > 0 && filtered.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
-                <Card className="opp-card" onClick={() =>{this.setState({dialog_open: true, selected: i})}}>
-
-      <CardContent className="opp-card-content">
-        <div className="date">
-          <div className="month">{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(new Date(event.date).getMonth())]}</div>
-          <div className="day"> {new Date(event.date).getDay() + 1}</div>
-        </div>
-        <div className="info">
-          <h3 className>{event.title}</h3>
-          <p className>{event.desc}</p>
-        </div>
-      </CardContent>
-      </Card>
+                 <OppCard 
+                  date={event.date}
+                  title={event.title}
+                  desc={event.desc}
+                  onClick={() => {this.setState({dialog_open: true, selected: i})}} 
+                  />
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
       <AppBar >
           <Toolbar>

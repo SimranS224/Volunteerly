@@ -20,7 +20,7 @@ export default function DenseTable(props) {
 
   return (
     <TableContainer component={Paper}>
-      <Table  >
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell align="left"><b>Statistics</b></TableCell>

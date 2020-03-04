@@ -1,0 +1,16 @@
+.AchivementCard {
+    display: flex;
+    flex-direction: row;
+}
+
+.AchivementCard .ach-card-container {
+    align-self: center;
+}
+
+.AchivementCard .icon img {
+    width: 100%;
+    height: auto;
+    padding-left: 52px;
+    padding-right: 52px;
+    padding-bottom: 20px;
+}
