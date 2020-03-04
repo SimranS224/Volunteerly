@@ -13,13 +13,13 @@ const login = (userName, password) => {
   try {
     const res = loginService.login(userName, password);
     if (res.success) {
-      console.log({res});
+      console.log("login success", res);
       
-      browserHistory.push("/")
-      return {type: allConstants.LOGIN, success: true, curUser: res.response} 
+      browserHistory.push("/home")
+      return {type: allConstants.LOGIN, success: true, curUser: res.response, isAdmin: res.response.level === 1} 
     }
   } catch (err) {
-    return {type: allConstants.LOGIN, success: false, curUser: null} 
+    return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
   }
 }
 

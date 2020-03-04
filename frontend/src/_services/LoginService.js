@@ -25,14 +25,26 @@ const login = (userName, password) => {
   //     console.error(error);
   // }
   // await new Promise(resolve => setTimeout(resolve, 3000));
+
   console.log("login service")
   let res = {
     user: `${userName}`, 
     password: `${password}`, // return password for now for testing purposes 
     userID: 1,
-    token: `some_jwt_token`
+    token: `some_jwt_token`,
   }
-  return { success: true, response: res }
+  // mock database stub
+  let level = null
+  if(userName== 'user' && password == 'user'){
+    console.log("logged in as user")
+    level = 0
+  }
+  else if(userName == 'admin' && password == 'admin'){
+    console.log("logged in as admin")
+    level = 1
+  }
+  res.level = level
+  return { success: level === null ? false : true, response: res }
 }
 
 const logout = () => {

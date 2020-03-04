@@ -108,3 +108,20 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+.event-title {
+    padding-top: 10vh;
+    font-size: 30px;
+}
+ .desc {
+    padding-top: 1vh;
+    font-size: 25px;
+}
+.event-desc {
+    padding-top: 5vh;
+    font-size: 20px;
+}
+ .event-date {
+    padding-top: 2vh;
+    font-size: 20px;
+}
