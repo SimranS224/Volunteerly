@@ -70,17 +70,19 @@ function Navbar(props) {
         </Drawer>
 
         <AppBar className="AppBar" position="static">
-            <IconButton onClick={toggleSidebar} edge="start" className={classes.menuButton} aria-label="menu" className="MenuIcon">
-            <MenuIcon />
-            </IconButton>
-            <h4>
-                <Link className="logo" to="/home">Volunteerly</Link>
-            </h4>
-            <IconButton>
-                <Link to="/profile"><AccountCircle /></Link>
-            </IconButton>
-            <Button ><PreferencesModal/></Button>
-            <Button className="Login" onClick={() => {props.logout(); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
+            <div className="container">
+              <IconButton onClick={toggleSidebar} edge="start" className={classes.menuButton} aria-label="menu" className="MenuIcon">
+              <MenuIcon />
+              </IconButton>
+              <h4>
+                  <Link className="logo" to="/home">Volunteerly</Link>
+              </h4>
+              <IconButton>
+                  <Link to="/profile"><AccountCircle /></Link>
+              </IconButton>
+              <Button className="Preferences"><PreferencesModal/></Button>
+              <Button className="Login" onClick={() => {props.logout(); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
+            </div>
         </AppBar>
       </div>
     );

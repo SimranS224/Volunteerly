@@ -81,7 +81,7 @@ class HomePage extends React.Component {
                   onClick={() => {this.setState({dialog_open: true, selected: i})}} 
                   />
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
-      <AppBar >
+      <AppBar className="EventAppBar">
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
               <CloseIcon />
@@ -93,12 +93,9 @@ class HomePage extends React.Component {
         <Typography className="event-title" variant="h2"> 
         {this.state.selected !== null ? filtered[this.state.selected].title : null}
         </Typography>
-        <Button variant="contained" color="primary" disableElevation>
-      Enroll
-    </Button>
-        <Typography className="desc" variant="h3"> 
-        Description
-        </Typography>
+        <Button className="primary-button" variant="contained" disableElevation>
+          Enroll
+        </Button>
         <Typography className="event-desc" variant="h4"> 
         {this.state.selected !== null ? filtered[this.state.selected].desc : null}
         </Typography>

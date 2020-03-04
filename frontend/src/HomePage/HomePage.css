@@ -109,6 +109,9 @@
     padding: 0 !important;
 }
 
+.EventAppBar {
+    background-color: #A37CF4 !important;
+}
 .event-title {
     padding-top: 10vh;
     font-size: 30px;
