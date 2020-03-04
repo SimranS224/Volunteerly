@@ -31,13 +31,11 @@ Admin users will have access to http://localhost:3000/admin and all authenticate
 
 ## User 
 
-1. Once the app starts the user will see the home page but wont have the ability to see any events until 
-2. 
-3. 
-4. 
-5. 
-6. 
-
+1. Once the app starts the user will see the home page, and events. 
+2. To access other pages the user must first login using the login steps provided above. 
+3. Then the user can see their profile which has hard coded values currently
+4. They can browse events on the homepage by searching an event, when they click on an event they can see more details 
+about it and can also see where it is on a google maps api view. 
 
 ## Admin
 
