@@ -39,14 +39,11 @@ Admin users will have access to http://localhost:3000/admin and all authenticate
 6. 
 
 
-## Admin 
+## Admin
 
-1. 
-2. 
-3. 
-4. 
-5. 
-6. 
+1. Admin can add an event, specifying the event name, description, and date of the event. Once he modifies it, it becomes available to all users.
+2. All of the events that an admin creates get generated in the "manage events" section.
+3. Admin can delete an event from his events section.
 
 # Folder Structure
 
