@@ -25,6 +25,28 @@ password: user
 Admin users will have access to http://localhost:3000/admin and all authenticated users can access their profile at http://localhost:3000/profile. Redirected to login if users are not authenticated.
   
 
+
+# Steps: 
+
+## User 
+
+1. Once the app starts the user will see the home page but wont have the ability to see any events until 
+2. 
+3. 
+4. 
+5. 
+6. 
+
+
+## Admin 
+
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+
 # Folder Structure
 
 ```bash
