@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,9 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import {userService} from '../_services/UserService.js'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
@@ -20,6 +16,8 @@ import OppCard from '../components/OppCard/OppCard';
 import MapContainer from '../components/Maps/MapContainer'
 import HeroImage from './welcome-2.png';
 import './HomePage.css';
+import { userActions } from "../_redux/_actions";
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -37,9 +35,17 @@ class HomePage extends React.Component {
   }
    componentDidMount() {
     let events =  userService.getEvents(null);
+    this.props.updateEvents(events)
     console.log("events", events)
-    this.setState({data: events, filtered: events})
+    console.log("events",this.props.globalEvents);
+    if (this.props.globalEvents) {
+      this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
+    } else {
+      this.setState({data: events, filtered: events})
+    }
+    
   }
+
   handleSearch = (e) =>{
     e = e.target.value
     let filtered = this.state.data.filter(event => {
@@ -56,7 +62,6 @@ class HomePage extends React.Component {
   } 
   render() {
      let { filtered } = this.state
-
       return (
           <div className="HomePage">
               <div className="hero-section">
@@ -119,8 +124,20 @@ class HomePage extends React.Component {
   }
 }
 
-const mapDispatchToProps = null;
-const mapState = null;
+const mapDispatchToProps = dispatch => {
+  return {
+    updateEvents: (curUser, events) => {
+      dispatch(userActions.updateEvents(curUser, events))
+    }
+  } 
+}
 
-const Homeconnected =  connect(mapState, mapDispatchToProps)(HomePage);
+const mapStateToProps = state => {
+  return {
+    curUser: state.userReducer.curUser,
+    globalEvents: state.userReducer.events,
+    }
+}
+
+const Homeconnected =  connect(mapStateToProps, mapDispatchToProps)(HomePage);
 export { Homeconnected as HomePage};

@@ -1,5 +1,6 @@
 # team48
-
+# Features
+Users can view events on the homepage and also search for specific events
 # Usage 
 A. Run  the below commands to use in development. 
   ```
@@ -11,6 +12,18 @@ B. Run the below commands to build, output will be in dist folder.
     npm run build 
   ```
 C. You can access the app at port: ``` http://localhost:3000/```
+
+D. Login with credentials to be an admin user:
+```
+username: admin
+password: admin
+```
+Login with the following to be a regular user:
+```
+username: user
+password: user
+```
+Admin users will have access to http://localhost:3000/admin and all authenticated users can access their profile at http://localhost:3000/profile. Redirected to login if users are not authenticated.
   
 
 # Folder Structure

@@ -5,26 +5,6 @@ const register = () => {
 }
 
 const login = (userName, password) => {
-  // api login calls 
-  // try {
-  //     let body = {}
-  //     console.log({body})
-  //     let response = await fetch('http://localhost:' + process.env.REACT_APP_SERVER_PORT + '/login', {
-  //         method: 'POST',
-  //         headers: { 
-  //           Accept: 
-  //           'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify(body),
-  //     });
-  //     console.log({response});
-  //     return response
-  // } catch (error) {
-  //     toast.error("An error occured!");
-  //     console.error(error);
-  // }
-  // await new Promise(resolve => setTimeout(resolve, 3000));
 
   console.log("login service")
   let res = {

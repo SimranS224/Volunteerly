@@ -26,6 +26,7 @@ const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of 
 ]
 
 const getEvents = (user) => {
+	console.log({data})
 	for(let i = 0; i < data.length; i++){
 		data[i].date = randomDate(new Date(2020, 0, 1), new Date())
 	}
@@ -42,6 +43,15 @@ const addEvent = (event, user) => {
 	data.push(event);
 	return getEvents(user)
 }
+
+const deleteEvent = (event, user) => {
+	const index = data.indexOf(event);
+	if (index > -1) {
+		data.splice(index, 1);
+	}
+	return getEvents(user)
+}
+
 export const userService = {
-	getEvents, addEvent
+	getEvents, addEvent, deleteEvent
 }

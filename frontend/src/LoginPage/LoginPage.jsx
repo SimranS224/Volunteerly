@@ -54,5 +54,6 @@ const mapStateToProps = state => {
     curUser: state.curUser
     }
 }
+
 const Loginconnected =  connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 export { Loginconnected as LoginPage};

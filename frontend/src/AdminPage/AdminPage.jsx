@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Divider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 import {userService} from '../_services/UserService.js'
 import CardWithButton from '../components/General/CardWithButton'
 import List from '@material-ui/core/List';
 import { ListItem } from '@material-ui/core';
+import { userActions } from "../_redux/_actions";
+
 
 import './AdminPage.css';
 
@@ -22,10 +22,13 @@ class AdminPage extends React.Component {
             eventDate:'2019-05-24'
         };
     }
-    addEvent(){
+    addEvent(event){
         console.log(userService.getEvents('admin'))
-        userService.addEvent({user: 'admin', title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate}, 'admin' )
-        console.log(userService.getEvents('admin'))
+        this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate})
+    }
+
+    deleteEvent(event){
+        this.props.deleteEvent(event)
     }
 
     titleChange(e){
@@ -70,7 +73,7 @@ class AdminPage extends React.Component {
                     <List className="events">
                         {userService.getEvents('admin').length > 0 && userService.getEvents('admin').map((event, i) =>{
                             return <ListItem key={'event' + i.toString()} >
-                                <CardWithButton event={event} buttonText="Delete" buttonFunc={console.log("test")} ></CardWithButton>
+                                <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
                             </ListItem>
                             })}
                     </List> 
@@ -80,8 +83,23 @@ class AdminPage extends React.Component {
   }
 }
 
-const mapDispatchToProps = null;
-const mapState = null;
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteEvent: (event) => {
+            dispatch(userActions.deleteEvent(event))
+        }, 
+        addEvent: (event) => {
+            dispatch(userActions.addEvent(event))
+        },
+    } 
+  }
+  
+const mapStateToProps = state => {
+    return {
+        curUser: state.userReducer.curUser,
+        globalEvents: state.userReducer.events,
+    }
+}
 
-const adminConnected = connect(mapState, mapDispatchToProps)(AdminPage)
+const adminConnected = connect(mapStateToProps, mapDispatchToProps)(AdminPage)
 export { adminConnected as AdminPage };
