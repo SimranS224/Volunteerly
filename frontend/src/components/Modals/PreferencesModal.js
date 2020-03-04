@@ -64,7 +64,7 @@ const PreferencesModal = ({ setPreferences }) => {
   const error = [planting, cleanUp, communityBuilding].filter(v => v).length !== 1;
 
   return (
-    <div>
+    <div className="preference">
       <Button variant="outlined" color="primary" onClick={openHandler}>
         Preferences
       </Button>

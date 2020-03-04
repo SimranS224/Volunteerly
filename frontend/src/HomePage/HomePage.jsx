@@ -36,8 +36,7 @@ class HomePage extends React.Component {
    componentDidMount() {
     let events =  userService.getEvents(null);
     this.props.updateEvents(events)
-    console.log("events", events)
-    console.log("events",this.props.globalEvents);
+
     if (this.props.globalEvents) {
       this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
     } else {

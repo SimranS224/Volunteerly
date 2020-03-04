@@ -7,7 +7,7 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
-  events: []
+  events: userService.getEvents(null)
 }
 
 function userReducer(state = initialState, action) {
@@ -47,7 +47,7 @@ function userReducer(state = initialState, action) {
     case allConstants.UPDATE_EVENTS:
       return {
         ...state,
-        events: action.events
+        events: action.event
       };
     default:
       return state;
