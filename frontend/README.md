@@ -1,7 +1,15 @@
 # team48
+
+## Note
+
+We would like you to consider features up until (5db210f1b09830055245641ecc67ad23d72ec5c0).
+
 # Features
+
 Users can view events on the homepage and also search for specific events
+
 # Usage 
+
 A. Run  the below commands to use in development. 
   ```
     npm install 
