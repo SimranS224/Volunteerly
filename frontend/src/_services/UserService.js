@@ -26,7 +26,6 @@ const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of 
 ]
 
 const getEvents = (user) => {
-	console.log({data})
 	for(let i = 0; i < data.length; i++){
 		data[i].date = randomDate(new Date(2020, 0, 1), new Date())
 	}

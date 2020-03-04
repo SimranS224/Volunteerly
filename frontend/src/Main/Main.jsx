@@ -31,7 +31,6 @@ class Main extends React.Component {
   }
 
   render() {
-      console.log("main.jsx", this.props.userReducer);
       return (
         <Router history={browserHistory}>
             <div className="App">   

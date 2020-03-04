@@ -68,9 +68,6 @@ const deleteEvent = (event, curUser) => {
 }
 
 const addEvent = (event, curUser) => {
-  console.log("hwiofneo");
-  
-  console.log(curUser.user)
   const updatedData = userService.addEvent(event, curUser.user);
   return updatedData;
 }
