@@ -17,8 +17,8 @@ class OppCard extends React.Component {
                         <div className="day"> {new Date(this.props.date).getDay() + 1}</div>
                     </div>
                     <div className="info">
-                        <h3 className>{this.props.title}</h3>
-                        <p className>{this.props.desc}</p>
+                        <h3 >{this.props.title}</h3>
+                        <p >{this.props.desc}</p>
                     </div>
                 </CardContent>
             </Card>
