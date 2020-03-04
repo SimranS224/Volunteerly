@@ -13,3 +13,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+.primary-button {
+    background-color: #A37CF4 !important;
+    color: white !important;
+}
