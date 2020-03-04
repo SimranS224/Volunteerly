@@ -50,18 +50,18 @@ class ProfilePage extends React.Component {
             <div className="profile-stats">
                 <h1 className="header">Stats</h1>
                 <div className="stat-row row">
-                    {statsRows.map((stat) => {
+                    {statsRows.map((stat, i) => {
                         return (
-                            <div className="col-md-4">
+                            <div className="col-md-4" key={'stats-' + i.toString()}>
                                 <StatCard icon={stat.icon} number={stat.result} text={stat.title}></StatCard>
                             </div>)
                     })}
                 </div>
                 <h1 className="header">Achievements</h1>
                 <div className="stat-row row">
-                    {achievementRows.map((achievement) => {
+                    {achievementRows.map((achievement, i) => {
                         return (
-                            <div className="col-md-4">
+                            <div className="col-md-4" key={'achievement-' + i.toString()}>
                                 <AchievementCard icon={achievement.icon} text={achievement.title}></AchievementCard>
                             </div>)
                     })}
