@@ -13,7 +13,7 @@ app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use("/*/hello", hello);
+app.use("/hello", hello);
 
 // export const handler = serverless(app);
-module.exports.handler = serverless(app);
+exports.handler = serverless(app);
