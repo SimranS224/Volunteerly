@@ -8,9 +8,14 @@ provider:
 
 functions:
   app:
-    handler: index.handler
+    handler:  src/api/events/index.handler
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:         ANY /
+        cors: true
+      - http:         ANY /{proxy+}
+        cors: true
+
 plugins:
   - serverless-offline
+  - serverless-plugin-typescript
+  
