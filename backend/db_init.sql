@@ -9,32 +9,6 @@ CREATE TABLE IF NOT EXISTS user (
     profile_picture_url VARCHAR(255)
 );
 
--- Create organization table
-CREATE TABLE IF NOT EXISTS organization (
-    id serial PRIMARY KEY,
-    organization_name VARCHAR(255) NOT NULL,
-    bio text,
-    oraganization_logo_url VARCHAR(255)
-);
-
--- Create event type table
-CREATE TABLE IF NOT EXISTS event_type (
-    id serial PRIMARY KEY,
-    text text NOT NULL
-);
-
--- Create category table
-CREATE TABLE IF NOT EXISTS category (
-    id serial PRIMARY KEY,
-    text text NOT NULL
-);
-
--- Create user event preference table
-CREATE TABLE IF NOT EXISTS user_event_preference (
-    user_id INTEGER REFERENCES user(id),
-    event_type_id INTEGER REFERENCES event(id)
-);
-
 -- Create user availability table
 CREATE TABLE IF NOT EXISTS user_availability (
     user_id INTEGER REFERENCES user(id),
@@ -43,13 +17,20 @@ CREATE TABLE IF NOT EXISTS user_availability (
     end_hour TIME NOT NULL
 );
 
--- Create achievement table
-CREATE TABLE IF NOT EXISTS achievement (
+-- Create organization table
+CREATE TABLE IF NOT EXISTS organization (
     id serial PRIMARY KEY,
-    user_id INTEGER REFERENCES user(id),
+    organization_name VARCHAR(255) NOT NULL,
+    bio text,
+    oraganization_logo_url VARCHAR(255)
+);
+
+
+-- Create stat or achievement category table
+CREATE TABLE IF NOT EXISTS category (
+    id serial PRIMARY KEY,
     photo_url text, 
-    text text, 
-    category_id INTEGER REFERENCES category(id)
+    text text NOT NULL
 );
 
 -- Create stat table 
@@ -67,20 +48,38 @@ CREATE TABLE IF NOT EXIST event (
     end_date TIMESTAMP, 
     description text,
     location text,
-    event_category_id INTEGER references category(id),
+    event_category_id INTEGER references event_type(id),
     photo_url text,
     organization_id INTEGER references organization(id),
     duration INTEGER,
 );
 
--- Create enrollment table
-CREATE TABLE IF NOT EXIST enrollment (
-    user_id INTEGER references user(id),
-    event_id INTEGER references event(id)
+-- Create event type table
+CREATE TABLE IF NOT EXISTS event_type (
+    id serial PRIMARY KEY,
+    text text NOT NULL
 );
 
--- Create organization table
+
+-- Create user event preference table
+CREATE TABLE IF NOT EXISTS user_event_preference (
+    user_id INTEGER REFERENCES user(id),
+    event_type_id INTEGER REFERENCES event(id),
+    PRIMARY KEY (user_id, event_type_id)
+);
+
+
+-- Create achievement table
+CREATE TABLE IF NOT EXISTS achievement (
+    user_id INTEGER REFERENCES user(id),
+    category_id INTEGER REFERENCES category(id),
+    PRIMARY KEY (user_id, category_id
+);
+
+
+-- Create enrollment table
 CREATE TABLE IF NOT EXIST enrollment (
-    user_id INTEGER references user(id),
-    event_id text references event(id)
+    user_id INTEGER references user(id) ON DELETE CASCADE,
+    event_id INTEGER references event(id)
+    PRIMARY KEY (user_id, event_id)
 );
