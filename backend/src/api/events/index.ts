@@ -15,4 +15,5 @@ app.use(bodyParser.json());
 
 app.use("/*/hello", hello);
 
-export const handler = serverless(app);
+// export const handler = serverless(app);
+module.exports.handler = serverless(app);
