@@ -1,3 +1,12 @@
+import S3 from 'aws-s3';
+const config = {
+    bucketName: 'volunteer-app-images',
+    region: 'ca-central-1',
+    accessKeyId: 'AKIA2ZJCVHTCYEEVWUKV',
+    secretAccessKey: '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',
+}
+const S3Client = new S3(config);
+
 // include all  user database calls and all functions here 
 
 // generate random date for fake data
@@ -40,7 +49,18 @@ const getEvents = (user) => {
 
 const addEvent = (event, user) => {
 	data.push(event);
-	return getEvents(user)
+	let formData = new FormData()
+	for(let i = 0; i < event.pictures.length; i++){
+		S3Client
+	    .uploadFile(event.pictures[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(
+	    	))
+		.then(data => console.log(data))
+		.catch(err => console.log(err))
+	}
+	console.log("uploading files", event.pictures[0])
+	
+
+	return getEvents(null)
 }
 
 const deleteEvent = (event, user) => {
