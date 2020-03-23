@@ -6,6 +6,21 @@ provider:
   stage: dev
   region: us-east-1
 
+  Statement:
+    - Effect: "Allow"
+      Action:
+        - "rds-data:ExecuteSql"
+        - "rds-data:ExecuteStatement"
+        - "rds-data:BatchExecuteStatement"
+        - "rds-data:BeginTransaction"
+        - "rds-data:RollbackTransaction"
+        - "rds-data:CommitTransaction"
+      Resource: "arn:aws:rds:{REGION}:{ACCOUNTID}:cluster:{DBAuroraClusterArn}"
+    - Effect: "Allow"
+      Action:
+        - "secretsmanager:GetSecretValue"
+      Resource: "arn:aws:secretsmanager:{REGION}:{ACCOUNTID}:secret:{DBSecretsStoreArn}/*"
+
 functions:
   app:
     handler:  src/api/events/index.handler
