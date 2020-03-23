@@ -7,6 +7,7 @@ import CardWithButton from '../components/General/CardWithButton'
 import List from '@material-ui/core/List';
 import { ListItem } from '@material-ui/core';
 import { userActions } from "../_redux/_actions";
+import ImageUploader from "react-images-upload";
 
 
 import './AdminPage.css';
@@ -20,7 +21,8 @@ class AdminPage extends React.Component {
             data: [],
             eventTitle: '',
             eventDescription: '',
-            eventDate:'2019-05-24'
+            eventDate:'2019-05-24',
+            pictures: []
         };
     }
 
@@ -36,7 +38,7 @@ class AdminPage extends React.Component {
     }
 
     addEvent(){
-        this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate})
+        this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
     }
 
     deleteEvent(event){
@@ -55,6 +57,15 @@ class AdminPage extends React.Component {
         this.setState({eventDate: e.target.value});
     }   
 
+    onDrop(pictureFiles) {
+        console.log(pictureFiles)
+        this.setState({
+      pictures: this.state.pictures.concat(pictureFiles)
+    });
+
+  }
+
+
   render() {
       return (
           <div className="AdminPage">
@@ -70,6 +81,16 @@ class AdminPage extends React.Component {
                         </div>
                         <div className="group">
                             <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
+                        </div>
+                        <div>
+                        <ImageUploader
+                            withIcon={true}
+                            withPreview={true}
+                            buttonText="Choose images"
+                            onChange={this.onDrop.bind(this)}
+                            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                            maxFileSize={5242880}
+                          />
                         </div>
                         <div className="group">
                             <Button variant="contained" color="primary" onClick={this.addEvent.bind(this)}>
