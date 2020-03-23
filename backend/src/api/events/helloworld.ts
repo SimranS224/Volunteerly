@@ -58,5 +58,4 @@ const hello = async (req:Request , res: Response) =>  {
 };
 
 
-
 router.use("/", hello);
