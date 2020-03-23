@@ -1,6 +1,6 @@
 import express from "express";
 import serverless from "serverless-http";
-import { router as hello } from "./helloworld";
+import { router as health_check } from "./health_check";
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -13,7 +13,6 @@ app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use("/hello", hello);
+app.use("/health_check", health_check);
 
-// export const handler = serverless(app);
-exports.handler = serverless(app);
+export const handler = serverless(app);
