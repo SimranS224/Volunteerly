@@ -88,7 +88,7 @@ class AdminPage extends React.Component {
                             withPreview={true}
                             buttonText="Choose images"
                             onChange={this.onDrop.bind(this)}
-                            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                            imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".JPG", ".GIF", ".PNG", ".JPEG"]}
                             maxFileSize={5242880}
                           />
                         </div>
