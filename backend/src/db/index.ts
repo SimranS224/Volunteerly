@@ -19,17 +19,12 @@ const db_query = async (event, context) => {
   var DBSecretsStoreArn = process.env.DBSecretsStoreArn;
   var DBAuroraClusterArn = process.env.DBAuroraClusterArn;
   var DatabaseName = process.env.DatabaseName;
-  console.log("params");
-  
   const params = {
     secretArn: DBSecretsStoreArn,
     resourceArn: DBAuroraClusterArn,
     sql: sqlStatement,
     database: DatabaseName
   }
-  console.log({params});
-  
-
   try {
     let dbResponse = await RDS.executeStatement(params).promise()
     console.log(JSON.stringify(dbResponse, null, 2))
