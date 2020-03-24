@@ -19,3 +19,15 @@
 .preference {
 	margin-top: 7.5px;
 }
+
+.MuiTypography-h6 {
+  font-size: 1.5rem !important;
+}
+
+.MuiTypography-body1 {
+  font-size: 1.5rem !important;
+}
+
+.MuiFormLabel-root {
+  font-size: 1.5rem !important;
+}
