@@ -1,5 +1,9 @@
--- Create user table
-CREATE TABLE IF NOT EXISTS user (
+drop schema if exists proj_309 cascade;
+create schema proj_309;
+set search_path to proj_309;
+
+-- Create volunteer table
+CREATE TABLE IF NOT EXISTS volunteer (
     id serial PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -9,9 +13,9 @@ CREATE TABLE IF NOT EXISTS user (
     profile_picture_url VARCHAR(255)
 );
 
--- Create user availability table
-CREATE TABLE IF NOT EXISTS user_availability (
-    user_id INTEGER REFERENCES user(id),
+-- Create volunteer availability table
+CREATE TABLE IF NOT EXISTS volunteer_availability (
+    volunteer_id INTEGER REFERENCES volunteer(id),
     day_of_week VARCHAR(100) NOT NULL,
     start_hour TIME NOT NULL, 
     end_hour TIME NOT NULL
@@ -35,23 +39,9 @@ CREATE TABLE IF NOT EXISTS category (
 
 -- Create stat table 
 CREATE TABLE IF NOT EXISTS stat (
-    user_id INTEGER REFERENCES user(id),
+    volunteer_id INTEGER REFERENCES volunteer(id),
     number INTEGER,
     category_id INTEGER references category(id)
-);
-
--- Create event table
-CREATE TABLE IF NOT EXIST event (
-    id serial PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    start_date TIMESTAMP, 
-    end_date TIMESTAMP, 
-    description text,
-    location text,
-    event_category_id INTEGER references event_type(id),
-    photo_url text,
-    organization_id INTEGER references organization(id),
-    duration INTEGER,
 );
 
 -- Create event type table
@@ -61,25 +51,41 @@ CREATE TABLE IF NOT EXISTS event_type (
 );
 
 
--- Create user event preference table
-CREATE TABLE IF NOT EXISTS user_event_preference (
-    user_id INTEGER REFERENCES user(id),
+-- Create event table
+CREATE TABLE IF NOT EXISTS event (
+    id serial PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    start_date TIMESTAMP, 
+    end_date TIMESTAMP, 
+    description text,
+    location text,
+    event_category_id INTEGER references event_type(id),
+    photo_url text,
+    organization_id INTEGER references organization(id),
+    duration INTEGER
+);
+
+
+
+-- Create volunteer event preference table
+CREATE TABLE IF NOT EXISTS volunteer_event_preference (
+    volunteer_id INTEGER REFERENCES volunteer(id),
     event_type_id INTEGER REFERENCES event(id),
-    PRIMARY KEY (user_id, event_type_id)
+    PRIMARY KEY (volunteer_id, event_type_id)
 );
 
 
 -- Create achievement table
 CREATE TABLE IF NOT EXISTS achievement (
-    user_id INTEGER REFERENCES user(id),
+    volunteer_id INTEGER REFERENCES volunteer(id),
     category_id INTEGER REFERENCES category(id),
-    PRIMARY KEY (user_id, category_id
+    PRIMARY KEY (volunteer_id, category_id)
 );
 
 
 -- Create enrollment table
-CREATE TABLE IF NOT EXIST enrollment (
-    user_id INTEGER references user(id) ON DELETE CASCADE,
-    event_id INTEGER references event(id)
-    PRIMARY KEY (user_id, event_id)
+CREATE TABLE IF NOT EXISTS enrollment (
+    volunteer_id INTEGER references volunteer(id) ON DELETE CASCADE,
+    event_id INTEGER references event(id),
+    PRIMARY KEY (volunteer_id, event_id)
 );
