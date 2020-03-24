@@ -8,9 +8,14 @@ import List from '@material-ui/core/List';
 import { ListItem } from '@material-ui/core';
 import { userActions } from "../_redux/_actions";
 import ImageUploader from "react-images-upload";
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import './AdminPage.css';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class AdminPage extends React.Component {
 
@@ -38,6 +43,13 @@ class AdminPage extends React.Component {
     }
 
     addEvent(){
+        this.setState({
+            showEventAddSuccess: true,
+            eventTitle: "",
+            eventDescription: "",
+            eventDate: '2019-05-24',
+            pictures: []
+        });
         this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
     }
 
@@ -54,16 +66,20 @@ class AdminPage extends React.Component {
     }
 
     dateChange(e){
+        console.log(e.target.value);
         this.setState({eventDate: e.target.value});
     }   
 
     onDrop(pictureFiles) {
         console.log(pictureFiles)
         this.setState({
-      pictures: this.state.pictures.concat(pictureFiles)
-    });
+            pictures: this.state.pictures.concat(pictureFiles)
+        });
+    }
 
-  }
+    handleClose() {
+        this.setState({showEventAddSuccess: false});
+    }
 
 
   render() {
@@ -72,6 +88,14 @@ class AdminPage extends React.Component {
               <div className="AddEvent-Section">
                 <h2 className="header">Add Event</h2>
                 <div className="AddEvent">
+                    <Snackbar open={this.state.showEventAddSuccess} 
+                              autoHideDuration={6000}
+                              onClose={this.handleClose.bind(this)}
+                              anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                        <Alert onClose={this.handleClose.bind(this)} severity="success">
+                            Successfully added an event 
+                        </Alert>
+                    </Snackbar>
                     <form noValidate autoComplete="off">
                         <div className="group">
                             <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>

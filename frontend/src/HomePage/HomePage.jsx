@@ -67,7 +67,7 @@ class HomePage extends React.Component {
                   <div className="hero-content">
                     <h1> Volunteer </h1>
                     <h3>Make friends, find purpose, and help out</h3>
-                    <input ref="query" placeholder=" Search" type="text" onChange={this.handleSearch}/>
+                    <input ref="query" placeholder=" Search for volunteering opportunities (try: beach cleanup)" type="text" onChange={this.handleSearch}/>
                   </div>
                   <img src={HeroImage} />
                 </div>
