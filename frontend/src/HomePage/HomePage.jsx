@@ -33,33 +33,28 @@ class HomePage extends React.Component {
       selected: null
     }
   }
-   componentDidMount() {
-    let events =  userService.getEvents(null);
-    this.props.updateEvents(events)
-
-    if (this.props.globalEvents) {
-      this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
-    } else {
-      this.setState({data: events, filtered: events})
-    }
-    
+  
+  componentDidMount() {
+  
   }
 
   handleSearch = (e) =>{
-    e = e.target.value
-    let filtered = this.state.data.filter(event => {
-      let keys = Object.keys(event)
-      for(let i = 0; i < keys.length; i++){
-        if(event[keys[i]].toLowerCase().indexOf(e.toLowerCase()) > -1){
-          return true
-        }
-      }
-      return false
-    })
-    this.setState({filtered: filtered})
+    // e = e.target.value
+    // let filtered = this.state.data.filter(event => {
+    //   let keys = Object.keys(event)
+    //   for(let i = 0; i < keys.length; i++){
+    //     if(event[keys[i]].toLowerCase().indexOf(e.toLowerCase()) > -1){
+    //       return true
+    //     }
+    //   }
+    //   return false
+    // })
+    // this.setState({filtered: filtered})
+    this.props.searchEvents(e.target.value)
   } 
+
   render() {
-     let { filtered } = this.state
+     let { events } = this.state
       return (
           <div className="HomePage">
               <div className="hero-section">
@@ -75,7 +70,7 @@ class HomePage extends React.Component {
       
       <div className="volunteering-opportunities">
         <List>
-              {filtered.length > 0 && filtered.map((event, i) =>{
+              {this.props.events.length > 0 && this.props.events.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
                  <OppCard 
                   date={event.date}
@@ -94,22 +89,22 @@ class HomePage extends React.Component {
 
         <DialogContent>
         <Typography className="event-title" variant="h2"> 
-        {this.state.selected !== null ? filtered[this.state.selected].title : null}
+        {this.state.selected !== null ? this.props.events[this.state.selected].title : null}
         </Typography>
         <Button className="primary-button" variant="contained" disableElevation>
           Enroll
         </Button>
         <Typography className="event-desc" variant="h4"> 
-        {this.state.selected !== null ? filtered[this.state.selected].desc : null}
+        {this.state.selected !== null ? this.props.events[this.state.selected].desc : null}
         </Typography>
         <Typography className="event-date" variant="h4"> 
-        Event date: {this.state.selected !== null ? filtered[this.state.selected].date : null} 
+        Event date: {this.state.selected !== null ? this.props.events[this.state.selected].date : null} 
         <br/>
         Event start time: 1pm
         <br/>
         Location:
         </Typography>
-        <MapContainer selectedPlace={filtered[this.state.selected]}/>
+        <MapContainer selectedPlace={this.props.events[this.state.selected]}/>
         
         </DialogContent>
       </Dialog>
@@ -126,6 +121,9 @@ const mapDispatchToProps = dispatch => {
   return {
     updateEvents: (curUser, events) => {
       dispatch(userActions.updateEvents(curUser, events))
+    },
+    searchEvents: (searchQuery) => {
+      dispatch(userActions.searchEvents(searchQuery))
     }
   } 
 }
@@ -133,7 +131,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     curUser: state.userReducer.curUser,
-    globalEvents: state.userReducer.events,
+    events: state.userReducer.events,
     }
 }
 
