@@ -1,0 +1,17 @@
+{
+  "message": "There were 2 validation errors:\n* MissingRequiredParameter: Missing required key 'resourceArn' in params\n* MissingRequiredParameter: Missing required key 'secretArn' in params",
+  "code": "MultipleValidationErrors",
+  "errors": [
+    {
+      "message": "Missing required key 'resourceArn' in params",
+      "code": "MissingRequiredParameter",
+      "time": "2020-03-24T01:49:13.866Z"
+    },
+    {
+      "message": "Missing required key 'secretArn' in params",
+      "code": "MissingRequiredParameter",
+      "time": "2020-03-24T01:49:13.866Z"
+    }
+  ],
+  "time": "2020-03-24T01:49:13.866Z"
+}
