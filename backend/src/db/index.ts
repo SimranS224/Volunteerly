@@ -1,4 +1,7 @@
 import dotenv from "dotenv";
+import {Sequelize} from 'sequelize-typescript';
+import {Person,Volunteer} from "./models"
+
 dotenv.config();
 
 const AWS = require('aws-sdk')
@@ -42,4 +45,15 @@ const db_query = async (event, context) => {
   }
 }
 
-export const db =  { db_query}
+const get_sequelize = () => {
+  if(process.env.NODE_ENV === "production"){
+      return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: [Person,Volunteer]});
+  }
+  else{
+      return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: [Person,Volunteer]});
+  }
+}
+
+const sequelize = get_sequelize()
+
+export { db_query as db, sequelize}
