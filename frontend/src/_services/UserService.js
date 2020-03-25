@@ -22,29 +22,49 @@ const randomDate = (start, end) => {
 	return [year, month, day].join('-');
 }
 
+const _types = ['cleanUp', 'communityBuilding', 'planting'];
+
 //fake data
-const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of ontario!',type:'Clean Up', date:randomDate(new Date(2020, 0, 1), new Date())}, 
-{user: 'admin', title: 'Teach Art and Paint Murals', desc: 'Provide art classes to the youth and help with community painting projects', type:'Community Building', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Teach English Classes', desc: 'Teach English to children and adults through short-term intensive classes', type:'Community Building', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Provide Child-Care Support', desc: 'Work with young children and provide support to day-care staff',type:'Community Building', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Support Manual Labor Projects', desc: 'Help paint homes and support basic manual labor tasks for local residents',type:'Community Building', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Clean the beaches', desc: 'Help clean the beach at Harbourfront', type:'Clean Up', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Clean the oceans', desc: 'Clean the Atlantic Ocean', type:'Clean Up', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Volunteer at SOS Autism', desc: 'Translate grant application documents', type:'Community Building', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'future', title: 'Plant trees in HighGarden', desc: 'Bring a shovel!', type:'Planting', date: randomDate(new Date(2020, 0, 1), new Date())}
+const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of ontario!',type:'cleanUp', date:randomDate(new Date(2020, 0, 1), new Date())}, 
+{user: 'admin', title: 'Teach Art and Paint Murals', desc: 'Provide art classes to the youth and help with community painting projects', type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'admin', title: 'Teach English Classes', desc: 'Teach English to children and adults through short-term intensive classes', type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'admin', title: 'Provide Child-Care Support', desc: 'Work with young children and provide support to day-care staff',type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'admin', title: 'Support Manual Labor Projects', desc: 'Help paint homes and support basic manual labor tasks for local residents',type:'communityBuilding', date: randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'past', title: 'Clean the beaches', desc: 'Help clean the beach at Harbourfront', type:'cleanUp', date: randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'past', title: 'Clean the oceans', desc: 'Clean the Atlantic Ocean', type:'cleanUp', date: randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'past', title: 'Volunteer at SOS Autism', desc: 'Translate grant application documents', type:'communityBuilding', date: randomDate(new Date(2020, 0, 1), new Date())},
+{user: 'future', title: 'Plant trees in HighGarden', desc: 'Bring a shovel!', type:'planting', date: randomDate(new Date(2020, 0, 1), new Date())}
 ]
 
-const getEvents = (user) => {
+const getEvents = (user, preferences) => {
+	// When integrating with backend "user" and "preferences" should be 
+	// sent as parameters to the backend, and the backend will retrieve the
+	// correct filtered events for the user. 
+
 	for(let i = 0; i < data.length; i++){
 		data[i].date = randomDate(new Date(2020, 0, 1), new Date())
 	}
-	if(user === null || user === undefined){
-		// all events
-		return data
-	}else{
-		// user specific events
-		return data.filter(event => event.user === user)
+	console.log("preferences", preferences);
+
+	let new_data = data;
+
+	if (user !== undefined && user !== null) {
+		new_data = new_data.filter(event => {
+			return event.user === user
+		})
 	}
+
+	if (preferences !== undefined && preferences !== null) {
+		console.log("here", preferences)
+		const types = Object.keys(preferences).filter(key => preferences[key])
+		new_data = new_data.filter(event => {
+			console.log(types.includes(event.type), event.type, types)
+			return types.includes(event.type)	
+		});
+	}
+	console.log(new_data)
+	return new_data
+	
 }
 
 const addEvent = (event, user) => {

@@ -42,6 +42,10 @@ const setPreferences = (preferencesState) => {
   return {type: allConstants.SET_PREFERENCES, newPreferenceState: preferencesState} 
 }
 
+const searchEvents = (searchQuery) => {
+  return {type: allConstants.SEARCH_EVENTS, searchQuery: searchQuery}
+}
+
 export const userActions = {
   setPreferences, 
   register, 
@@ -49,5 +53,6 @@ export const userActions = {
   logout,
   updateEvents,
   addEvent,
-  deleteEvent
+  deleteEvent,
+  searchEvents
 }
