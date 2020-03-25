@@ -18,3 +18,7 @@
     background-color: #A37CF4 !important;
     color: white !important;
 }
+
+.MuiAlert-message {
+    font-size: 1.5rem !important;
+}
