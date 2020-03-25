@@ -53,7 +53,23 @@ const get_sequelize = () => {
       return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: modelsList});
   }
   else{
-      return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: modelsList });
+      // return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: modelsList });
+      return new Sequelize(
+        process.env.dbname,
+        process.env.user,
+        process.env.password,
+        {
+          dialect: 'postgres',
+          host: process.env.host,
+          port: process.env.port,
+          operatorsAliases: false,
+          models: modelsList,
+          dialectOptions: {
+            connectTimeout: 60000,
+            ssl:true
+          },
+        },
+      )
   }
 }
 
