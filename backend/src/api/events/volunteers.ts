@@ -1,5 +1,5 @@
 // import express, { Request, Response } from "express";
-import {Person, Volunteer} from "../../db/models"
+import {Volunteer} from "../../db/models"
 import {sequelize} from "../../db"
 // export const router = express.Router();
 

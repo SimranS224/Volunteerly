@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import {Sequelize} from 'sequelize-typescript';
-import {Person,Volunteer} from "./models"
+import {Volunteer, VolunteerAvailability, Organization, Category, Stat, EventType, Event,
+VolunteerEventPreference, Achievement, Enrollment} from "./models"
 
 dotenv.config();
 
@@ -46,11 +47,13 @@ const db_query = async (event, context) => {
 }
 
 const get_sequelize = () => {
+  const modelsList = [Volunteer, VolunteerAvailability, Organization, Category, Stat, EventType, Event,
+    VolunteerEventPreference, Achievement, Enrollment]
   if(process.env.NODE_ENV === "production"){
-      return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: [Person,Volunteer]});
+      return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: modelsList});
   }
   else{
-      return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: [Person,Volunteer]});
+      return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: modelsList });
   }
 }
 
