@@ -6,7 +6,7 @@ import {sequelize} from "../../db"
 const post_volunteers = async (req:Request , res: Response) =>  {
     console.log("request is:", req)
     console.log("posting volunteers")
-    const {data} = req.body;
+    const data = req.body;
     console.log("request body", data)
     // sequelize.sync().then(()=> Volunteer.create({name:'Test volunteer',email:'test', password:'another', profile_picture_url:'test'}));
     sequelize.sync().then(()=>Volunteer.create(data)).then(response => res.send(response))
