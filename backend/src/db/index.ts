@@ -9,6 +9,7 @@ const get_sequelize = () => {
   const modelsList = [Volunteer, VolunteerAvailability, Organization, Category, Stat, EventType, Event,
     VolunteerEventPreference, Achievement, Enrollment]
   if(process.env.NODE_ENV === "production"){
+      //TODO implement production Sequelize
       return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: modelsList});
   }
   else{

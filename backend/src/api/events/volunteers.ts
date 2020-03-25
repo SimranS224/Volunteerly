@@ -11,12 +11,14 @@ const post_volunteers = async (req:Request , res: Response) =>  {
     const data = req.body;
     console.log({data})
     // sequelize.sync().then(()=>Volunteer.create(data)).then(response => res.send(response))
-    sequelize.sync().then(() => Volunteer.create(data)).then(newVolunteer => res.send(newVolunteer))
+    const user = await sequelize.sync().then(() => Volunteer.create(data))
+    res.send(user)
 }
 
 const get_volunteers = async (req:Request , res: Response) =>  {
     console.log("getting volunteers")
-    sequelize.sync().then(()=>Volunteer.findAll()).then((users)=>res.send(users))
+    const users = await sequelize.sync().then(()=>Volunteer.findAll())
+    res.send(users)
   
 }
 
