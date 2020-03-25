@@ -1,6 +1,7 @@
 import express from "express";
 import serverless from "serverless-http";
 import { router as health_check } from "./health_check";
+import {get_volunteers} from "./volunteers"
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -29,6 +30,7 @@ const get_sequelize = () => {
 
 // const sequelize = get_sequelize();
 app.use("/health_check", health_check);
+app.use("/volunteers", get_volunteers)
 const sequelize = get_sequelize()
 //TODO add all of the models
 //TODO how to make sure this is run before everything else?
