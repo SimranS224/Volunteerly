@@ -5,29 +5,6 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: us-east-1
-  environment:
-    tableName: events
-    REGION: ${file(./serverless.env.yml):dev.REGION}
-    ACCOUNTID: ${file(./serverless.env.yml):dev.ACCOUNTID}
-    secretArn: ${file(./serverless.env.yml):dev.secretArn}
-    resourceArn: ${file(./serverless.env.yml):dev.resourceArn}
-    cluster: ${file(./serverless.env.yml):dev.cluster}
-    database: ${file(./serverless.env.yml):dev.database}
-
-  Statement:
-    - Effect: "Allow"
-      Action:
-        - "rds-data:ExecuteSql"
-        - "rds-data:ExecuteStatement"
-        - "rds-data:BatchExecuteStatement"
-        - "rds-data:BeginTransaction"
-        - "rds-data:RollbackTransaction"
-        - "rds-data:CommitTransaction"
-      Resource: "*"
-    - Effect: "Allow"  
-      Action:
-        - "secretsmanager:GetSecretValue"
-      Resource: "arn:aws:secretsmanager:{REGION}:{ACCOUNTID}:secret:{secretArn}/*"
 
 functions: 
   app:  
