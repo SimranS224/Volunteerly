@@ -28,6 +28,42 @@ const addVolunteer = async (req:Request , res: Response) =>  {
 
 const getAllVolunteers = async (req:Request , res: Response) =>  {
   console.log("getting volunteers")
+  const { user_id } = req.params;
+  console.log("getting volunteer")
+  console.log({user_id});
+  if (user_id !== undefined){
+    await getSpecificVolunteer(user_id, res);
+  } else {
+    await getAllVolunteersHelper(res);
+   
+  }
+}
+
+const getSpecificVolunteer = async (userId: any , res: Response) =>  {
+
+  console.log("getting volunteer")
+  console.log({userId});
+  
+  try {
+      const user = await sequelize.sync().then(()=>Volunteer.findAll({
+          where: {
+            id: userId
+          }
+        }));
+      res.send({
+          statusCode: 200,
+          body: JSON.stringify(user)
+      });
+  } catch (err) {
+      res.send({
+          statusCode: err.statusCode || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message || 'Could not fetch the Note.'
+      })
+  }
+}
+
+const getAllVolunteersHelper =  async (res: Response) =>  {
   try {
       const users = await sequelize.sync().then(()=>Volunteer.findAll())
       res.send({
