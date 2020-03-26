@@ -2,10 +2,10 @@ import { browserHistory } from '../../_helpers';
 import { allConstants } from './constants';
 import { loginService } from '../../_services'
 
-const register = async (name, userName, password) => {
+const register = async (name, username, password) => {
  try {
     console.log("registering")
-    const res = loginService.register(name, userName, password);
+    const res = loginService.register(name, username, password);
     if (res.success) {
       
       return {type: allConstants.REGISTER, success: true} 
@@ -22,23 +22,21 @@ const register = async (name, userName, password) => {
   }
 }
 
-const login = (userName, password) => {
+const login = (id, statusCode, username, token, level) => {
   // try to login with loginService
   
-  try {
-    const res = loginService.login(userName, password);
-    if (res.success) {
-      
+
+    if (statusCode === 200) {
       browserHistory.push("/home")
-      return {type: allConstants.LOGIN, success: true, curUser: res.response, isAdmin: res.response.level === 1} 
+      return {type: allConstants.LOGIN, success: true, curUser: {id: id, username: username, token: token, level: level}, isAdmin: level === 1} 
     }
-  } catch (err) {
-    return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
+    else{
+      return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
   }
 }
 
 const logout = () => {
-  loginService.logout();
+  browserHistory.push("/home")
   return { type: allConstants.LOGOUT }
 }
 

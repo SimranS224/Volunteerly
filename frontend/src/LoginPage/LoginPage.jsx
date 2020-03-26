@@ -16,19 +16,18 @@ class LoginPage extends React.Component {
         password: '',
     };
   }
-  login = (username, password) =>{
+  login = async (username, password) =>{
+    console.log("login")
     let res = await fetch('http://localhost:3004/dev/api/login/', {
         method: 'post',
-        body:    JSON.stringify({name: name, email: userName, password: password}),
+        body:    JSON.stringify({email: username, password: password}),
         headers: { 'Content-Type': 'application/json' },
     })
     res = await res.json()
     console.log("register res", res)
-    if(res.statusCode === 200){
-      this.props.history.push('/home')
-    }else{
-      alert(res.msg)
-    }
+
+      this.props.login(res.id, res.statusCode, username, res.token, res.level)
+
   }
 
   render() {
@@ -39,7 +38,7 @@ class LoginPage extends React.Component {
             <TextField id="email"  required placeholder="email" variant="outlined" onChange={(e)=> {this.setState({'username': e.target.value})}}/>
             <TextField id="password" required type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
             <Button variant="contained" color="primary"  value="Submit" onClick={() => {
-              this.props.login(this.state.username, this.state.password)
+              this.login(this.state.username, this.state.password)
             }}>
                 Login
             </Button>
@@ -56,8 +55,8 @@ class LoginPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) => {
-      dispatch(userActions.login(username, password))
+    login: (id, statusCode, username, token, level) => {
+      dispatch(userActions.login(id, statusCode, username, token, level))
     }
   } 
 }

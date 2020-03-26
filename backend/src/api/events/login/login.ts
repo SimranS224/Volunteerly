@@ -19,7 +19,7 @@ const login = async (req:Request , res: Response) =>  {
               }
               const token = jwt.sign({ id: email }, "volunteer_secret!!!")
 
-              return res.send({statusCode: 200, msg: "", token: token, level: users[i].level})
+              return res.send({statusCode: 200, msg: "", id: users[i].id, token: token, level: users[i].level})
           }
       }
     return res.send({ statusCode: 401, msg: "Invalid login!", token: null }) 
