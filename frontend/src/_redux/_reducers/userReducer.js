@@ -92,13 +92,14 @@ const addEvent = (event, curUser) => {
 }
 
 const filterEvents = (events, searchQuery) => {
+  console.log("searchquery", searchQuery)
   if(searchQuery === null || searchQuery === undefined || searchQuery === '') {
     return events;
   }
   return events.filter(event => {
     let keys = Object.keys(event)
     for(let i = 0; i < keys.length; i++){
-      if(event[keys[i]].toLowerCase().indexOf(searchQuery.toLowerCase()) > -1){
+      if(event[keys[i]].toString().toLowerCase().indexOf(searchQuery.toLowerCase()) > -1){
         return true
       }
     }

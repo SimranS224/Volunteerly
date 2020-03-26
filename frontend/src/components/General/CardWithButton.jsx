@@ -4,6 +4,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button'
 import './Styling.css'
+import hdate from 'human-date';
+import QRCode from 'qrcode.react';
 
 class CardWithButton extends React.Component {
     constructor(props) {
@@ -16,15 +18,17 @@ class CardWithButton extends React.Component {
             <div className="container">
                 <Card className="test">
                 <CardHeader
-                    title={this.props.event.title}
-                    subheader={this.props.event.date}
+                    title={this.props.event.name}
+                    subheader={hdate.prettyPrint(this.props.event.start_date)}
                 />
                 <CardContent>
-                    {this.props.event.desc}
+                    {this.props.event.description}
                 </CardContent>
-                <Button onClick={this.props.buttonFunc} variant="contained" color="primary">
+                <Button style={{marginBottom: "-20%"}} onClick={this.props.buttonFunc} variant="contained" color="primary">
                     {this.props.buttonText}
                 </Button>
+                <QRCode style={{float: "right"}} value="google.com"/>
+
                 </Card>
             </div>
         );
