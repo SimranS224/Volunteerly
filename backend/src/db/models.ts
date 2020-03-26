@@ -14,13 +14,13 @@ export class Volunteer extends Model<Volunteer>{
   @Column
   email: string;
   @AllowNull(false)
-  @Column
+  @Column(DataType.TEXT)
   password: string;
   @Column(DataType.TEXT)
   bio: string;
   // @Column
   // date_joined: Date;
-  @Column
+  @Column(DataType.TEXT)
   profile_picture_UrL: string;
   @AllowNull(false)
   @Column
