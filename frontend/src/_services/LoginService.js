@@ -1,7 +1,17 @@
+const fetch = require('node-fetch');
 
-
-const register = () => {
-  // cannot implement until we have a backend 
+const register = (name, userName, password) => {
+  // cannot implement until we have a backend
+  fetch('http://localhost:3004/dev/volunteers/', {
+        method: 'post',
+        body:    JSON.stringify({name: name, email: userName, password: password}),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => res.json())
+    .then(json => {
+       return {success: json.status, msg: json.msg}
+    });
+    
 }
 
 const login = (userName, password) => {

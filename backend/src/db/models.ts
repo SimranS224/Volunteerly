@@ -2,7 +2,7 @@ import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, Belon
  
 
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Volunteer extends Model<Volunteer>{
   @AllowNull(false)
   @Column
@@ -14,17 +14,20 @@ export class Volunteer extends Model<Volunteer>{
   @Column
   email: string;
   @AllowNull(false)
-  @Column
+  @Column(DataType.TEXT)
   password: string;
   @Column(DataType.TEXT)
   bio: string;
   // @Column
   // date_joined: Date;
-  @Column
+  @Column(DataType.TEXT)
   profile_picture_UrL: string;
+  @AllowNull(false)
+  @Column
+  level: number;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class VolunteerAvailability extends Model<VolunteerAvailability>{
 
   @ForeignKey(() => Volunteer)
@@ -41,7 +44,7 @@ export class VolunteerAvailability extends Model<VolunteerAvailability>{
   end_hour: Date;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Organization extends Model<Organization>{
   @AllowNull(false)
   @Column
@@ -52,7 +55,7 @@ export class Organization extends Model<Organization>{
   organization_logo_url: string;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class EventType extends Model<EventType>{
   @Column(DataType.TEXT)
   photo_url: string;
@@ -61,7 +64,7 @@ export class EventType extends Model<EventType>{
   text: string;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Stat extends Model<Stat>{
   @ForeignKey(()=>Volunteer)
   @Column
@@ -74,7 +77,7 @@ export class Stat extends Model<Stat>{
   quantity:number;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class StatCategory extends Model<StatCategory>{
   @Column(DataType.TEXT)
   photo_url: string;
@@ -82,7 +85,7 @@ export class StatCategory extends Model<StatCategory>{
   text: string;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Event extends Model<Event>{
   @AllowNull(false)
   @Column
@@ -107,7 +110,7 @@ export class Event extends Model<Event>{
   duration:number;
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
   @ForeignKey(() => Volunteer)
   @PrimaryKey
@@ -118,7 +121,7 @@ export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
   @Column
   event_type_id:number;
 }
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Achievement extends Model<Achievement>{
   @Column(DataType.TEXT)
   photo_url: string;
@@ -128,7 +131,7 @@ export class Achievement extends Model<Achievement>{
   @Column
   quantity: number
 }
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class AchievementEarned extends Model<AchievementEarned>{
   @ForeignKey(() => Volunteer)
   @PrimaryKey
@@ -141,7 +144,7 @@ export class AchievementEarned extends Model<AchievementEarned>{
 
 }
 
-@Table
+@Table({ createdAt: false, updatedAt: false })
 export class Enrollment extends Model<Enrollment>{
   //TODO implement the cascade option
   // @BelongsTo(()=>Volunteer,{

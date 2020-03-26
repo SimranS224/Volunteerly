@@ -13,7 +13,6 @@ import event from "../../db/migrations/event.json"
 import volunteer_event_preferences from "../../db/migrations/volunteer_event_preferences.json"
 import enrollment from "../../db/migrations/enrollment.json"
 
-
 export const router = express.Router();
 // import * as fs from "fs";
 // const fs = require('fs')
@@ -35,14 +34,16 @@ const initialize_db = async (req:Request , res: Response) =>  {
 
 
 
-    res.send("finished")
+    return res.send("finished")
 }
 
 const delete_db = async (req:Request , res: Response) =>  {
     console.log("clearing db")
-    sequelize.sync({force:true})
+    await sequelize.sync({force:true})
+    return res.send("finished")
 
 }
+
 router.delete("/", delete_db)
 router.get("/", initialize_db)
 // router.post("/",post_volunteers)

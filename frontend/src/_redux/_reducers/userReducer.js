@@ -16,8 +16,7 @@ function userReducer(state = initialState, action) {
   switch (action.type) {
     case allConstants.REGISTER:
       return {
-        loggingIn: true,
-        user: action.user
+        ...state
       };
     case allConstants.LOGIN:
       const updatedUser = updateUser(action.success, action.curUser)
