@@ -42,8 +42,8 @@ function Navbar(props) {
             showNav: !state.showNav
         })
     }
-    if(props.userReducer.loggedIn === true && state.loggedIn !== true){
-        setState({loggedIn: true, showNav: state.showNav})
+    if(props.userReducer.loggedIn !== state.loggedIn){
+        setState({loggedIn: props.userReducer.loggedIn, showNav: state.showNav})
     }
     return (
       <div className="Navbar">
@@ -81,7 +81,7 @@ function Navbar(props) {
                   <Link to="/profile"><AccountCircle /></Link>
               </IconButton>
               <PreferencesModal />
-              <Button className="Login" onClick={() => {props.logout(); setState({loggedIn: false})}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
+              <Button className="Login" onClick={() => {props.logout();}}><Link to="/login">{state.loggedIn !== true ? "Login" : "Logout"}</Link></Button>
             </div>
         </AppBar>
       </div>

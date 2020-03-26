@@ -7,3 +7,4 @@ jspm_packages
 .build
 *.env
 serverless.env.yml
+*.DS_Store

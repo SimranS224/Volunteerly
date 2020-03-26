@@ -1,28 +1,44 @@
 import { browserHistory } from '../../_helpers'; 
 import { allConstants } from './constants';
-import { loginService } from '../../_services'
 
-const register = () => {
+const register = (statusCode) => {
  
+    console.log("registering")
+    if (statusCode === 200) {
+      
+      return {type: allConstants.REGISTER, success: true} 
+    }
+    else if (statusCode === 401){
+      alert("Email already exists!")
+      return {type: allConstants.REGISTER, success: false} 
+
+    }
+    else{
+      console.log("failed to add")
+      return {type: allConstants.REGISTER, success: false} 
+
+    }
+  
 }
 
-const login = (userName, password) => {
-  // try to login with loginService
-  
-  try {
-    const res = loginService.login(userName, password);
-    if (res.success) {
-      
-      browserHistory.push("/home")
-      return {type: allConstants.LOGIN, success: true, curUser: res.response, isAdmin: res.response.level === 1} 
+const login = (id, statusCode, username, token, level, first_name, last_name, profile_picture_url) => {  
+    console.log("loggin in at useractions")
+    if (statusCode === 200) {
+      browserHistory.push('/home')
+      return {type: allConstants.LOGIN, success: true, curUser: {id: id, username: username, token: token, level: level, first_name: first_name, last_name: last_name, profile_picture_url: profile_picture_url}, isAdmin: level === 1} 
     }
-  } catch (err) {
-    return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
+    else if (statusCode === 401){
+      alert("Invalid credentials!")
+      return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
+
+    }
+    else{
+      alert("Error occured!")
+      return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
   }
 }
 
 const logout = () => {
-  loginService.logout();
   return { type: allConstants.LOGOUT }
 }
 

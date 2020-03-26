@@ -25,7 +25,7 @@
     "sequelize-cli": "^5.5.1",
     "sequelize-typescript": "^1.1.0",
     "serverless-http": "^2.3.2",
-    "serverless-offline": "^6.0.0",
+    "serverless-offline": "^5.12.1",
     "tslint": "^6.1.0",
     "uuid": "^7.0.2"
   },
@@ -33,8 +33,10 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/register": "^7.9.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.6",
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/morgan": "^1.9.0",
     "serverless-plugin-typescript": "^1.1.9",
     "ts-node": "^8.7.0",
@@ -42,8 +44,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "sls offline start --httpPort 3004",
-    "start": "sls offline start --httpPort 3004",
+    "dev": "sls offline start --port 3004",
+    "start": "npx nodemon --exec \"sls offline start --port 3004\"",
     "build": "tsc -p ."
   },
   "keywords": [],

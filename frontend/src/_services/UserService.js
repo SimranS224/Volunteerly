@@ -36,6 +36,7 @@ const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of 
 {user: 'future', title: 'Plant trees in HighGarden', desc: 'Bring a shovel!', type:'planting', date: randomDate(new Date(2020, 0, 1), new Date())}
 ]
 
+
 const getEvents = (user, preferences) => {
 	// When integrating with backend "user" and "preferences" should be 
 	// sent as parameters to the backend, and the backend will retrieve the
@@ -69,7 +70,6 @@ const getEvents = (user, preferences) => {
 
 const addEvent = (event, user) => {
 	data.push(event);
-	let formData = new FormData()
 	for(let i = 0; i < event.pictures.length; i++){
 		S3Client
 	    .uploadFile(event.pictures[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(

@@ -3,6 +3,7 @@ import { Route, Router, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 
 import { LoginPage } from '../LoginPage';
+import { RegisterPage } from '../RegisterPage'
 import { HomePage } from '../HomePage';
 
 import Navbar from '../components/Navbar/Navbar.jsx';
@@ -40,6 +41,7 @@ class Main extends React.Component {
                         <PrivateRoute admin={false} userReducer={this.props.userReducer} path="/profile" component={ProfilePage} />
 
                         <Route path="/login" component={LoginPage} />
+                        <Route path="/register" component={RegisterPage} />
                         <PrivateRoute admin={true} userReducer={this.props.userReducer} path="/admin" component={AdminPage} />
                   
                         <Redirect from="*" to="/home" />
