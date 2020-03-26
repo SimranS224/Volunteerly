@@ -20,14 +20,14 @@ function userReducer(state = initialState, action) {
       };
     case allConstants.LOGIN:
       const updatedUser = updateUser(action.success, action.curUser)
-      return Object.assign({}, state, {
+      return { ...state,
         isAdmin: action.isAdmin,
         loggedIn: action.success,
         curUser: updatedUser,
         preferences: {}
-      });
+      };
     case allConstants.LOGOUT:
-      return { loggedIn: false, curUser: null };
+      return { ...initialState};
     case allConstants.SET_PREFERENCES:
       let newEvents = userService.getEvents(null, action.newPreferenceState);
       return {

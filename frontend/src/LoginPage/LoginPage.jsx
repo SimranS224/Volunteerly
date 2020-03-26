@@ -7,27 +7,30 @@ import { FormControl } from '@material-ui/core';
 import { userActions } from "../_redux/_actions";
 import './LoginPage.css'
 import store from 'store'
+import { browserHistory } from '../_helpers'; 
+
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        username: '',
+        email: '',
         password: '',
     };
   }
-  login = async (username, password) =>{
+  login = async (email, password) =>{
     console.log("login")
     let res = await fetch('http://localhost:3004/dev/api/login/', {
         method: 'post',
-        body:    JSON.stringify({email: username, password: password}),
+        body:    JSON.stringify({email: email, password: password}),
         headers: { 'Content-Type': 'application/json' },
     })
     res = await res.json()
-    console.log("register res", res)
+    console.log("login res", res)
 
-      this.props.login(res.id, res.statusCode, username, res.token, res.level)
-
+      this.props.login(res.id, res.statusCode, email, res.token, res.level)
+    
   }
 
   render() {
@@ -35,10 +38,10 @@ class LoginPage extends React.Component {
       <div className="container">
         <div className="login">
           <FormControl className="form">
-            <TextField id="email"  required placeholder="email" variant="outlined" onChange={(e)=> {this.setState({'username': e.target.value})}}/>
+            <TextField id="email"  required placeholder="Email" variant="outlined" onChange={(e)=> {this.setState({'email': e.target.value})}}/>
             <TextField id="password" required type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
             <Button variant="contained" color="primary"  value="Submit" onClick={() => {
-              this.login(this.state.username, this.state.password)
+              this.login(this.state.email, this.state.password)
             }}>
                 Login
             </Button>
@@ -55,8 +58,8 @@ class LoginPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (id, statusCode, username, token, level) => {
-      dispatch(userActions.login(id, statusCode, username, token, level))
+    login: (id, statusCode, email, token, level) => {
+      dispatch(userActions.login(id, statusCode, email, token, level))
     }
   } 
 }

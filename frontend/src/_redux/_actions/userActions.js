@@ -1,7 +1,7 @@
 import { browserHistory } from '../../_helpers'; 
 import { allConstants } from './constants';
 
-const register = async (statusCode) => {
+const register = (statusCode) => {
  
     console.log("registering")
     if (statusCode === 200) {
@@ -21,12 +21,10 @@ const register = async (statusCode) => {
   
 }
 
-const login = (id, statusCode, username, token, level) => {
-  // try to login with loginService
-  
-
+const login = (id, statusCode, username, token, level) => {  
+    console.log("loggin in at useractions")
     if (statusCode === 200) {
-      browserHistory.push("/home")
+      browserHistory.push('/home')
       return {type: allConstants.LOGIN, success: true, curUser: {id: id, username: username, token: token, level: level}, isAdmin: level === 1} 
     }
     else if (statusCode === 401){
