@@ -89,7 +89,8 @@ const PreferencesModal = ({ setPreferences }) => {
       planting: state.planting, 
       cleanUp: state.cleanUp, 
       communityBuilding: state.communityBuilding,
-      selectedDate: state.selectedDate
+      selectedDate: state.selectedDate,
+      availbility: parseSchedule(state.schedule)
     }
     
     setPreferences(preferenceState);
@@ -104,7 +105,6 @@ const PreferencesModal = ({ setPreferences }) => {
   }
 
   const handleAvailabilityChange = (newSchedule) => {
-    console.log(parseSchedule(newSchedule))
     setState({
       ...state,
       schedule: newSchedule
