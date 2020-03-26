@@ -4,6 +4,8 @@ import { router as login } from "./login";
 import { router as volunteers } from "./volunteers/new_index";
 import { router as db_calls } from "./database_events";
 import { router as stats } from "./stats";
+import { router as enrollments } from "./enrollments";
+import { router as events } from "./events";
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -19,6 +21,8 @@ app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
+app.use("/*/events", events)
+app.use("/*/enrollments", enrollments)
 app.use("/*/volunteers", volunteers)
 app.use("/*/database", db_calls)
 app.use("/*/login", login)

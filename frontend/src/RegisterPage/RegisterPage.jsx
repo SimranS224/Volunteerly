@@ -45,7 +45,7 @@ class RegisterPage extends React.Component {
       let data = await this.uploadPhoto()
       profile_picture_url = data.location
     }
-    let res = await fetch('http://localhost:3004/dev/api/volunteers/', {
+    let res = await fetch('http://localhost:3000/dev/api/volunteers/', {
         method: 'post',
         body:  JSON.stringify({first_name: first_name, last_name: last_name, email: email, password: password, profile_picture_url: profile_picture_url}),
         headers: { 'Content-Type': 'application/json' },
@@ -54,9 +54,7 @@ class RegisterPage extends React.Component {
     console.log("register res", res)
     this.props.register(res.statusCode)
     this.props.login(res.id, res.statusCode, res.email, res.token, res.level, first_name, last_name, profile_picture_url)
-    if(res.statusCode === 200){
-      this.props.history.push("/home")
-    }
+
 
   }
 onDrop = (pictureFiles) =>{
@@ -101,8 +99,8 @@ const mapDispatchToProps = dispatch => {
     register: (statusCode) => {
       dispatch(userActions.register(statusCode))
     },
-    login: (id, statusCode, email, token, level) => {
-      dispatch(userActions.login(id, statusCode, email, token, level))
+    login: (id, statusCode, email, token, level, first_name, last_name, profile_picture_url) => {
+      dispatch(userActions.login(id, statusCode, email, token, level, first_name, last_name, profile_picture_url))
     }
   } 
 }
