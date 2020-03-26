@@ -2,8 +2,24 @@ import { browserHistory } from '../../_helpers';
 import { allConstants } from './constants';
 import { loginService } from '../../_services'
 
-const register = () => {
- 
+const register = async (name, userName, password) => {
+ try {
+    console.log("registering")
+    const res = loginService.register(name, userName, password);
+    if (res.success) {
+      
+      return {type: allConstants.REGISTER, success: true} 
+    }
+    else{
+      console.log("failed to add")
+      console.log(res.msg)
+      return {type: allConstants.REGISTER, success: false} 
+
+    }
+  } catch (err) {
+    console.log("error?", err)
+    return {type: allConstants.REGISTER, success: false} 
+  }
 }
 
 const login = (userName, password) => {

@@ -24,14 +24,14 @@ class LoginPage extends React.Component {
         <div className="login">
           <FormControl className="form">
             <TextField id="email"  required placeholder="email" variant="outlined" onChange={(e)=> {this.setState({'username': e.target.value})}}/>
-            <TextField id="password"  type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
+            <TextField id="password" required type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
             <Button variant="contained" color="primary"  value="Submit" onClick={() => {
               this.props.login(this.state.username, this.state.password)
             }}>
                 Login
             </Button>
             <div>Not registered yet?</div>
-            <Button variant="contained" color="primary" value="Submit">
+            <Button variant="contained" color="primary" value="Submit" onClick={()=> {this.props.history.push('/register')}}>
             Register
             </Button>
           </FormControl>

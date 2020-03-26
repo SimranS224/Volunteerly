@@ -22,6 +22,9 @@ export class Volunteer extends Model<Volunteer>{
   // date_joined: Date;
   @Column
   profile_picture_UrL: string;
+  @AllowNull(false)
+  @Column
+  level: number;
 }
 
 @Table
