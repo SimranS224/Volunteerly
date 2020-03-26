@@ -95,7 +95,7 @@ class ProfilePage extends React.Component {
                 </div>
                 <CardList elementList={pastEvents}></CardList> */}
 
-                <div>
+                {/* <div>
                     <h1>Events {this.props.curUser.first_name} has enrolled in</h1>
                 </div>
                 <List>
@@ -108,7 +108,7 @@ class ProfilePage extends React.Component {
                                     />
                                 </ListItem>)
                     })}
-                </List>
+                </List> */}
             </div>
           </div>
         );
