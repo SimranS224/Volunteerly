@@ -1,7 +1,6 @@
 import express from "express";
 import serverless from "serverless-http";
-import { router as volunteers } from "./volunteers";
-import { router as db_calls} from "./database_events";
+import {router as get_info} from './get_info';
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -17,7 +16,7 @@ app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use("/*/all", volunteers)
+app.use("/*/one", get_info)
 // app.use("/database", db_calls)
 
 export const handler = serverless(app)
