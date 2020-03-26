@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
-export const router = express.Router();
 import {Volunteer, Event} from "../../db/models"
 import {sequelize} from "../../db"
+
+export const router = express.Router();
+
 
 const getEvents = async (req: Request, res: Response) => {
     //const { userId, availability, timeRanges } = req.body;
