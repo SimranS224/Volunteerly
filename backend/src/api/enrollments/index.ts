@@ -14,10 +14,17 @@ const getEnrollments = async (req: Request, res: Response) => {
             },
             include: [Event]
         }));
-        res.send({
-            statusCode: 200,
-            body: JSON.stringify(user[0].events)
-        });
+        if(user.length > 0) {
+            res.send({
+                statusCode: 200,
+                body: JSON.stringify(user[0].events)
+            });
+        } else {
+            res.send({
+                statusCode: 200,
+                body: []
+            });  
+        }
     } catch (err) {
         console.log(`Failed to get enrollments - user_id: ${user_id} - ${err.message}`)
         res.send({
@@ -29,13 +36,12 @@ const getEnrollments = async (req: Request, res: Response) => {
 }
 
 const addEnrollment = async (req: Request, res: Response) => {
-    const { user_id, event_id } = req.params;
-
+    const { user_id, event_id } = req.body;
     console.log(`Getting enrollments - user_id: ${user_id} - event_id: ${event_id}`)
     try {
         await sequelize.sync()
             .then(() => Enrollment.create({
-                user_id: user_id,
+                volunteer_id: user_id,
                 event_id: event_id
             }));
         res.send({
