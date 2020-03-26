@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import {Sequelize} from 'sequelize-typescript';
-import {Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
+import {User, VolunteerAvailability, EventType, Stat, StatCategory, Event,
 VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "./models"
 
 dotenv.config();
@@ -12,7 +12,7 @@ const currPort: number =  process.env.port ? process.env.port as unknown as numb
 
 
 const getSequelize = () => {
-  const modelsList = [Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
+  const modelsList = [User, VolunteerAvailability, EventType, Stat, StatCategory, Event,
     VolunteerEventPreference, Achievement, AchievementEarned, Enrollment]
   // if(process.env.NODE_ENV === "production"){
   //     //TODO implement production Sequelize

@@ -3,12 +3,12 @@ import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, Belon
  
 // remove createdAt and updatedAt from all tables
 
-@Table({ createdAt: false, updatedAt: false })
-export class Volunteer extends Model<Volunteer>{
+@Table({ createdAt: true, updatedAt: false })
+export class User extends Model<User>{
   @AllowNull(false)
   @Column
   first_name: string;
-  @AllowNull(false)
+  // @AllowNull(false)
   @Column
   last_name: string;
   @AllowNull(false)
@@ -33,7 +33,7 @@ export class Volunteer extends Model<Volunteer>{
 @Table({ createdAt: false, updatedAt: false })
 export class VolunteerAvailability extends Model<VolunteerAvailability>{
 
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @Column
   volunteer_id:number;
   @AllowNull(false)
@@ -47,16 +47,16 @@ export class VolunteerAvailability extends Model<VolunteerAvailability>{
   end_hour: Date;
 }
 
-@Table({ createdAt: false, updatedAt: false })
-export class Organization extends Model<Organization>{
-  @AllowNull(false)
-  @Column
-  organization_name: string;
-  @Column(DataType.TEXT)
-  bio: string;
-  @Column
-  organization_logo_url: string;
-}
+// @Table({ createdAt: false, updatedAt: false })
+// export class Organization extends Model<Organization>{
+//   @AllowNull(false)
+//   @Column
+//   organization_name: string;
+//   @Column(DataType.TEXT)
+//   bio: string;
+//   @Column
+//   organization_logo_url: string;
+// }
 
 @Table({ createdAt: false, updatedAt: false })
 export class EventType extends Model<EventType>{
@@ -69,7 +69,7 @@ export class EventType extends Model<EventType>{
 
 @Table({ createdAt: false, updatedAt: false })
 export class Stat extends Model<Stat>{
-  @ForeignKey(()=>Volunteer)
+  @ForeignKey(()=>User)
   @Column
   volunteer_id:number;
   @ForeignKey(()=>StatCategory)
@@ -108,18 +108,18 @@ export class Event extends Model<Event>{
   event_category_id:number;
   @Column(DataType.TEXT)
   photo_url: string;
-  @ForeignKey(() => Organization)
+  @ForeignKey(() => User)
   @Column
   organization_id: number;
   @Column
   duration:number;
-  @BelongsToMany(() => Volunteer, () => Enrollment, 'event_id')
-  volunteers: Volunteer[];
+  @BelongsToMany(() => User, () => Enrollment, 'event_id')
+  volunteers: User[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
 export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;
@@ -141,7 +141,7 @@ export class Achievement extends Model<Achievement>{
 }
 @Table({ createdAt: false, updatedAt: false })
 export class AchievementEarned extends Model<AchievementEarned>{
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;
@@ -158,7 +158,7 @@ export class Enrollment extends Model<Enrollment>{
   // @BelongsTo(()=>Volunteer,{
   //   onDelete: "CASCADE"
   // })
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;

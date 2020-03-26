@@ -1,11 +1,10 @@
 import express, { Request, Response } from "express";
 import {sequelize} from "../db"
-import {Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
+import {User, VolunteerAvailability, EventType, Stat, StatCategory, Event,
     VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "../db/models"
 
 import volunteers from "../db/migrations/volunteers.json"
 import volunteer_availabilities from "../db/migrations/volunteer_availability.json"
-import organizations from "../db/migrations/organizations.json"
 import event_type from "../db/migrations/event_type.json"
 import stat from "../db/migrations/stat.json"
 import stat_category from "../db/migrations/stat_category.json"
@@ -24,9 +23,9 @@ const path = require("path");
 const initialize_db = async (req:Request , res: Response) =>  {
     console.log("calling initialize_db")
     // console.log("the volunteers are:", volunteers)
-    await sequelize.sync({force:true}).then(() => volunteers.forEach(volunteer => Volunteer.create(volunteer)))
+    await sequelize.sync({force:true}).then(() => volunteers.forEach(volunteer => User.create(volunteer)))
     await volunteer_availabilities.forEach(el => VolunteerAvailability.create(el))
-    await organizations.forEach(el => Organization.create(el))
+    // await organizations.forEach(el => Organization.create(el))
     await event_type.forEach(el => EventType.create(el))
     await stat.forEach(el => Stat.create(el))
     await stat_category.forEach(el => StatCategory.create(el))
