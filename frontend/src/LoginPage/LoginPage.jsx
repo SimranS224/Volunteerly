@@ -16,7 +16,20 @@ class LoginPage extends React.Component {
         password: '',
     };
   }
-
+  login = (username, password) =>{
+    let res = await fetch('http://localhost:3004/dev/api/login/', {
+        method: 'post',
+        body:    JSON.stringify({name: name, email: userName, password: password}),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    res = await res.json()
+    console.log("register res", res)
+    if(res.statusCode === 200){
+      this.props.history.push('/home')
+    }else{
+      alert(res.msg)
+    }
+  }
 
   render() {
     return (

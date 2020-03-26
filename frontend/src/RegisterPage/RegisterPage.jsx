@@ -18,14 +18,14 @@ class RegisterPage extends React.Component {
     };
   }
   register = async (name, userName, password) =>{
-    let res = await fetch('http://localhost:3004/dev/volunteers/', {
+    let res = await fetch('http://localhost:3004/dev/api/volunteers/', {
         method: 'post',
         body:    JSON.stringify({name: name, email: userName, password: password}),
         headers: { 'Content-Type': 'application/json' },
     })
     res = await res.json()
     console.log("register res", res)
-    if(res.status === "success"){
+    if(res.statusCode === 200){
       this.props.history.push('/login')
     }else{
       alert(res.msg)
