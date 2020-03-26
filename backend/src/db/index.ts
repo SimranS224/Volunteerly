@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
 import {Sequelize} from 'sequelize-typescript';
-import {Volunteer, VolunteerAvailability, Organization, Category, Stat, EventType, Event,
-VolunteerEventPreference, Achievement, Enrollment} from "./models"
+import {Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
+VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "./models"
 
 dotenv.config();
 
 const get_sequelize = () => {
-  const modelsList = [Volunteer, VolunteerAvailability, Organization, Category, Stat, EventType, Event,
-    VolunteerEventPreference, Achievement, Enrollment]
+  const modelsList = [Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
+    VolunteerEventPreference, Achievement, AchievementEarned, Enrollment]
   if(process.env.NODE_ENV === "production"){
       //TODO implement production Sequelize
       return new Sequelize(process.env.DATABASE_URL,{operatorsAliases: false,models: modelsList});
