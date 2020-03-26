@@ -8,7 +8,7 @@ provider:
 
 functions: 
   volunteers:  
-    handler:  src/api/events/index.handler
+    handler:  src/api/index.handler
     events:
       - http:         ANY api
         cors: true

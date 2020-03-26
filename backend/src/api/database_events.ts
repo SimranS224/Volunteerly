@@ -1,17 +1,17 @@
 import express, { Request, Response } from "express";
-import {sequelize} from "../../db"
+import {sequelize} from "../db"
 import {Volunteer, VolunteerAvailability, Organization, EventType, Stat, StatCategory, Event,
-    VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "../../db/models"
+    VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "../db/models"
 
-import volunteers from "../../db/migrations/volunteers.json"
-import volunteer_availabilities from "../../db/migrations/volunteer_availability.json"
-import organizations from "../../db/migrations/organizations.json"
-import event_type from "../../db/migrations/event_type.json"
-import stat from "../../db/migrations/stat.json"
-import stat_category from "../../db/migrations/stat_category.json"
-import event from "../../db/migrations/event.json"
-import volunteer_event_preferences from "../../db/migrations/volunteer_event_preferences.json"
-import enrollment from "../../db/migrations/enrollment.json"
+import volunteers from "../db/migrations/volunteers.json"
+import volunteer_availabilities from "../db/migrations/volunteer_availability.json"
+import organizations from "../db/migrations/organizations.json"
+import event_type from "../db/migrations/event_type.json"
+import stat from "../db/migrations/stat.json"
+import stat_category from "../db/migrations/stat_category.json"
+import event from "../db/migrations/event.json"
+import volunteer_event_preferences from "../db/migrations/volunteer_event_preferences.json"
+import enrollment from "../db/migrations/enrollment.json"
 
 export const router = express.Router();
 // import * as fs from "fs";
