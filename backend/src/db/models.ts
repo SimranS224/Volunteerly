@@ -21,7 +21,7 @@ export class Volunteer extends Model<Volunteer>{
   // @Column
   // date_joined: Date;
   @Column(DataType.TEXT)
-  profile_picture_UrL: string;
+  profile_picture_url: string;
   @AllowNull(false)
   @Column
   level: number;

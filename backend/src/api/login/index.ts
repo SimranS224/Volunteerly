@@ -4,5 +4,5 @@ import { login } from "./login";
 export const router = express.Router();
 
 
-router.get("/", login)
+router.post("/", login)
 

@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 const addVolunteer = async (req:Request , res: Response) =>  {
   // console.log("request is:", req)
   console.log("posting volunteers foo")
-    const {email, first_name, last_name, password} = req.body;
+    const {email, first_name, last_name, password, profile_picture_url} = req.body;
     console.log(req.body)
     const hashedPassword = bcrypt.hashSync(password, 8);
     console.log("hash", hashedPassword)
@@ -25,11 +25,13 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     }
     console.log("hello!!")
     console.log("raw data")
-    const v_body = {id: users.length, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0}
+    const v_body = {id: users.length + 1, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0, profile_picture_url: profile_picture_url}
     console.log(v_body)
     const newVolunteer = await Volunteer.create(v_body)
     console.log(newVolunteer)
-    return res.send({status: "success", msg: ""})
+    const token = jwt.sign({ id: email }, "volunteer_secret!!!")
+
+    return res.send({statusCode: 200, email: email, id: users.length, token: token, level: 0, msg: ""})
 }
 
 const getAllVolunteers = async (req:Request , res: Response) =>  {

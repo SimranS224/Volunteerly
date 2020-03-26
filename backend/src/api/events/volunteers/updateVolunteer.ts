@@ -26,7 +26,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     }
     console.log("hello!!")
     console.log("raw data")
-    const v_body = {id: users.length, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0}
+    const v_body = {id: users.length + 1, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0}
     console.log(v_body)
     const newVolunteer = await Volunteer.create(v_body)
     console.log(newVolunteer)
