@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS volunteer (
     email VARCHAR(100) NOT NULL,
     pass VARCHAR(100) NOT NULL,
     bio text,
-    date_joined TIMESTAMP, 
+    date_joined TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     profile_picture_url VARCHAR(255)
 );
 
