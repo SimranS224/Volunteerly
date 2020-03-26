@@ -1,6 +1,6 @@
 import express from "express";
 import serverless from "serverless-http";
-import { router as volunteers } from "./volunteers";
+import volunteers from "./volunteers";
 import { router as db_calls} from "./database_events";
 import bodyParser from "body-parser";
 import compression from "compression";

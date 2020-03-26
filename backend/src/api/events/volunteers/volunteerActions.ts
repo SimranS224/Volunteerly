@@ -24,7 +24,7 @@ const login = async (req:Request , res: Response) =>  {
       }
     return res.send({ statusCode: 401, msg: "Invalid login!", token: null }) 
   }
-  catch{
+  catch (err){
     return res.send({
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
@@ -34,14 +34,15 @@ const login = async (req:Request , res: Response) =>  {
 }
 const addVolunteer = async (req:Request , res: Response) =>  {
   // console.log("request is:", req)
-  console.log("posting volunteers")
-    const {email, name, password} = req.body;
+  console.log("posting volunteers foo")
+    const {email, first_name, last_name, password} = req.body;
     console.log(req.body)
     const hashedPassword = bcrypt.hashSync(password, 8);
     console.log("hash", hashedPassword)
+    console.log("checking foobar")
     // sequelize.sync().then(()=>Volunteer.create(data)).then(response => res.send(response))
     await sequelize.sync()
-        
+      console.log("synced")
     const users = await Volunteer.findAll()
     for(let i = 0; i < users.length; i++){
         if(users[i].email == email){
@@ -49,8 +50,8 @@ const addVolunteer = async (req:Request , res: Response) =>  {
             return res.send({status: 'error', msg: "Account with email already exists"})
         }
     }
-    console.log("hello ")
-    const newVolunteer = await Volunteer.create({email: email, name: name, password: hashedPassword})
+    console.log("hello!!")
+    const newVolunteer = await Volunteer.create({email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0})
     console.log(newVolunteer)
     return res.send({status: "success", msg: ""})
 }
