@@ -4,34 +4,6 @@ import {sequelize} from "../../../db"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-const login = async (req:Request , res: Response) =>  { 
-  console.log("login")
-  try{
-    const {email, password} = req.body;
-    await sequelize.sync()
-    const users = await Volunteer.findAll()
-      for(let i = 0; i < users.length; i++){
-          if(users[i].email == email){
-              console.log("found existing email")
-              const passwordIsValid = bcrypt.compareSync(password, users[i].password);
-              if(!passwordIsValid){
-                return res.send({ statusCode: 401, msg: "Invalid login!", token: null })
-              }
-              const token = jwt.sign({ id: email }, "volunteer_secret!!!")
-
-              return res.send({statusCode: 200, msg: "", token: token, level: users[i].level})
-          }
-      }
-    return res.send({ statusCode: 401, msg: "Invalid login!", token: null }) 
-  }
-  catch (err){
-    return res.send({
-          statusCode: err.statusCode || 500,
-          headers: { 'Content-Type': 'text/plain' },
-          body: err.message || 'Could not fetch the Note.'
-      })
-  }
-}
 
 const addVolunteer = async (req:Request , res: Response) =>  {
   // console.log("request is:", req)
@@ -52,10 +24,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
         }
     }
     console.log("hello!!")
-    console.log("raw data")
-    const v_body = {id: users.length, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0}
-    console.log(v_body)
-    const newVolunteer = await Volunteer.create(v_body)
+    const newVolunteer = await Volunteer.create({email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0})
     console.log(newVolunteer)
     return res.send({status: "success", msg: ""})
 }
@@ -77,4 +46,27 @@ const getAllVolunteers = async (req:Request , res: Response) =>  {
   }
 }
 
-export { addVolunteer, getAllVolunteers, login};
+const getVolunteer = async (req:Request , res: Response) =>  {
+  console.log("getting volunteer")
+
+  const { user_id } = req.params;
+  try {
+      const user = await sequelize.sync().then(()=>Volunteer.findAll({
+          where: {
+            id: user_id
+          }
+        }));
+      res.send({
+          statusCode: 200,
+          body: JSON.stringify(user)
+      });
+  } catch (err) {
+      res.send({
+          statusCode: err.statusCode || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message || 'Could not fetch the Note.'
+      })
+  }
+}
+
+export { addVolunteer, getAllVolunteers, getVolunteer};

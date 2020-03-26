@@ -1,6 +1,6 @@
 import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default} from 'sequelize-typescript';
  
-
+// remove createdAt and updatedAt from all tables
 
 @Table({ createdAt: false, updatedAt: false })
 export class Volunteer extends Model<Volunteer>{
