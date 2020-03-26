@@ -91,6 +91,21 @@ const deleteEvent = (event, user) => {
 	return getEvents(user)
 }
 
+/**
+ * Returns the events that a user has enrolled in 
+ * @param {integer} userId 
+ */
+const getEnrolledEvents = (userId) => {
+	return fetch(`http://localhost:3000/dev/api/enrollments/${userId}`)
+		.then(res => res.json())
+		.then(res => {
+			if(res.error) {
+				throw(res.error)
+			}
+			return JSON.parse(res.body)
+		})
+}
+
 export const userService = {
-	getEvents, addEvent, deleteEvent
+	getEvents, addEvent, deleteEvent, getEnrolledEvents
 }

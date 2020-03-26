@@ -1,25 +1,31 @@
-import express from "express";
-import serverless from "serverless-http";
-import { router as login} from "./login";
-import { router as volunteers } from "./volunteers/new_index";
-import { router as db_calls} from "./database_events";
-import bodyParser from "body-parser";
-import compression from "compression";
-import morgan from "morgan";
-import cors from "cors";
+import express, { Request, Response } from "express";
+export const router = express.Router();
+import {Volunteer, Event} from "../../db/models"
+import {sequelize} from "../../db"
 
-import dotenv from "dotenv";
-dotenv.config();
+const getEvents = async (req: Request, res: Response) => {
+    const { user_id } = req.body;
 
-const app = express();
+    console.log(`Getting enrollments - user_id: ${user_id}`)
+    try {
+        const user = await sequelize.sync().then(()=>Volunteer.findAll({
+            where: {
+                id: user_id
+            },
+            include: [Event]
+        }));
+        res.send({
+            statusCode: 200,
+            body: JSON.stringify(user[0].events)
+        });
+    } catch (err) {
+        console.log(`Failed to get enrollments - user_id: ${user_id} - ${err.message}`)
+        res.send({
+            statusCode: err.statusCode || 500,
+            headers: { 'Content-Type': 'text/plain' },
+            body: err.message || 'Could not fetch the Enrollment.'
+        })
+    }
+}
 
-app.use(cors());
-app.use(morgan("combined"));
-app.use(compression());
-app.use(bodyParser.json());
-
-app.use("/*/login", login)
-app.use("/*/volunteers", volunteers)
-app.use("/*/database", db_calls)
-
-export const handler = serverless(app)
+router.post("/", getEvents)

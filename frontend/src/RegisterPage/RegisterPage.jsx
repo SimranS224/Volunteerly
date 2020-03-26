@@ -45,7 +45,7 @@ class RegisterPage extends React.Component {
       let data = await this.uploadPhoto()
       profile_picture_url = data.location
     }
-    let res = await fetch('http://localhost:3004/dev/api/volunteers/', {
+    let res = await fetch('http://localhost:3000/dev/api/volunteers/', {
         method: 'post',
         body:  JSON.stringify({first_name: first_name, last_name: last_name, email: email, password: password, profile_picture_url: profile_picture_url}),
         headers: { 'Content-Type': 'application/json' },
