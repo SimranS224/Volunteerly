@@ -67,7 +67,6 @@ const PreferencesModal = ({ setPreferences }) => {
     planting: false,
     cleanUp: false,
     communityBuilding: false,
-    selectedDate: null,
     selectedDateString: null,
     schedule: []
   });
@@ -90,7 +89,7 @@ const PreferencesModal = ({ setPreferences }) => {
       cleanUp: state.cleanUp, 
       communityBuilding: state.communityBuilding,
       selectedDate: state.selectedDate,
-      availbility: parseSchedule(state.schedule)
+      availability: parseSchedule(state.schedule)
     }
     
     setPreferences(preferenceState);
