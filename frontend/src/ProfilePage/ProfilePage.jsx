@@ -39,7 +39,7 @@ class ProfilePage extends React.Component {
           <div className="profile">
             <div className="profile-header">
                 <div className="profile-header-container">
-                    <div className="profile-picture"></div>
+                    <div className="profile-picture">{this.props.curUser.profile_picture_url !== undefined && this.props.curUser.profile_picture_url !== null && this.props.curUser.profile_picture_url !== "" ? <img src={this.props.curUser.profile_picture_url} alt="profile pic" width="100%"></img> : null}</div>
                     <div className="profile-info">
                         <h2>{this.props.curUser.first_name + " " + this.props.curUser.last_name}</h2>
                         <p>Joined February 2019</p>

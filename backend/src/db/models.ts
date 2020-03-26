@@ -1,4 +1,5 @@
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique} from 'sequelize-typescript';
+
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique, BelongsToMany} from 'sequelize-typescript';
  
 // remove createdAt and updatedAt from all tables
 
@@ -25,6 +26,8 @@ export class Volunteer extends Model<Volunteer>{
   @AllowNull(false)
   @Column
   level: number;
+  @BelongsToMany(() => Event, () => Enrollment, 'volunteer_id')
+  events: Event[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -110,6 +113,8 @@ export class Event extends Model<Event>{
   organization_id: number;
   @Column
   duration:number;
+  @BelongsToMany(() => Volunteer, () => Enrollment, 'event_id')
+  volunteers: Volunteer[];
 }
 
 @Table({ createdAt: false, updatedAt: false })

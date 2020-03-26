@@ -8,6 +8,7 @@ import { userActions } from "../_redux/_actions";
 import './LoginPage.css'
 import store from 'store'
 import { browserHistory } from '../_helpers'; 
+import {userService} from '../_services/UserService.js'
 
 
 class LoginPage extends React.Component {
@@ -18,6 +19,8 @@ class LoginPage extends React.Component {
         email: '',
         password: '',
     };
+
+    userService.getEnrolledEvents(1);
   }
   login = async (email, password) =>{
     console.log("login")
@@ -29,8 +32,8 @@ class LoginPage extends React.Component {
     res = await res.json()
     console.log("login res", res)
 
-      this.props.login(res.id, res.statusCode, email, res.token, res.level, res.first_name, res.last_name, res.profile_picture_url)
-    
+    this.props.login(res.id, res.statusCode, email, res.token, res.level, res.first_name, res.last_name, res.profile_picture_url)
+  
   }
 
   render() {
