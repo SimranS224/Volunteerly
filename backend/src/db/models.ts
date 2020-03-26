@@ -1,5 +1,5 @@
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, BelongsToMany} from 'sequelize-typescript';
-import { emitKeypressEvents } from 'readline';
+
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique, BelongsToMany} from 'sequelize-typescript';
  
 // remove createdAt and updatedAt from all tables
 
@@ -84,6 +84,8 @@ export class Stat extends Model<Stat>{
 export class StatCategory extends Model<StatCategory>{
   @Column(DataType.TEXT)
   photo_url: string;
+  @Unique
+  @AllowNull(false)
   @Column
   text: string;
 }
@@ -130,8 +132,9 @@ export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
 export class Achievement extends Model<Achievement>{
   @Column(DataType.TEXT)
   photo_url: string;
+  @ForeignKey(()=> StatCategory)
   @Column
-  text: string;
+  stat_category_id: string;
   @Default(0)
   @Column
   quantity: number
@@ -159,6 +162,9 @@ export class Enrollment extends Model<Enrollment>{
   @PrimaryKey
   @Column
   volunteer_id: number;
+  @Default(0)
+  @Column
+  attended: number
 
 
   @ForeignKey(() => Event)

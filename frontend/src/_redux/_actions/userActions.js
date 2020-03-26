@@ -74,6 +74,10 @@ const searchEvents = (searchQuery) => {
   return {type: allConstants.SEARCH_EVENTS, searchQuery: searchQuery}
 }
 
+const setEvents = (events) => {
+  return {type: allConstants.SET_EVENTS, events: events}
+}
+
 export const userActions = {
   setPreferences, 
   register, 
@@ -82,5 +86,6 @@ export const userActions = {
   updateEvents,
   addEvent,
   deleteEvent,
-  searchEvents
+  searchEvents,
+  setEvents
 }

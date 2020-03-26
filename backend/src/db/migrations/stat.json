@@ -1,6 +1,6 @@
 [{"id":1,"volunteer_id":"1","stat_category_id":"1","quantity":79},
 {"id":2,"volunteer_id":"1","stat_category_id":"2","quantity":83},
-{"id":3,"volunteer_id":"1","stat_category_id":"3","quantity":0},
+{"id":3,"volunteer_id":"1","stat_category_id":"3","quantity":53},
 {"id":4,"volunteer_id":"2","stat_category_id":"1","quantity":58},
 {"id":5,"volunteer_id":"2","stat_category_id":"2","quantity":1},
 {"id":6,"volunteer_id":"2","stat_category_id":"3","quantity":55},

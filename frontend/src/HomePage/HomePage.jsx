@@ -17,7 +17,7 @@ import MapContainer from '../components/Maps/MapContainer'
 import HeroImage from './welcome-2.png';
 import './HomePage.css';
 import { userActions } from "../_redux/_actions";
-
+var hdate = require('human-date');
  
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -32,6 +32,10 @@ class HomePage extends React.Component {
       filtered: [],
       selected: null
     }
+    userService.getEvents()
+      .then((events) => {
+        this.props.setEvents(events);
+      });
   }
   
   componentDidMount() {
@@ -73,9 +77,9 @@ class HomePage extends React.Component {
               {this.props.events.length > 0 && this.props.events.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
                  <OppCard 
-                  date={event.date}
-                  title={event.title}
-                  desc={event.desc}
+                  date={event.start_date}
+                  title={event.name}
+                  desc={event.description}
                   onClick={() => {this.setState({dialog_open: true, selected: i})}} 
                   />
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
@@ -89,18 +93,18 @@ class HomePage extends React.Component {
 
         <DialogContent>
         <Typography className="event-title" variant="h2"> 
-        {this.state.selected !== null ? this.props.events[this.state.selected].title : null}
+        {this.state.selected !== null ? this.props.events[this.state.selected].name : null}
         </Typography>
         <Button className="primary-button" variant="contained" disableElevation>
           Enroll
         </Button>
         <Typography className="event-desc" variant="h4"> 
-        {this.state.selected !== null ? this.props.events[this.state.selected].desc : null}
+        {this.state.selected !== null ? this.props.events[this.state.selected].description : null}
         </Typography>
         <Typography className="event-date" variant="h4"> 
-        Event date: {this.state.selected !== null ? this.props.events[this.state.selected].date : null} 
+        Starts {this.state.selected !== null ? hdate.prettyPrint(this.props.events[this.state.selected].start_date, { showTime: true }) : null} 
         <br/>
-        Event start time: 1pm
+        Ends {this.state.selected !== null ? hdate.prettyPrint(this.props.events[this.state.selected].end_date, { showTime: true }) : null} 
         <br/>
         Location:
         </Typography>
@@ -128,6 +132,9 @@ const mapDispatchToProps = dispatch => {
     },
     login: (id, statusCode, email, token, level, first_name, last_name, profile_picture_url) => {
       dispatch(userActions.login(id, statusCode, email, token, level, first_name, last_name, profile_picture_url))
+    },
+    setEvents: (events) => {
+      dispatch(userActions.setEvents(events));
     }
   } 
 }
