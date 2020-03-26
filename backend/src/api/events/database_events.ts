@@ -38,5 +38,11 @@ const initialize_db = async (req:Request , res: Response) =>  {
     res.send("finished")
 }
 
+const delete_db = async (req:Request , res: Response) =>  {
+    console.log("clearing db")
+    sequelize.sync({force:true})
+
+}
+router.delete("/", delete_db)
 router.get("/", initialize_db)
 // router.post("/",post_volunteers)
