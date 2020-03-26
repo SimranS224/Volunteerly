@@ -13,7 +13,7 @@ class CardWithButton extends React.Component {
     }
 
     render() {
-     
+     console.log("window loc",window.location.origin )
         return (
             <div className="container">
                 <Card className="test">
@@ -24,10 +24,10 @@ class CardWithButton extends React.Component {
                 <CardContent>
                     {this.props.event.description}
                 </CardContent>
-                <Button style={{marginBottom: "-20%"}} onClick={this.props.buttonFunc} variant="contained" color="primary">
+                <Button className="deleteButton" onClick={this.props.buttonFunc} variant="contained" color="primary">
                     {this.props.buttonText}
                 </Button>
-                <QRCode style={{float: "right"}} value="google.com"/>
+                <QRCode className="QR" value={window.location.origin + "/event_login/" + this.props.event.id}/>
 
                 </Card>
             </div>

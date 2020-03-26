@@ -56,3 +56,10 @@
     padding: 16px;
     margin-top: 8px;
 }
+.AdminPage .textField {
+    width: 50%;
+}
+.AdminPage .inputEvent{
+    margin-left: 32%;
+    margin-bottom: 16px;
+}
