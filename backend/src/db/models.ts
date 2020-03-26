@@ -1,4 +1,4 @@
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default} from 'sequelize-typescript';
  
 
 
@@ -6,7 +6,10 @@ import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, Belon
 export class Volunteer extends Model<Volunteer>{
   @AllowNull(false)
   @Column
-  name: string;
+  first_name: string;
+  @AllowNull(false)
+  @Column
+  last_name: string;
   @AllowNull(false)
   @Column
   email: string;
@@ -15,8 +18,8 @@ export class Volunteer extends Model<Volunteer>{
   password: string;
   @Column(DataType.TEXT)
   bio: string;
-  @Column
-  date_joined: Date;
+  // @Column
+  // date_joined: Date;
   @Column
   profile_picture_UrL: string;
 }
@@ -50,7 +53,7 @@ export class Organization extends Model<Organization>{
 }
 
 @Table
-export class Category extends Model<Category>{
+export class EventType extends Model<EventType>{
   @Column(DataType.TEXT)
   photo_url: string;
   @AllowNull(false)
@@ -63,19 +66,22 @@ export class Stat extends Model<Stat>{
   @ForeignKey(()=>Volunteer)
   @Column
   volunteer_id:number;
+  @ForeignKey(()=>StatCategory)
   @Column
-  number:number;
-  @ForeignKey(()=>Category)
+  stat_category_id:number;
+  @Default(0)
   @Column
-  category_id:number; 
+  quantity:number;
 }
 
 @Table
-export class EventType extends Model<EventType>{
-  @AllowNull(false) 
+export class StatCategory extends Model<StatCategory>{
   @Column(DataType.TEXT)
-  text: string
-} 
+  photo_url: string;
+  @Column
+  text: string;
+}
+
 @Table
 export class Event extends Model<Event>{
   @AllowNull(false)
@@ -111,19 +117,27 @@ export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
   @PrimaryKey
   @Column
   event_type_id:number;
-  
 }
-
 @Table
 export class Achievement extends Model<Achievement>{
+  @Column(DataType.TEXT)
+  photo_url: string;
+  @Column
+  text: string;
+  @Default(0)
+  @Column
+  quantity: number
+}
+@Table
+export class AchievementEarned extends Model<AchievementEarned>{
   @ForeignKey(() => Volunteer)
   @PrimaryKey
   @Column
   volunteer_id: number;
-  @ForeignKey(() => Category)
+  @ForeignKey(() => Achievement)
   @PrimaryKey
   @Column
-  category_id: number;
+  achievement_id: number;
 
 }
 
