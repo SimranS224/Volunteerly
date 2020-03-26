@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
   }
   login = async (email, password) =>{
     console.log("login")
-    let res = await fetch('http://localhost:3000/dev/api/login/', {
+    let res = await fetch('http://localhost:3004/dev/api/login/', {
         method: 'post',
         body:    JSON.stringify({email: email, password: password}),
         headers: { 'Content-Type': 'application/json' },
