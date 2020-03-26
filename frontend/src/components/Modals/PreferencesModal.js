@@ -155,19 +155,6 @@ const PreferencesModal = ({ setPreferences }) => {
                 startDate={new Date('2020-03-24')}
                 onChange={handleAvailabilityChange}
               />
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Choose a date"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
               </MuiPickersUtilsProvider>
             </FormControl>
           </div>
