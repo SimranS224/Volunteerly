@@ -27,6 +27,7 @@ function userReducer(state = initialState, action) {
         preferences: {}
       };
     case allConstants.LOGOUT:
+      localStorage.removeItem('userData'); // remove user data 
       return { ...initialState};
     case allConstants.SET_PREFERENCES:
       let newEvents = userService.getEvents(null, action.newPreferenceState);

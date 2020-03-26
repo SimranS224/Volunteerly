@@ -35,7 +35,7 @@ class HomePage extends React.Component {
   }
   
   componentDidMount() {
-  
+
   }
 
   handleSearch = (e) =>{
@@ -117,6 +117,7 @@ class HomePage extends React.Component {
   }
 }
 
+
 const mapDispatchToProps = dispatch => {
   return {
     updateEvents: (curUser, events) => {
@@ -124,6 +125,9 @@ const mapDispatchToProps = dispatch => {
     },
     searchEvents: (searchQuery) => {
       dispatch(userActions.searchEvents(searchQuery))
+    },
+    login: (id, statusCode, email, token, level, first_name, last_name, profile_picture_url) => {
+      dispatch(userActions.login(id, statusCode, email, token, level, first_name, last_name, profile_picture_url))
     }
   } 
 }

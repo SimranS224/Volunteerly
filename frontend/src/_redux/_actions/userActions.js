@@ -21,10 +21,22 @@ const register = (statusCode) => {
   
 }
 
-const login = (id, statusCode, username, token, level, first_name, last_name, profile_picture_url) => {  
+const login = (id, statusCode, username, token, level, first_name, last_name, profile_picture_url) => {    
     console.log("loggin in at useractions")
+    
     if (statusCode === 200) {
       browserHistory.push('/home')
+      // save user data so they don't have to login for future page reloads
+      localStorage.setItem('userData', JSON.stringify({
+        id: id,
+        statusCode: statusCode, 
+        username: username,
+        token: token,
+        level: level,
+        first_name: first_name,
+        last_name: last_name,
+        profile_picture_url: profile_picture_url
+      }));
       return {type: allConstants.LOGIN, success: true, curUser: {id: id, username: username, token: token, level: level, first_name: first_name, last_name: last_name, profile_picture_url: profile_picture_url}, isAdmin: level === 1} 
     }
     else if (statusCode === 401){

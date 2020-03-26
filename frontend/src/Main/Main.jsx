@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Router, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'; 
+import { userActions } from "../_redux/_actions";
 
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage'
@@ -27,7 +28,14 @@ const PrivateRoute = ({ admin, userReducer, component: Component, ...rest }) => 
 class Main extends React.Component {
   constructor(props) {
       super(props);
-     
+
+      // Log the user in automatically if we saved their data from a previous login
+      const userData = localStorage.getItem('userData');
+      if(userData !== undefined && userData !== null) {
+        let user = JSON.parse(userData);
+        this.props.login(user.id, user.statusCode, user.username, user.token, user.level,
+           user.first_name, user.last_name, user.profile_picture_url)
+      }
       
   }
 
@@ -53,7 +61,13 @@ class Main extends React.Component {
   }
 }
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (id, statusCode, email, token, level, first_name, last_name, profile_picture_url) => {
+      dispatch(userActions.login(id, statusCode, email, token, level, first_name, last_name, profile_picture_url))
+    }
+  } 
+}
 
 
 const mapStateToProps = state => {

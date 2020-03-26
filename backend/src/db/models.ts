@@ -26,7 +26,7 @@ export class Volunteer extends Model<Volunteer>{
   @AllowNull(false)
   @Column
   level: number;
-  @BelongsToMany(() => Event, () => Enrollment)
+  @BelongsToMany(() => Event, () => Enrollment, 'volunteer_id')
   events: Event[];
 }
 
@@ -111,7 +111,7 @@ export class Event extends Model<Event>{
   organization_id: number;
   @Column
   duration:number;
-  @BelongsToMany(() => Volunteer, () => Enrollment)
+  @BelongsToMany(() => Volunteer, () => Enrollment, 'event_id')
   volunteers: Volunteer[];
 }
 
