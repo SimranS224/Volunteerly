@@ -2,6 +2,7 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
+  cache: false,
    entry: ['babel-polyfill', './src/index.jsx'],
   resolve: {
     extensions: [".js", ".jsx"],
@@ -49,7 +50,7 @@ module.exports = {
     })
   ],
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   externals: {
     config: JSON.stringify({
