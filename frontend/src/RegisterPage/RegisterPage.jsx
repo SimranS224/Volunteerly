@@ -53,7 +53,7 @@ class RegisterPage extends React.Component {
     res = await res.json()
     console.log("register res", res)
     this.props.register(res.statusCode)
-    this.props.login(res.id, res.statusCode, res.email, res.token, res.level)
+    this.props.login(res.id, res.statusCode, res.email, res.token, res.level, first_name, last_name, profile_picture_url)
     if(res.statusCode === 200){
       this.props.history.push("/home")
     }

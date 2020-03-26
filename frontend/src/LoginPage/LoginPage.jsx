@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
     res = await res.json()
     console.log("login res", res)
 
-      this.props.login(res.id, res.statusCode, email, res.token, res.level)
+      this.props.login(res.id, res.statusCode, email, res.token, res.level, res.first_name, res.last_name, res.profile_picture_url)
     
   }
 
@@ -58,8 +58,8 @@ class LoginPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (id, statusCode, email, token, level) => {
-      dispatch(userActions.login(id, statusCode, email, token, level))
+    login: (id, statusCode, email, token, level, first_name, last_name, profile_picture_url) => {
+      dispatch(userActions.login(id, statusCode, email, token, level, first_name, last_name, profile_picture_url))
     }
   } 
 }

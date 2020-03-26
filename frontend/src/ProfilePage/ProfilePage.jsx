@@ -41,7 +41,7 @@ class ProfilePage extends React.Component {
                 <div className="profile-header-container">
                     <div className="profile-picture"></div>
                     <div className="profile-info">
-                        <h2>Wenqin Ye</h2>
+                        <h2>{this.props.curUser.first_name + " " + this.props.curUser.last_name}</h2>
                         <p>Joined February 2019</p>
                     </div>
                 </div>
@@ -83,7 +83,11 @@ class ProfilePage extends React.Component {
 }
 
 const mapDispatchToProps = null;
-const mapState = null;
+const mapStateToProps = state => {
+  return {
+    curUser: state.userReducer.curUser
+    }
+}
 
-const Profileconnected =  connect(mapState, mapDispatchToProps)(ProfilePage);
+const Profileconnected =  connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
 export { Profileconnected as ProfilePage};
