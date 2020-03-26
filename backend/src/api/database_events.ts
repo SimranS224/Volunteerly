@@ -12,6 +12,9 @@ import stat_category from "../db/migrations/stat_category.json"
 import event from "../db/migrations/event.json"
 import volunteer_event_preferences from "../db/migrations/volunteer_event_preferences.json"
 import enrollment from "../db/migrations/enrollment.json"
+import achievement from "../db/migrations/achievement.json"
+import achievement_earned from "../db/migrations/achievement_earned.json"  
+
 
 export const router = express.Router();
 // import * as fs from "fs";
@@ -30,6 +33,8 @@ const initialize_db = async (req:Request , res: Response) =>  {
     await event.forEach(el => Event.create(el))
     await volunteer_event_preferences.forEach(el => VolunteerEventPreference.create(el))
     await enrollment.forEach(el => Enrollment.create(el))
+    await achievement.forEach(el => Achievement.create(el))
+    await achievement_earned.forEach(el => AchievementEarned.create(el))
 
 
 
