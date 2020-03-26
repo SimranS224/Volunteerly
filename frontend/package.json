@@ -22,6 +22,7 @@
     "date-fns": "^2.10.0",
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
+    "human-date": "^1.4.0",
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",

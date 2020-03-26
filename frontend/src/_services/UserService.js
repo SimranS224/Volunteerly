@@ -37,7 +37,21 @@ const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of 
 ]
 
 
+
 const getEvents = (user, preferences) => {
+	console.log("getting events");
+	return fetch(`http://localhost:3004/dev/api/events`)
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log(JSON.parse(res.body))
+		return JSON.parse(res.body)
+	})
+}
+
+const getEvents_fake = (user, preferences) => {
 	// When integrating with backend "user" and "preferences" should be 
 	// sent as parameters to the backend, and the backend will retrieve the
 	// correct filtered events for the user. 
@@ -96,7 +110,7 @@ const deleteEvent = (event, user) => {
  * @param {integer} userId 
  */
 const getEnrolledEvents = (userId) => {
-	return fetch(`http://localhost:3000/dev/api/enrollments/${userId}`)
+	return fetch(`http://localhost:3004/dev/api/enrollments/${userId}`)
 		.then(res => res.json())
 		.then(res => {
 			if(res.error) {

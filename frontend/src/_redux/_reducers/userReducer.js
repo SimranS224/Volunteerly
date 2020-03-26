@@ -7,8 +7,8 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
-  _allEvents: userService.getEvents(null), // _events is the master list of events
-  events: userService.getEvents(null), // events is a filtered list of events from searching
+  _allEvents: [], // _events is the master list of events
+  events: [], // events is a filtered list of events from searching
   searchQuery: ''
 }
 
@@ -55,12 +55,18 @@ function userReducer(state = initialState, action) {
         events: action.event
       };
     case allConstants.SEARCH_EVENTS:
-      console.log('searching events', );
       newEvents = filterEvents(state._allEvents, state.searchQuery)
       return {
         ...state,
         events: newEvents,
         searchQuery: action.searchQuery
+      }
+    case allConstants.SET_EVENTS:
+      console.log(action);
+      return {
+        ...state,
+        _allEvents: action.events,
+        events: action.events,
       }
     default:
       return state;
