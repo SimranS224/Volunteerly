@@ -6,6 +6,7 @@ import { userActions } from "../_redux/_actions";
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage'
 import { HomePage } from '../HomePage';
+import { EventLoginPage } from '../EventLoginPage';
 
 import Navbar from '../components/Navbar/Navbar.jsx';
   
@@ -46,6 +47,7 @@ class Main extends React.Component {
                 <Navbar />
                     <Switch>
                         <Route path="/home" component={HomePage} />
+                        <Route path="/event_login/:id" component={EventLoginPage} />
                         <PrivateRoute admin={false} userReducer={this.props.userReducer} path="/profile" component={ProfilePage} />
 
                         <Route path="/login" component={LoginPage} />

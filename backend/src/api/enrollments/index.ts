@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
 export const router = express.Router();
+<<<<<<< HEAD
 import {Volunteer, Event, Enrollment} from "../../db/models"
+=======
+import {User, Event} from "../../db/models"
+>>>>>>> 3ced5a3dbeccd1f1e1a45bd57fb5ba44ee3b2b3d
 import {sequelize} from "../../db"
 
 const getEnrollments = async (req: Request, res: Response) => {
@@ -8,7 +12,7 @@ const getEnrollments = async (req: Request, res: Response) => {
 
     console.log(`Getting enrollments - user_id: ${user_id}`)
     try {
-        const user = await sequelize.sync().then(()=>Volunteer.findAll({
+        const user = await sequelize.sync().then(()=>User.findAll({
             where: {
                 id: user_id
             },
@@ -39,11 +43,12 @@ const addEnrollment = async (req: Request, res: Response) => {
     const { user_id, event_id } = req.body;
     console.log(`Getting enrollments - user_id: ${user_id} - event_id: ${event_id}`)
     try {
-        await sequelize.sync()
-            .then(() => Enrollment.create({
-                volunteer_id: user_id,
-                event_id: event_id
-            }));
+        const user = await sequelize.sync().then(()=>User.findAll({
+            where: {
+                id: user_id
+            },
+            include: [Event]
+        }));
         res.send({
             statusCode: 200,
             body: "Successfully created enrollment"

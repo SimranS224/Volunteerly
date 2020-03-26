@@ -10,7 +10,6 @@ import { userActions } from "../_redux/_actions";
 import ImageUploader from "react-images-upload";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import QRCode from 'qrcode.react';
 
 import './AdminPage.css';
 
@@ -98,15 +97,15 @@ class AdminPage extends React.Component {
                             Successfully added an event 
                         </Alert>
                     </Snackbar>
-                    <form noValidate autoComplete="off">
-                        <div className="group">
-                            <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
+                    <form noValidate autoComplete="off" >
+                        <div className="inputEvent" >
+                            <TextField className="textField" id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
                         </div>
-                        <div className="group">
-                            <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
+                        <div className="inputEvent" >
+                            <TextField className="textField" id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
                         </div>
-                        <div className="group">
-                            <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
+                        <div className="inputEvent" >
+                            <TextField className="textField" id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
                         </div>
                         <div>
                         <ImageUploader
