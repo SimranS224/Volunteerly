@@ -18,9 +18,8 @@ app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
-
+app.use("/*/login", login)
 app.use("/*/volunteers", volunteers)
 app.use("/*/database", db_calls)
-app.use("/*/login", login)
 
 export const handler = serverless(app)

@@ -44,8 +44,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "sls offline start --httpPort 3004",
-    "start": "npx nodemon --exec \"sls offline start --httpPort 3004\"",
+    "dev": "sls offline start --port 3004",
+    "start": "npx nodemon --exec \"sls offline start --port 3004\"",
     "build": "tsc -p ."
   },
   "keywords": [],
