@@ -3,6 +3,7 @@ import serverless from "serverless-http";
 import { router as events } from "./events";
 import { router as health_check } from "./health_check";
 import { router as volunteers } from "./volunteers";
+import { router as db_calls} from "./database_events";
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -19,5 +20,6 @@ app.use(bodyParser.json());
 // app.use("/health_check", health_check);
 // app.use("/events", events);
 app.use("/volunteers", volunteers)
+app.use("/database", db_calls)
 
 export const handler = serverless(app)
