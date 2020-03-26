@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 export const router = express.Router();
-import {Volunteer, Event} from "../../db/models"
+import {User, Event} from "../../db/models"
 import {sequelize} from "../../db"
 
 const getEnrollments = async (req: Request, res: Response) => {
@@ -8,7 +8,7 @@ const getEnrollments = async (req: Request, res: Response) => {
 
     console.log(`Getting enrollments - user_id: ${user_id}`)
     try {
-        const user = await sequelize.sync().then(()=>Volunteer.findAll({
+        const user = await sequelize.sync().then(()=>User.findAll({
             where: {
                 id: user_id
             },
@@ -33,7 +33,7 @@ const addEnrollment = async (req: Request, res: Response) => {
 
     console.log(`Getting enrollments - user_id: ${user_id}`)
     try {
-        const user = await sequelize.sync().then(()=>Volunteer.findAll({
+        const user = await sequelize.sync().then(()=>User.findAll({
             where: {
                 id: user_id
             },

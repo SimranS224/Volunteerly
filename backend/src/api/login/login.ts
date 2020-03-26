@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {Volunteer} from "../../db/models"
+import {User} from "../../db/models"
 import {sequelize} from "../../db"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -9,7 +9,7 @@ const login = async (req:Request , res: Response) =>  {
   try{
     const {email, password} = req.body;
     await sequelize.sync()
-    const users = await Volunteer.findAll()
+    const users = await User.findAll()
       for(let i = 0; i < users.length; i++){
           if(users[i].email == email){
               console.log("found existing email")

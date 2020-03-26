@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {Volunteer} from "../../db/models"
+import {User} from "../../db/models"
 import {sequelize} from "../../db"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -16,7 +16,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     // sequelize.sync().then(()=>Volunteer.create(data)).then(response => res.send(response))
     await sequelize.sync()
       console.log("synced")
-    const users = await Volunteer.findAll()
+    const users = await User.findAll()
     for(let i = 0; i < users.length; i++){
         if(users[i].email == email){
             console.log("found existing email")
@@ -27,7 +27,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     console.log("raw data")
     const v_body = {id: users.length + 1, email: email, first_name: first_name, last_name: last_name, password: hashedPassword, level: 0, profile_picture_url: profile_picture_url}
     console.log(v_body)
-    const newVolunteer = await Volunteer.create(v_body)
+    const newVolunteer = await User.create(v_body)
     console.log(newVolunteer)
     const token = jwt.sign({ id: email }, "volunteer_secret!!!")
 
@@ -54,7 +54,7 @@ const getSpecificVolunteer = async (userId: any , res: Response) =>  {
   console.log({userId});
   
   try {
-      const user = await sequelize.sync().then(()=>Volunteer.findAll({
+      const user = await sequelize.sync().then(()=>User.findAll({
           where: {
             id: userId
           }
@@ -74,7 +74,7 @@ const getSpecificVolunteer = async (userId: any , res: Response) =>  {
 
 const getAllVolunteersHelper =  async (res: Response) =>  {
   try {
-      const users = await sequelize.sync().then(()=>Volunteer.findAll())
+      const users = await sequelize.sync().then(()=>User.findAll())
       res.send({
           statusCode: 200,
           body: JSON.stringify(users)
