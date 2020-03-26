@@ -1,4 +1,5 @@
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, BelongsToMany} from 'sequelize-typescript';
+import { emitKeypressEvents } from 'readline';
  
 
 
@@ -22,6 +23,9 @@ export class Volunteer extends Model<Volunteer>{
   // date_joined: Date;
   @Column
   profile_picture_UrL: string;
+
+  @BelongsToMany(() => Event, () => Enrollment)
+  events: Event[];
 }
 
 @Table
@@ -105,6 +109,8 @@ export class Event extends Model<Event>{
   organization_id: number;
   @Column
   duration:number;
+  @BelongsToMany(() => Volunteer, () => Enrollment)
+  volunteers: Volunteer[];
 }
 
 @Table
