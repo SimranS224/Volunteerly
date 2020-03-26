@@ -10,16 +10,9 @@ functions:
   volunteers:  
     handler:  src/api/events/index.handler
     events:
-      - http:         ANY all_volunteers
+      - http:         ANY api
         cors: true
       - http:         ANY /{proxy+}
-        cors: true
-  volunteer:  
-    handler:  src/api/specific_volunteer/index.handler
-    events:
-      - http:         ANY volunteer
-        cors: true
-      - http:         ANY volunteer/{proxy+}
         cors: true
 
 plugins:
