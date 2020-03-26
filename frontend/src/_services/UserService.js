@@ -88,7 +88,7 @@ const addEvent = (event, user) => {
 		S3Client
 	    .uploadFile(event.pictures[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(
 	    	))
-		.then(data => console.log(data))
+		.then(data => console.log(data.location))
 		.catch(err => console.log(err))
 	}
 	console.log("uploading files", event.pictures[0])

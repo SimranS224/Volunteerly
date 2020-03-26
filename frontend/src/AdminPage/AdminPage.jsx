@@ -10,6 +10,14 @@ import { userActions } from "../_redux/_actions";
 import ImageUploader from "react-images-upload";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 import QRCode from 'qrcode.react';
 
 import './AdminPage.css';
@@ -27,10 +35,14 @@ class AdminPage extends React.Component {
             data: [],
             eventTitle: '',
             eventDescription: '',
-            eventDate:'2019-05-24',
+            startDate:'2019-05-24',
+            endDate: '2019-05-24',
+            startTime: "Thu Mar 26 2020 23:57:51 GMT-0400 (Eastern Daylight Time)",
+            endTime: "Thu Mar 26 2020 23:58:51 GMT-0400 (Eastern Daylight Time)",
             pictures: []
         };
     }
+
 
     componentDidMount() {
         let events =  userService.getEvents(null);
@@ -43,14 +55,26 @@ class AdminPage extends React.Component {
         }
     }
 
-    addEvent(){
-        this.setState({
-            showEventAddSuccess: true,
-            eventTitle: "",
-            eventDescription: "",
-            eventDate: '2019-05-24',
-            pictures: []
-        });
+    addEvent = async () => {
+        // this.setState({
+        //     showEventAddSuccess: true,
+        //     eventTitle: "",
+        //     eventDescription: "",
+        //     eventDate: '2019-05-24',
+        //     pictures: []
+        // });
+
+        // {"id":10,"name":"Ronstring","start_date":"2/25/2020","end_date":"2/25/2020", "description":"","location":"Huaqiao","event_category_id":"9","photo_url":"http://dummyimage.com/247x163.png/dddddd/000000","organization_id":"4","duration":5}]
+        // try { 
+        //     await userService.addEvent(event, this.props.curUser);
+        //     this.props.addEvent({, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
+
+        // } catch (err) {
+        //     console.log(`Error adding event: ${err}`)
+        // }
+        // console.log(this.props.curUser)
+
+        // console.log({curUser})
         this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
     }
 
@@ -66,10 +90,31 @@ class AdminPage extends React.Component {
         this.setState({eventDescription: e.target.value});
     }
 
-    dateChange(e){
+    startDateChange(e){
         console.log(e.target.value);
-        this.setState({eventDate: e.target.value});
-    }   
+        this.setState({startDate: e.target.value});
+    }  
+    
+    endDateChange(e){
+        console.log(e.target.value);
+        this.setState({endDate: e.target.value});
+    }  
+
+    startTimeChange(time){
+        console.log("here")
+        const stringTime = time.toString().slice(16, 24)
+        console.log({stringTime});
+
+        this.setState({startTime: time});
+    }  
+    
+    endTimeChange(time){
+        const stringTime = time.toString().slice(16, 24)
+        console.log({stringTime});
+        
+        this.setState({endTime: time});
+    } 
+
 
     onDrop(pictureFiles) {
         console.log(pictureFiles)
@@ -106,7 +151,63 @@ class AdminPage extends React.Component {
                             <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
                         </div>
                         <div className="group">
-                            <TextField id="standard-basic" type="date" label="Date"  value={this.state.eventDate} onChange={this.dateChange.bind(this)}/>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                        <Grid container justify="space-around">
+                            <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Start Date"
+                            value={this.state.startDate}
+                            onChange={this.startDateChange.bind(this)}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            />
+                            <KeyboardDatePicker
+                            margin="normal"
+                            id="date-picker-dialog"
+                            label="End Date"
+                            format="MM/dd/yyyy"
+                            value={this.state.endDate}
+                            onChange={this.endDateChange.bind(this)}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            />
+                            </Grid>
+                        </MuiPickersUtilsProvider>
+                        </div>
+                        <div className="group">
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                        <Grid container justify="space-around">
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Start Time"
+                            value={this.state.startTime}
+                            onChange={val => {this.startTimeChange(val)}}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="End Time"
+                            value={this.state.endTime}
+                            onChange={val => {this.endTimeChange(val)}}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        </Grid>
+                        </MuiPickersUtilsProvider>
                         </div>
                         <div>
                         <ImageUploader

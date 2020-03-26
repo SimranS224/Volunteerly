@@ -38,7 +38,6 @@ function userReducer(state = initialState, action) {
         preferences: action.newPreferenceState
       };
     case allConstants.ADD_EVENT:
-      const addedEvents = addEvent(action.event, state.curUser)
       return {
         ...state,
         events: addedEvents
@@ -86,10 +85,9 @@ const deleteEvent = (event, curUser) => {
   return updatedData;
 }
 
-const addEvent = (event, curUser) => {
-  const updatedData = userService.addEvent(event, curUser.user);
-  return updatedData;
-}
+// const addEvent = (event, curUser) => {
+//   return updatedData;
+// }
 
 const filterEvents = (events, searchQuery) => {
   console.log("searchquery", searchQuery)
