@@ -10,6 +10,7 @@ import { userActions } from "../_redux/_actions";
 import ImageUploader from "react-images-upload";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import QRCode from 'qrcode.react';
 
 import './AdminPage.css';
 
@@ -83,6 +84,7 @@ class AdminPage extends React.Component {
 
 
   render() {
+    console.log("data", this.state.data)
       return (
           <div className="AdminPage">
               <div className="AddEvent-Section">
@@ -128,7 +130,8 @@ class AdminPage extends React.Component {
               <div className="ManageEvents-Section">
                     <h2 className="header">Manage Events</h2>
                     <List className="events">
-                        {this.state.data.length > 0 && this.state.data.map((event, i) =>{
+                        {
+                            this.state.data.length > 0 && this.state.data.map((event, i) =>{
                             return <ListItem key={'event' + i.toString()} >
                                 <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
                             </ListItem>
