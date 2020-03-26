@@ -18,7 +18,7 @@ import HeroImage from './welcome-2.png';
 import './HomePage.css';
 import { userActions } from "../_redux/_actions";
 
-
+ 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

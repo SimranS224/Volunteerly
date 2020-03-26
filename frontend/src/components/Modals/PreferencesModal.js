@@ -12,10 +12,53 @@ import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
+import ScheduleSelector from 'react-schedule-selector'
 import './PreferencesModal.css';
 import { connect } from 'react-redux';
 
 import { userActions } from "../../_redux/_actions";
+
+// schedule is a list of date objects for each hour that 
+// the user is available for: Example: [2012-08-01 12:00, 2012-08-01 13:00, 2012-08-01 14:00]
+// This function converts it into a more readable form: with [day of week, start hour, end hour] 
+//  [monday, 12:00, 14:00]
+// NOTE: only the day is considered because the schedule picker we use does not care about the specific date
+//       but rather the day of the week
+const parseSchedule = (schedule) => {
+  const int2day = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednseday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+  }
+  if(schedule.length === 0) {
+    return []
+  }
+
+  let ranges = []
+  let currentDay = int2day[schedule[0].getDay()]
+  let startHour = schedule[0].getHours()
+  let endHour = schedule[0].getHours()
+  for(let i = 1; i < schedule.length; i++) {
+    const date = schedule[i]
+    const day = int2day[date.getDay()]
+    const hour = date.getHours()
+
+    // new day range to process so restart 
+    if(currentDay !== null && (currentDay != day || endHour + 1 !== hour)) {
+      ranges.push([currentDay, startHour, endHour])
+      currentDay = day;
+      startHour = hour;
+      endHour = hour;
+    } 
+    endHour = hour;
+  }
+  ranges.push([currentDay, startHour, endHour]);
+  return ranges;
+}
 
 const PreferencesModal = ({ setPreferences }) => {
 
@@ -25,7 +68,8 @@ const PreferencesModal = ({ setPreferences }) => {
     cleanUp: false,
     communityBuilding: false,
     selectedDate: null,
-    selectedDateString: null
+    selectedDateString: null,
+    schedule: []
   });
 
   const updateHandler = name => event => {
@@ -57,7 +101,15 @@ const PreferencesModal = ({ setPreferences }) => {
        ...state,
        selectedDate: date
     });
-}
+  }
+
+  const handleAvailabilityChange = (newSchedule) => {
+    console.log(parseSchedule(newSchedule))
+    setState({
+      ...state,
+      schedule: newSchedule
+    })
+  }
 
   const { planting, cleanUp, communityBuilding, selectedDate } = state;
   const error = [planting, cleanUp, communityBuilding].filter(v => v).length !== 1;
@@ -94,6 +146,16 @@ const PreferencesModal = ({ setPreferences }) => {
                 />
               </FormGroup>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+              <ScheduleSelector
+                selection={state.schedule}
+                numDays={7}
+                minTime={8}
+                maxTime={24}
+                dateFormat="ddd"
+                startDate={new Date('2020-03-24')}
+                onChange={handleAvailabilityChange}
+              />
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
