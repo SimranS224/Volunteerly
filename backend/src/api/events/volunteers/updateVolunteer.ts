@@ -32,6 +32,7 @@ const login = async (req:Request , res: Response) =>  {
       })
   }
 }
+
 const addVolunteer = async (req:Request , res: Response) =>  {
   // console.log("request is:", req)
   console.log("posting volunteers foo")
@@ -73,27 +74,4 @@ const getAllVolunteers = async (req:Request , res: Response) =>  {
   }
 }
 
-const getVolunteer = async (req:Request , res: Response) =>  {
-  console.log("getting volunteer")
-
-  const { user_id } = req.params;
-  try {
-      const user = await sequelize.sync().then(()=>Volunteer.findAll({
-          where: {
-            id: user_id
-          }
-        }));
-      res.send({
-          statusCode: 200,
-          body: JSON.stringify(user)
-      });
-  } catch (err) {
-      res.send({
-          statusCode: err.statusCode || 500,
-          headers: { 'Content-Type': 'text/plain' },
-          body: err.message || 'Could not fetch the Note.'
-      })
-  }
-}
-
-export { addVolunteer, getAllVolunteers, getVolunteer};
+export { addVolunteer, getAllVolunteers};

@@ -7,12 +7,19 @@ provider:
   region: us-east-1
 
 functions: 
-  app:  
+  volunteers:  
     handler:  src/api/events/index.handler
     events:
-      - http:         ANY /
+      - http:         ANY all_volunteers
         cors: true
       - http:         ANY /{proxy+}
+        cors: true
+  volunteer:  
+    handler:  src/api/specific_volunteer/index.handler
+    events:
+      - http:         ANY volunteer
+        cors: true
+      - http:         ANY volunteer/{proxy+}
         cors: true
 
 plugins:
