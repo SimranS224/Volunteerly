@@ -78,6 +78,10 @@ const setEvents = (events) => {
   return {type: allConstants.SET_EVENTS, events: events}
 }
 
+const setEnrolledEvents = (enrolledEvents) => {
+  return {type: allConstants.setEnrolledEvents, enrolledEvents: enrolledEvents}
+}
+
 export const userActions = {
   setPreferences, 
   register, 
@@ -87,5 +91,6 @@ export const userActions = {
   addEvent,
   deleteEvent,
   searchEvents,
-  setEvents
+  setEvents,
+  setEnrolledEvents
 }
