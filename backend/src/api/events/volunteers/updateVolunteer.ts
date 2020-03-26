@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 
 const addVolunteer = async (req:Request , res: Response) =>  {
   // console.log("request is:", req)
+  try{
   console.log("posting volunteers foo")
     const {email, first_name, last_name, password} = req.body;
     console.log(req.body)
@@ -20,7 +21,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     for(let i = 0; i < users.length; i++){
         if(users[i].email == email){
             console.log("found existing email")
-            return res.send({status: 'error', msg: "Account with email already exists"})
+            return res.send({status: 401, msg: "Account with email already exists"})
         }
     }
     console.log("hello!!")
@@ -29,7 +30,18 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     console.log(v_body)
     const newVolunteer = await Volunteer.create(v_body)
     console.log(newVolunteer)
-    return res.send({status: "success", msg: ""})
+    const token = jwt.sign({ id: email }, "volunteer_secret!!!")
+
+    return res.send({statusCode: 200, email: email, id: users.length, token: token, level: 0, msg: ""})
+  }
+  catch (err) {
+      res.send({
+          statusCode: err.statusCode || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message || 'Could not fetch the Note.'
+      })
+  }
+
 }
 
 const getAllVolunteers = async (req:Request , res: Response) =>  {

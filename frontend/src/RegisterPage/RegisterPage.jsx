@@ -12,24 +12,23 @@ class RegisterPage extends React.Component {
     super(props);
 
     this.state = {
-        username: '',
+        email: '',
         password: '',
-        name: ''
+        first_name: '',
+        last_name: ''
     };
   }
-  register = async (name, userName, password) =>{
+  register = async (first_name, lastname, email, password) =>{
     let res = await fetch('http://localhost:3004/dev/api/volunteers/', {
         method: 'post',
-        body:    JSON.stringify({name: name, email: userName, password: password}),
+        body:  JSON.stringify({first_name: first_name, last_name: last_name, email: email, password: password}),
         headers: { 'Content-Type': 'application/json' },
     })
     res = await res.json()
     console.log("register res", res)
-    if(res.statusCode === 200){
-      this.props.history.push('/login')
-    }else{
-      alert(res.msg)
-    }
+    this.props.register(res.statusCode)
+    this.props.login(res.id, res.statusCode, res.email, res.token, res.level)
+
   }
 
   render() {
@@ -38,12 +37,13 @@ class RegisterPage extends React.Component {
         <div className="login">
         <h3>Register </h3>
           <FormControl className="form">
-           <TextField id="name"  required placeholder="Full Name" variant="outlined" onChange={(e)=> {this.setState({'name': e.target.value})}}/>
+           <TextField id="first_name"  required placeholder="First Name" variant="outlined" onChange={(e)=> {this.setState({'first_name': e.target.value})}}/>
+           <TextField id="last_name"  required placeholder="Last Name" variant="outlined" onChange={(e)=> {this.setState({'last_name': e.target.value})}}/>
 
-            <TextField id="email"  required placeholder="Email" variant="outlined" onChange={(e)=> {this.setState({'username': e.target.value})}}/>
+            <TextField id="email"  required placeholder="Email" variant="outlined" onChange={(e)=> {this.setState({'email': e.target.value})}}/>
             <TextField id="password" required type="Password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
             <Button variant="contained" color="primary"  value="Submit" onClick={() => {
-              this.register(this.state.name, this.state.username, this.state.password)
+              this.register(this.state.first_name, this.state.last_name, this.state.email, this.state.password)
             }}>
                 Register
             </Button>
@@ -56,17 +56,16 @@ class RegisterPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    register: (name, username, password) => {
-      dispatch(userActions.register(name, username, password))
+    register: (statusCode) => {
+      dispatch(userActions.register(statusCode))
+    },
+    login: (id, statusCode, email, token, level) => {
+      dispatch(userActions.login(id, statusCode, email, token, level))
     }
   } 
 }
 
-const mapStateToProps = state => {
-  return {
-
-    }
-}
+const mapStateToProps = null
 
 const Registerconnected =  connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
 export { Registerconnected as RegisterPage};

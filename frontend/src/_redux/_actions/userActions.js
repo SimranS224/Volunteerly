@@ -1,25 +1,24 @@
 import { browserHistory } from '../../_helpers'; 
 import { allConstants } from './constants';
-import { loginService } from '../../_services'
 
-const register = async (name, username, password) => {
- try {
+const register = async (statusCode) => {
+ 
     console.log("registering")
-    const res = loginService.register(name, username, password);
-    if (res.success) {
+    if (statusCode === 200) {
       
       return {type: allConstants.REGISTER, success: true} 
     }
-    else{
-      console.log("failed to add")
-      console.log(res.msg)
+    else if (statusCode === 401){
+      alert("Email already exists!")
       return {type: allConstants.REGISTER, success: false} 
 
     }
-  } catch (err) {
-    console.log("error?", err)
-    return {type: allConstants.REGISTER, success: false} 
-  }
+    else{
+      console.log("failed to add")
+      return {type: allConstants.REGISTER, success: false} 
+
+    }
+  
 }
 
 const login = (id, statusCode, username, token, level) => {
@@ -30,13 +29,18 @@ const login = (id, statusCode, username, token, level) => {
       browserHistory.push("/home")
       return {type: allConstants.LOGIN, success: true, curUser: {id: id, username: username, token: token, level: level}, isAdmin: level === 1} 
     }
+    else if (statusCode === 401){
+      alert("Invalid credentials!")
+      return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
+
+    }
     else{
+      alert("Error occured!")
       return {type: allConstants.LOGIN, success: false, curUser: null, isAdmin: false} 
   }
 }
 
 const logout = () => {
-  browserHistory.push("/home")
   return { type: allConstants.LOGOUT }
 }
 
