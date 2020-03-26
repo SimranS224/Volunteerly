@@ -110,16 +110,35 @@ const deleteEvent = (event, user) => {
  * @param {integer} userId 
  */
 const getEnrolledEvents = (userId) => {
+	console.log("user id: ", userId);
 	return fetch(`http://localhost:3004/dev/api/enrollments/${userId}`)
 		.then(res => res.json())
 		.then(res => {
-			if(res.error) {
-				throw(res.error)
+			if(res.statusCode !== 200) {
+				throw(`Problem getting event for user: ${res.body}`)
 			}
 			return JSON.parse(res.body)
 		})
+		.catch(error => {
+			console.error(error);
+		})
+}
+
+const enrollInEvent = (userId, eventId) => {
+	return fetch(`http://localhost:3004/dev/api/enrollments/add`, {
+        method: 'post',
+        body:    JSON.stringify({event_id: eventId, user_id: userId, attended: 0}),
+        headers: { 'Content-Type': 'application/json' },
+    })
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		return res
+	})
 }
 
 export const userService = {
-	getEvents, addEvent, deleteEvent, getEnrolledEvents
+	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent
 }

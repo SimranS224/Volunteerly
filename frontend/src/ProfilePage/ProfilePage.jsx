@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {userService} from '../_services/UserService.js'
+import { userActions } from "../_redux/_actions";
 import CardList from '../components/General/CardList'
 import UserStatistics from '../components/General/UserStatistics'
 import StatCard from '../components/Cards/StatCard/StatCard';
 import AchievementCard from '../components/Cards/AchievementCard/AchievementCard';
+import OppCard from '../components/OppCard/OppCard';
 import './ProfilePage.css'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import HouseIcon from './HouseCircle.svg';
 import badge1 from './badge1.png';
 import badge2 from './badge2.png';
@@ -30,9 +34,23 @@ createData('Tutored 10 high school students', undefined, badge3),
 class ProfilePage extends React.Component {
     constructor(props){
         super(props)
+        this.state = {
+            loadedEnrolledEvents: false,
+            enrolledEvents: []
+        }
     }
 
     render() {
+        if(!this.state.loadedEnrolledEvents) {
+            this.setState({loadedEnrolledEvents: true});
+            userService.getEnrolledEvents(this.props.curUser.id).then((events) => {
+                console.log("setting events: ", events);
+                this.setState({
+                    enrolledEvents: events
+                })
+            })
+        }
+
         let pastEvents =  userService.getEvents('past');
         let futureEvents =  userService.getEvents('future');
       return (
@@ -76,17 +94,39 @@ class ProfilePage extends React.Component {
                     <h1>Past Events</h1>
                 </div>
                 <CardList elementList={pastEvents}></CardList> */}
+
+                <div>
+                    <h1>Events {this.props.curUser.first_name} has enrolled in</h1>
+                </div>
+                <List>
+                    {this.state.enrolledEvents.map((event, i) => {
+                        return (<ListItem key={'event' + i.toString()}>
+                                    <OppCard 
+                                    date={event.start_date}
+                                    title={event.name}
+                                    description={event.description}
+                                    />
+                                </ListItem>)
+                    })}
+                </List>
             </div>
           </div>
         );
     }
 }
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = dispatch => {
+    return {
+      setEnrolledEvents: (enrolledEvents) => {
+        dispatch(userActions.setEnrolledEvents(enrolledEvents));
+      }
+    } 
+}
+
 const mapStateToProps = state => {
   return {
     curUser: state.userReducer.curUser
-    }
+  }
 }
 
 const Profileconnected =  connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
