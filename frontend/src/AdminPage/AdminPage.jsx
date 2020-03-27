@@ -35,6 +35,7 @@ class AdminPage extends React.Component {
             data: [],
             eventTitle: '',
             eventDescription: '',
+            location: '',
             startDate:'2019-05-24',
             endDate: '2019-05-24',
             startTime: "Thu Mar 26 2020 23:57:51 GMT-0400 (Eastern Daylight Time)",
@@ -83,11 +84,16 @@ class AdminPage extends React.Component {
     }
 
     titleChange(e){
+
         this.setState({eventTitle: e.target.value});
     }
 
     descriptionChange(e){
         this.setState({eventDescription: e.target.value});
+    }
+
+    locationChange(e){
+        this.setState({location: e.target.value});
     }
 
     startDateChange(e){
@@ -149,6 +155,9 @@ class AdminPage extends React.Component {
                         </div>
                         <div className="group">
                             <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
+                        </div>
+                        <div className="group">
+                            <TextField id="standard-basic" label="Location" multiline={true} rows={5} value={this.state.location} onChange={this.locationChange.bind(this)} />
                         </div>
                         <div className="group">
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
