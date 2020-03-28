@@ -12,6 +12,14 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import '../components/Modals/PreferencesModal.css';
+
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -37,13 +45,24 @@ class AdminPage extends React.Component {
             eventDescription: '',
             location: '',
             startDate:'2019-05-24',
+            valid: false, 
+            eventType: '',
             endDate: '2019-05-24',
             startTime: "Thu Mar 26 2020 23:57:51 GMT-0400 (Eastern Daylight Time)",
             endTime: "Thu Mar 26 2020 23:58:51 GMT-0400 (Eastern Daylight Time)",
-            pictures: []
+            pictures: [],
+            Cleanup: true,
+            Hospital: false,
+            Translation: false,
+            Fundraising: false,
+            Homeless: false,
+            ElderlyorDisabled: false,
+            Research: false, 
+            RefugeesorMigrants: false,
+            Trustee: false 
         };
     }
-
+    
 
     componentDidMount() {
         let events =  userService.getEvents(null);
@@ -57,6 +76,21 @@ class AdminPage extends React.Component {
     }
 
     addEvent = async () => {
+
+        // verify all fields are filled, if not show an error 
+
+
+        // create new event 
+
+
+        // sent to user service 
+
+
+        // reset state 
+
+
+
+
         // this.setState({
         //     showEventAddSuccess: true,
         //     eventTitle: "",
@@ -132,9 +166,21 @@ class AdminPage extends React.Component {
     handleClose() {
         this.setState({showEventAddSuccess: false});
     }
+    updateHandler = name => event => {
+        this.setState({[name]: event.target.checked });
+    };
 
 
   render() {
+
+    const { Cleanup, Hospital, Translation, Fundraising, Homeless, ElderlyorDisabled,
+            Research, RefugeesorMigrants, Trustee  } = this.state;
+    const eventTypes = []
+
+    const error = [Cleanup, Hospital, Translation,
+        Fundraising, Homeless, ElderlyorDisabled,
+        Research, RefugeesorMigrants, Trustee ].filter(v => v).length !== 1;
+
     console.log("data", this.state.data)
       return (
           <div className="AdminPage">
@@ -158,6 +204,33 @@ class AdminPage extends React.Component {
                         </div>
                         <div className="group">
                             <TextField id="standard-basic" label="Location" multiline={true} rows={5} value={this.state.location} onChange={this.locationChange.bind(this)} />
+                        </div>
+                        <div className="root">
+
+                        <FormControl required error={error} component="fieldset" className="formControl">
+                            <FormLabel component="legend">Pick one (i.e the one that matches your event the most) </FormLabel>
+                            <FormGroup>
+                            {
+                             this.state.data.map((event, i) =>{
+                            return <ListItem key={'event' + i.toString()} >
+                                <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
+                            </ListItem>
+                            })}
+                            <FormControlLabel
+                                control={<Checkbox checked={Cleanup} onChange={this.updateHandler("Cleanup")} name="Cleanup" />}
+                                label="Cleanup Gray"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox checked={Hospital} onChange={this.updateHandler()} name="Hospital" />}
+                                label="Hospital"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox checked={antoine} onChange={this.updateHandler} name="antoine" />}
+                                label="Antoine Llorca"
+                            />
+                            </FormGroup>
+                            <FormHelperText>You can display an error</FormHelperText>
+                        </FormControl>
                         </div>
                         <div className="group">
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
