@@ -191,7 +191,7 @@ class AdminPage extends React.Component {
         const previousstate = this.state
         console.log({previousstate})
 
-
+        
         this.setState({...initialState, 
             eventTypes: JSON.parse(JSON.stringify(intialEventTypes)),
             data: this.props.globalEvents,
@@ -201,6 +201,7 @@ class AdminPage extends React.Component {
             addEventErrors: []
            });
         console.log({initialState});
+        console.log({intialEventTypes});
         
         // console.log({curUser})
         // this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
