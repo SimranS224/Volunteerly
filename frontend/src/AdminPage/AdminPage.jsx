@@ -51,15 +51,18 @@ class AdminPage extends React.Component {
             startTime: "Thu Mar 26 2020 23:57:51 GMT-0400 (Eastern Daylight Time)",
             endTime: "Thu Mar 26 2020 23:58:51 GMT-0400 (Eastern Daylight Time)",
             pictures: [],
-            Cleanup: true,
-            Hospital: false,
-            Translation: false,
-            Fundraising: false,
-            Homeless: false,
-            ElderlyorDisabled: false,
-            Research: false, 
-            RefugeesorMigrants: false,
-            Trustee: false 
+            eventTypes: {
+                "Cleanup": true,
+                "Hospital": false,
+                "Translation": false,
+                "Fundraising": false,
+                "Homeless": false,
+                "Elderly or Disabled": false,
+                "Research": false, 
+                "Refugees or Migrants": false,
+                "Trustee": false 
+            },
+            error: false
         };
     }
     
@@ -72,6 +75,10 @@ class AdminPage extends React.Component {
           this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
         } else {
           this.setState({data: events, filtered: events})
+        }
+
+        if (!this.state.error){
+            this.setState({error: false});
         }
     }
 
@@ -167,162 +174,151 @@ class AdminPage extends React.Component {
         this.setState({showEventAddSuccess: false});
     }
     updateHandler = name => event => {
-        this.setState({[name]: event.target.checked });
+        let newState = Object.assign({}, this.state);
+        newState.eventTypes[`${name}`]= event.target.checked
+        this.setState(newState); 
+        console.log("updte");
+        
+        this.setState({error: Object.keys(this.state.eventTypes).filter(event => this.state.eventTypes[`${event}`]).length === 1
+        })
     };
 
 
   render() {
+    const eventTypes = this.state.eventTypes;
+    console.log({eventTypes})
+    const er = this.state.error;
+    console.log({er});
+    return (
+        <div className="AdminPage">
+            <div className="AddEvent-Section">
+            <h2 className="header">Add Event</h2>
+            <div className="AddEvent">
+                <Snackbar open={this.state.showEventAddSuccess} 
+                            autoHideDuration={6000}
+                            onClose={this.handleClose.bind(this)}
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert onClose={this.handleClose.bind(this)} severity="success">
+                        Successfully added an event 
+                    </Alert>
+                </Snackbar>
+                <form noValidate autoComplete="off">
+                    <div className="group">
+                        <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
+                    </div>
+                    <div className="group">
+                        <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
+                    </div>
+                    <div className="group">
+                        <TextField id="standard-basic" label="Location" multiline={true} rows={5} value={this.state.location} onChange={this.locationChange.bind(this)} />
+                    </div>
+                    <div className="root">
 
-    const { Cleanup, Hospital, Translation, Fundraising, Homeless, ElderlyorDisabled,
-            Research, RefugeesorMigrants, Trustee  } = this.state;
-    const eventTypes = []
-
-    const error = [Cleanup, Hospital, Translation,
-        Fundraising, Homeless, ElderlyorDisabled,
-        Research, RefugeesorMigrants, Trustee ].filter(v => v).length !== 1;
-
-    console.log("data", this.state.data)
-      return (
-          <div className="AdminPage">
-              <div className="AddEvent-Section">
-                <h2 className="header">Add Event</h2>
-                <div className="AddEvent">
-                    <Snackbar open={this.state.showEventAddSuccess} 
-                              autoHideDuration={6000}
-                              onClose={this.handleClose.bind(this)}
-                              anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-                        <Alert onClose={this.handleClose.bind(this)} severity="success">
-                            Successfully added an event 
-                        </Alert>
-                    </Snackbar>
-                    <form noValidate autoComplete="off">
-                        <div className="group">
-                            <TextField id="standard-basic" label="Event Name" value={this.state.eventTitle} onChange={this.titleChange.bind(this)}/>
-                        </div>
-                        <div className="group">
-                            <TextField id="standard-basic" label="Description" multiline={true} rows={5} value={this.state.eventDescription} onChange={this.descriptionChange.bind(this)} />
-                        </div>
-                        <div className="group">
-                            <TextField id="standard-basic" label="Location" multiline={true} rows={5} value={this.state.location} onChange={this.locationChange.bind(this)} />
-                        </div>
-                        <div className="root">
-
-                        <FormControl required error={error} component="fieldset" className="formControl">
-                            <FormLabel component="legend">Pick one (i.e the one that matches your event the most) </FormLabel>
-                            <FormGroup>
-                            {
-                             this.state.data.map((event, i) =>{
-                            return <ListItem key={'event' + i.toString()} >
-                                <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
-                            </ListItem>
-                            })}
-                            <FormControlLabel
-                                control={<Checkbox checked={Cleanup} onChange={this.updateHandler("Cleanup")} name="Cleanup" />}
-                                label="Cleanup Gray"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox checked={Hospital} onChange={this.updateHandler()} name="Hospital" />}
-                                label="Hospital"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox checked={antoine} onChange={this.updateHandler} name="antoine" />}
-                                label="Antoine Llorca"
-                            />
-                            </FormGroup>
-                            <FormHelperText>You can display an error</FormHelperText>
-                        </FormControl>
-                        </div>
-                        <div className="group">
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-                        <Grid container justify="space-around">
-                            <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Start Date"
-                            value={this.state.startDate}
-                            onChange={this.startDateChange.bind(this)}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            />
-                            <KeyboardDatePicker
-                            margin="normal"
-                            id="date-picker-dialog"
-                            label="End Date"
-                            format="MM/dd/yyyy"
-                            value={this.state.endDate}
-                            onChange={this.endDateChange.bind(this)}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
-                        </div>
-                        <div className="group">
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-                        <Grid container justify="space-around">
-                            <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="Start Time"
-                            value={this.state.startTime}
-                            onChange={val => {this.startTimeChange(val)}}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change time',
-                            }}
-                            />
-
-                            <KeyboardTimePicker
-                            margin="normal"
-                            id="time-picker"
-                            label="End Time"
-                            value={this.state.endTime}
-                            onChange={val => {this.endTimeChange(val)}}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change time',
-                            }}
-                            />
-                        </Grid>
-                        </MuiPickersUtilsProvider>
-                        </div>
-                        <div>
-                        <ImageUploader
-                            withIcon={true}
-                            withPreview={true}
-                            buttonText="Choose images"
-                            onChange={this.onDrop.bind(this)}
-                            imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".JPG", ".GIF", ".PNG", ".JPEG"]}
-                            maxFileSize={5242880}
-                          />
-                        </div>
-                        <div className="group">
-                            <Button variant="contained" color="primary" onClick={this.addEvent.bind(this)}>
-                                Add event
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-              </div>
-
-              <div className="ManageEvents-Section">
-                    <h2 className="header">Manage Events</h2>
-                    <List className="events">
+                    <FormControl required error={!this.state.error} component="fieldset" className="formControl">
+                        <FormLabel component="legend">Pick one (i.e the one that matches your event the most) </FormLabel>
+                        <FormGroup>
                         {
-                            this.state.data.length > 0 && this.state.data.map((event, i) =>{
-                            return <ListItem key={'event' + i.toString()} >
-                                <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
-                            </ListItem>
-                            })}
-                    </List> 
-              </div>
-          </div>
-      );
+                            Object.keys(this.state.eventTypes).map((event, i) =>{
+                                return <FormControlLabel key={`${event}`}
+                                    control={<Checkbox checked={this.state.eventTypes.event} onChange={this.updateHandler(event)} name={`${event}`} />}
+                                    label={`${event}`}
+                                />
+                        })}
+                        </FormGroup>
+                        <FormHelperText>Please only choose one</FormHelperText>
+                    </FormControl>
+                    </div>
+                    <div className="group">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                    <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="MM/dd/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Start Date"
+                        value={this.state.startDate}
+                        onChange={this.startDateChange.bind(this)}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                        />
+                        <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="End Date"
+                        format="MM/dd/yyyy"
+                        value={this.state.endDate}
+                        onChange={this.endDateChange.bind(this)}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                        />
+                        </Grid>
+                    </MuiPickersUtilsProvider>
+                    </div>
+                    <div className="group">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                    <Grid container justify="space-around">
+                        <KeyboardTimePicker
+                        margin="normal"
+                        id="time-picker"
+                        label="Start Time"
+                        value={this.state.startTime}
+                        onChange={val => {this.startTimeChange(val)}}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change time',
+                        }}
+                        />
+
+                        <KeyboardTimePicker
+                        margin="normal"
+                        id="time-picker"
+                        label="End Time"
+                        value={this.state.endTime}
+                        onChange={val => {this.endTimeChange(val)}}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change time',
+                        }}
+                        />
+                    </Grid>
+                    </MuiPickersUtilsProvider>
+                    </div>
+                    <div>
+                    <ImageUploader
+                        withIcon={true}
+                        withPreview={true}
+                        buttonText="Choose images"
+                        onChange={this.onDrop.bind(this)}
+                        imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".JPG", ".GIF", ".PNG", ".JPEG"]}
+                        maxFileSize={5242880}
+                        />
+                    </div>
+                    <div className="group">
+                        <Button variant="contained" color="primary" onClick={this.addEvent.bind(this)}>
+                            Add event
+                        </Button>
+                    </div>
+                </form>
+            </div>
+            </div>
+
+            <div className="ManageEvents-Section">
+                <h2 className="header">Manage Events</h2>
+                <List className="events">
+                    {
+                        this.state.data.length > 0 && this.state.data.map((event, i) =>{
+                        return <ListItem key={'event' + i.toString()} >
+                            <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
+                        </ListItem>
+                        })}
+                </List> 
+            </div>
+        </div>
+    );
   }
 }
 
