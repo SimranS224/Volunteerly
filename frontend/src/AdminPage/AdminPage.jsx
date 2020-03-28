@@ -34,7 +34,6 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 const initialState = {
-    data: [],
     eventTitle: '',
     eventDescription: '',
     location: '',
@@ -43,29 +42,34 @@ const initialState = {
     startTime: new Date(),
     endTime: new Date(),
     currentDateTime: new Date(), 
-    pictures: [],
-    eventTypes: {
-        "Cleanup": false,
-        "Hospital": false,
-        "Translation": false,
-        "Fundraising": false,
-        "Homeless": false,
-        "Elderly or Disabled": false,
-        "Research": false, 
-        "Refugees or Migrants": false,
-        "Trustee": false 
-    },
-    error: false,
-    addEventErrors: []// use for displaying to the user when an event 
+    error: false
 };
-class AdminPage extends React.Component {
 
-    
+const intialEventTypes = {
+    "Cleanup": false,
+    "Hospital": false,
+    "Translation": false,
+    "Fundraising": false,
+    "Homeless": false,
+    "Elderly or Disabled": false,
+    "Research": false, 
+    "Refugees or Migrants": false,
+    "Trustee": false 
+}
+
+
+class AdminPage extends React.Component {
 
     constructor(props) {
         super(props);
     
-        this.state = {...initialState};
+        this.state = {...initialState, 
+                      eventTypes: JSON.parse(JSON.stringify(intialEventTypes)),
+                      data: [],
+                      pictures: [],
+                      addEventErrors: [],
+                      addEventErrors: []// use for displaying to the user when an event 
+                     };
     }
     
 
@@ -99,7 +103,7 @@ class AdminPage extends React.Component {
         if (state.endDate <= state.currentDateTime){
             errors.push("Invalid end date");
         } 
-        if (state.startDate >= state.endDate) {
+        if (state.startDate > state.endDate) {
             errors.push("Start date cannot be after end date");
         }
         if (state.startTime >= state.endTime){
@@ -187,8 +191,15 @@ class AdminPage extends React.Component {
         const previousstate = this.state
         console.log({previousstate})
 
-        this.setState({...initialState});
-        this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
+
+        this.setState({...initialState, 
+            eventTypes: JSON.parse(JSON.stringify(intialEventTypes)),
+            data: this.props.globalEvents,
+            pictures: [],
+            addEventErrors: [],
+            filtered: this.props.globalEvents,
+            addEventErrors: []
+           });
         console.log({initialState});
         
         // console.log({curUser})
