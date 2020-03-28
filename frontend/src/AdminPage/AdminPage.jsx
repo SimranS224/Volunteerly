@@ -33,38 +33,39 @@ import './AdminPage.css';
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
+const initialState = {
+    data: [],
+    eventTitle: '',
+    eventDescription: '',
+    location: '',
+    startDate: new Date('2019-08-18T21:11:54'),
+    endDate: new Date('2019-08-18T21:11:54'),
+    startTime: new Date(),
+    endTime: new Date(),
+    currentDateTime: new Date(), 
+    pictures: [],
+    eventTypes: {
+        "Cleanup": false,
+        "Hospital": false,
+        "Translation": false,
+        "Fundraising": false,
+        "Homeless": false,
+        "Elderly or Disabled": false,
+        "Research": false, 
+        "Refugees or Migrants": false,
+        "Trustee": false 
+    },
+    error: false,
+    addEventErrors: []// use for displaying to the user when an event 
+};
 class AdminPage extends React.Component {
+
+    
 
     constructor(props) {
         super(props);
     
-        this.state = {
-            data: [],
-            eventTitle: '',
-            eventDescription: '',
-            location: '',
-            startDate: new Date('2019-08-18T21:11:54'),
-            endDate: new Date('2019-08-18T21:11:54'),
-            startTime: new Date(),
-            endTime: new Date(),
-            currentDateTime: new Date(), 
-            pictures: [],
-            eventTypes: {
-                "Cleanup": false,
-                "Hospital": false,
-                "Translation": false,
-                "Fundraising": false,
-                "Homeless": false,
-                "Elderly or Disabled": false,
-                "Research": false, 
-                "Refugees or Migrants": false,
-                "Trustee": false 
-            },
-            error: false,
-            addEventErrors: [] // use for displaying to the user when an event 
-            // is not valid 
-        };
+        this.state = {...initialState};
     }
     
 
@@ -98,6 +99,9 @@ class AdminPage extends React.Component {
         if (state.endDate <= state.currentDateTime){
             errors.push("Invalid end date");
         } 
+        if (state.startDate >= state.endDate) {
+            errors.push("Start date cannot be after end date");
+        }
         if (state.startTime >= state.endTime){
             errors.push("Invalid start and end time");
         } 
@@ -114,59 +118,81 @@ class AdminPage extends React.Component {
         }
     }
 
+    getDuration() {
+        const duration = Math.abs(this.state.startTime - this.state.endTime) / 36e5
+        console.log({duration});
+        const decimals = (duration % 1) * 60
+        console.log({decimals});
+        
+        let rounded_duration;
+        if (decimals < 15){
+            rounded_duration = Math.floor(duration)
+        } else if (decimals < 45){
+            rounded_duration = Math.floor(duration) + 0.30
+        } else {
+            rounded_duration = Math.ceil(duration)
+        }
 
+        console.log({rounded_duration});
+        return rounded_duration
+    }
+
+    getTimeRange() {
+        const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+        const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+        return startTimeAsString + "-" + endTimeAsString
+    }
+   
 
     addEvent = async () => {
 
         // verify all fields are filled, if not show an error 
-        console.log("diweonfenweof")
+        console.log("Adding event")
         const isValid = this.verifyValidEvent()
         if (!isValid[0]){
             this.setState({addEventErrors: isValid[1]});
             console.log("Could not add event"); // alert at this point
             return 
         }
-        // const state = this.state
-        // // create new event 
-        // const newEvent = {
-        //     name: state.eventTitle,
-        //     start_date: 
-        //     end_date:
-        //     description:
-        //     location:
-        //     photo_url: 
-
-        // }
+        const state = this.state
+        // create new event 
+        const newEvent = {
+            name: state.eventTitle,
+            start_date: state.startDate,
+            end_date: state.endDate,
+            description: state.eventDescription,
+            location:state.location,
+            photo_url: state.pictures,
+            organization_id: this.props.curUser.id,
+            duration: this.getDuration(),
+            timeRange: this.getTimeRange()
+        }
 
 
         // sent to user service 
+        console.log("Added event ");
+        console.log({newEvent});
 
-
-        // reset state 
-
-
-
-
-        // this.setState({
-        //     showEventAddSuccess: true,
-        //     eventTitle: "",
-        //     eventDescription: "",
-        //     eventDate: '2019-05-24',
-        //     pictures: []
-        // });
-
-        // {"id":10,"name":"Ronstring","start_date":"2/25/2020","end_date":"2/25/2020", "description":"","location":"Huaqiao","event_category_id":"9","photo_url":"http://dummyimage.com/247x163.png/dddddd/000000","organization_id":"4","duration":5}]
+        
         // try { 
-        //     await userService.addEvent(event, this.props.curUser);
-        //     this.props.addEvent({, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
+        //     await userService.addEvent({event: newEvent, token: this.props.curUser.token});
+        //     this.props.addEvent(newEvent)
 
         // } catch (err) {
         //     console.log(`Error adding event: ${err}`)
         // }
-        // console.log(this.props.curUser)
 
+
+        // reset state 
+        const previousstate = this.state
+        console.log({previousstate})
+
+        this.setState({...initialState});
+        this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
+        console.log({initialState});
+        
         // console.log({curUser})
-        this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
+        // this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
     }
 
     deleteEvent(event){
@@ -236,20 +262,27 @@ class AdminPage extends React.Component {
 
 
   render() {
-    const eventTypes = this.state.eventTypes;
-    console.log({eventTypes})
-    const er = this.state.error;
-    console.log({er});
-    let verifyerror = this.verifyValidEvent()[1]
-    console.log({verifyerror})
-    console.log(this.state.endDate <= this.state.currentDateTime);
-    console.log(this.state.endDate);
-    console.log(this.state.currentDateTime);
-    const pics = this.state.pictures
-    console.log({pics})
+    // const eventTypes = this.state.eventTypes;
+    // console.log({eventTypes})
+    // const er = this.state.error;
+    // console.log({er});
+    // let verifyerror = this.verifyValidEvent()[1]
+    // console.log({verifyerror})
+    // console.log(this.state.endDate <= this.state.currentDateTime);
+    // console.log(this.state.endDate);
+    // console.log(this.state.currentDateTime);
+    // const pics = this.state.pictures
+    // console.log({pics})
     // convert to string 
+    const addErrors = this.state.addEventErrors
+    console.log({addErrors})
+    const afterState = this.state
+    console.log({afterState});
     
-    
+    // const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+    // const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+    // const timeRange = startTimeAsString + "-" + endTimeAsString
+    // console.log({timeRange});
     
     return (
         <div className="AdminPage">
