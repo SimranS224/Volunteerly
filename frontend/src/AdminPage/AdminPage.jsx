@@ -44,15 +44,14 @@ class AdminPage extends React.Component {
             eventTitle: '',
             eventDescription: '',
             location: '',
-            startDate:'2019-05-24',
-            valid: false, 
-            eventType: '',
-            endDate: '2019-05-24',
-            startTime: "Thu Mar 26 2020 23:57:51 GMT-0400 (Eastern Daylight Time)",
-            endTime: "Thu Mar 26 2020 23:58:51 GMT-0400 (Eastern Daylight Time)",
+            startDate: new Date('2019-08-18T21:11:54'),
+            endDate: new Date('2019-08-18T21:11:54'),
+            startTime: new Date(),
+            endTime: new Date(),
+            currentDateTime: new Date(), 
             pictures: [],
             eventTypes: {
-                "Cleanup": true,
+                "Cleanup": false,
                 "Hospital": false,
                 "Translation": false,
                 "Fundraising": false,
@@ -62,7 +61,9 @@ class AdminPage extends React.Component {
                 "Refugees or Migrants": false,
                 "Trustee": false 
             },
-            error: false
+            error: false,
+            addEventErrors: [] // use for displaying to the user when an event 
+            // is not valid 
         };
     }
     
@@ -82,12 +83,60 @@ class AdminPage extends React.Component {
         }
     }
 
+    verifyValidEvent = () => {
+        const state  = this.state;
+        let errors = [];
+        if (!state.eventTitle.length || state.eventTitle.length <= 4 ){
+            errors.push("Event Title needs to be longer than 4 characters ");
+        } 
+        if (!state.location || state.location.length <= 4 ){
+            errors.push("Event Location needs to be longer than 4 characters ");
+        } 
+        if (state.startDate <= state.currentDateTime){
+            errors.push("Invalid start date");
+        } 
+        if (state.endDate <= state.currentDateTime){
+            errors.push("Invalid end date");
+        } 
+        if (state.startTime >= state.endTime){
+            errors.push("Invalid start and end time");
+        } 
+        if (!state.pictures){
+            errors.push("Please select one more pictures describing your event");
+        } 
+        if (!state.error){
+            errors.push("Invalid event type");
+        }
+        if (!errors.length){
+            return [true, []];
+        } else { 
+            return [false, errors];
+        }
+    }
+
+
+
     addEvent = async () => {
 
         // verify all fields are filled, if not show an error 
+        console.log("diweonfenweof")
+        const isValid = this.verifyValidEvent()
+        if (!isValid[0]){
+            this.setState({addEventErrors: isValid[1]});
+            console.log("Could not add event"); // alert at this point
+            return 
+        }
+        // const state = this.state
+        // // create new event 
+        // const newEvent = {
+        //     name: state.eventTitle,
+        //     start_date: 
+        //     end_date:
+        //     description:
+        //     location:
+        //     photo_url: 
 
-
-        // create new event 
+        // }
 
 
         // sent to user service 
@@ -137,14 +186,14 @@ class AdminPage extends React.Component {
         this.setState({location: e.target.value});
     }
 
-    startDateChange(e){
-        console.log(e.target.value);
-        this.setState({startDate: e.target.value});
+    startDateChange(day){
+        console.log({day});
+        this.setState({startDate: day});
     }  
     
-    endDateChange(e){
-        console.log(e.target.value);
-        this.setState({endDate: e.target.value});
+    endDateChange(day){
+        console.log({day});
+        this.setState({endDate: day});
     }  
 
     startTimeChange(time){
@@ -156,6 +205,8 @@ class AdminPage extends React.Component {
     }  
     
     endTimeChange(time){
+
+       
         const stringTime = time.toString().slice(16, 24)
         console.log({stringTime});
         
@@ -164,9 +215,9 @@ class AdminPage extends React.Component {
 
 
     onDrop(pictureFiles) {
-        console.log(pictureFiles)
+        console.log({pictureFiles})
         this.setState({
-            pictures: this.state.pictures.concat(pictureFiles)
+            pictures: pictureFiles
         });
     }
 
@@ -189,6 +240,17 @@ class AdminPage extends React.Component {
     console.log({eventTypes})
     const er = this.state.error;
     console.log({er});
+    let verifyerror = this.verifyValidEvent()[1]
+    console.log({verifyerror})
+    console.log(this.state.endDate <= this.state.currentDateTime);
+    console.log(this.state.endDate);
+    console.log(this.state.currentDateTime);
+    const pics = this.state.pictures
+    console.log({pics})
+    // convert to string 
+    
+    
+    
     return (
         <div className="AdminPage">
             <div className="AddEvent-Section">
@@ -233,17 +295,15 @@ class AdminPage extends React.Component {
 
                     <Grid container justify="space-around">
                         <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="Start Date"
-                        value={this.state.startDate}
-                        onChange={this.startDateChange.bind(this)}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
+                                margin="normal"
+                                id="date-picker-dialog"
+                                label="Start Date"
+                                format="MM/dd/yyyy"
+                                value={this.state.startDate}
+                                onChange={val => {this.startDateChange(val)}}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
                         />
                         <KeyboardDatePicker
                         margin="normal"
@@ -251,7 +311,7 @@ class AdminPage extends React.Component {
                         label="End Date"
                         format="MM/dd/yyyy"
                         value={this.state.endDate}
-                        onChange={this.endDateChange.bind(this)}
+                        onChange={val => {this.endDateChange(val)}}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                         }}
