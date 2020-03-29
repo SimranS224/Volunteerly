@@ -10,13 +10,13 @@ const getEvents = async (req: Request, res: Response) => {
   console.log(`Getting events`)
   try {
       const events = await sequelize.sync().then(()=>Event.findAll({}));
-      res.send({
+      return res.send({
           statusCode: 200,
           body: events
       });
   } catch (err) {
       console.log(`Failed to get events - ${err.message}`)
-      res.send({
+      return res.send({
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
           body: err.message || 'Could not fetch the Enrollment.'
@@ -91,4 +91,32 @@ const addEvent = async (req: Request, res: Response) => {
 }
 
 
-export  {addEvent, getEvents }
+const deleteEvent = async (req: Request, res: Response) => {
+  const {event_id} = req.params;
+  try {
+    const deletedEvent = await sequelize.sync().then(()=>Event.destroy({
+      where: {
+        id: event_id
+      }
+    }));
+    console.log({deletedEvent});
+    if (deletedEvent == 0){
+      return res.send({
+        statusCode: 200,
+        body: []
+      });
+    }
+  } catch (err) {
+      console.log(`Failed to delete event - ${err.message}`)
+      return res.send({
+          statusCode: err.statusCode,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message
+      })
+  }
+  await getEvents(req, res);
+
+}
+
+
+export  {addEvent, getEvents, deleteEvent }
