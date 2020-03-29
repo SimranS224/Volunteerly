@@ -68,6 +68,7 @@ class AdminPage extends React.Component {
                       data: [],
                       pictures: [],
                       addEventErrors: [],
+                      _image_key: 0,
                       addEventErrors: []// use for displaying to the user when an event 
                      };
     }
@@ -198,7 +199,8 @@ class AdminPage extends React.Component {
             pictures: [],
             addEventErrors: [],
             filtered: this.props.globalEvents,
-            addEventErrors: []
+            addEventErrors: [],
+            _image_key: this.state._image_key +1
            });
         console.log({initialState});
         console.log({intialEventTypes});
@@ -327,7 +329,7 @@ class AdminPage extends React.Component {
                         {
                             Object.keys(this.state.eventTypes).map((event, i) =>{
                                 return <FormControlLabel key={`${event}`}
-                                    control={<Checkbox checked={this.state.eventTypes.event} onChange={this.updateHandler(event)} name={`${event}`} />}
+                                    control={<Checkbox checked={this.state.eventTypes[event]} onChange={this.updateHandler(event)} name={`${event}`} />}
                                     label={`${event}`}
                                 />
                         })}
@@ -398,6 +400,8 @@ class AdminPage extends React.Component {
                         withPreview={true}
                         buttonText="Choose images"
                         onChange={this.onDrop.bind(this)}
+                        key={this.state._image_key}
+                        label="Max file size: 5mb, accepted: jpg, gif, png"
                         imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".JPG", ".GIF", ".PNG", ".JPEG"]}
                         maxFileSize={5242880}
                         />
