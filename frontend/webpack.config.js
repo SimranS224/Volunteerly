@@ -7,6 +7,9 @@ module.exports = {
     extensions: [".js", ".jsx"],
     modules: ["node_modules"]
   },
+  node: {
+    fs: 'empty'
+  },
   
   module: {
     rules: [

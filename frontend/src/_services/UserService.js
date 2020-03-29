@@ -1,46 +1,20 @@
 import S3 from 'aws-s3';
+import dotenv from "dotenv";
+dotenv.config();
+
+
 const config = {
     bucketName: 'volunteer-app-images',
-    region: 'ca-central-1',
-    accessKeyId: 'AKIA2ZJCVHTCYEEVWUKV',
-    secretAccessKey: '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',
+    region: process.env.REGION,
+    accessKeyId: process.env.Access_key_ID,
+    secretAccessKey: process.env.Secret_access_key,
 }
 const S3Client = new S3(config);
-
-// include all  user database calls and all functions here 
-
-// generate random date for fake data
-const randomDate = (start, end) => {
-    let d = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
-        month = (d.getMonth() + 1).toString(),
-        day = (d.getDate()).toString(),
-        year = d.getFullYear();
-
-    month = month.length < 2 ? '0' + month : month;
-    day = day.length < 2 ? '0' + day : day;
-
-	return [year, month, day].join('-');
-}
-
-const _types = ['cleanUp', 'communityBuilding', 'planting'];
-
-//fake data
-const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of ontario!',type:'cleanUp', date:randomDate(new Date(2020, 0, 1), new Date())}, 
-{user: 'admin', title: 'Teach Art and Paint Murals', desc: 'Provide art classes to the youth and help with community painting projects', type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Teach English Classes', desc: 'Teach English to children and adults through short-term intensive classes', type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Provide Child-Care Support', desc: 'Work with young children and provide support to day-care staff',type:'communityBuilding', date:randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'admin', title: 'Support Manual Labor Projects', desc: 'Help paint homes and support basic manual labor tasks for local residents',type:'communityBuilding', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Clean the beaches', desc: 'Help clean the beach at Harbourfront', type:'cleanUp', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Clean the oceans', desc: 'Clean the Atlantic Ocean', type:'cleanUp', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'past', title: 'Volunteer at SOS Autism', desc: 'Translate grant application documents', type:'communityBuilding', date: randomDate(new Date(2020, 0, 1), new Date())},
-{user: 'future', title: 'Plant trees in HighGarden', desc: 'Bring a shovel!', type:'planting', date: randomDate(new Date(2020, 0, 1), new Date())}
-]
-
-
+const HOST = process.env.HOST
 
 const getEvents = (user, preferences) => {
 	console.log("getting events");
-	return fetch(`http://localhost:3004/dev/api/events`)
+	return fetch(`${HOST}/dev/api/events`)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -130,7 +104,7 @@ const deleteEvent = (event, user) => {
  * @param {integer} userId 
  */
 const getEnrolledEvents = (userId) => {
-	return fetch(`http://localhost:3004/dev/api/enrollments/${userId}`)
+	return fetch(`${HOST}/dev/api/enrollments/${userId}`)
 		.then(res => res.json())
 		.then(res => {
 			if(res.error) {

@@ -75,7 +75,7 @@ class AdminPage extends React.Component {
     
 
     componentDidMount() {
-        let events =  userService.getEvents(null);
+        let events =  userService.getEvents(); // update
         this.props.updateEvents(events)
 
         if (this.props.globalEvents) {
