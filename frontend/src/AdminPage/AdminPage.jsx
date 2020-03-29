@@ -169,6 +169,12 @@ class AdminPage extends React.Component {
             location:state.location,
             photo_url: state.pictures,
             organization_id: this.props.curUser.id,
+            eventType: Object.keys(state.eventTypes).filter((key) => { 
+                            console.log(state.eventTypes[`${key}`] );
+                            if (state.eventTypes[`${key}`]){
+                                return key;
+                            }
+                        }),
             duration: this.getDuration(),
             timeRange: this.getTimeRange()
         }
