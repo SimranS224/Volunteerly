@@ -82,18 +82,31 @@ const getEvents_fake = (user, preferences) => {
 	
 }
 
-const addEvent = (event, user) => {
+const addEvent = (currEvent) => {
+	const event = currEvent.event
 	data.push(event);
-	for(let i = 0; i < event.pictures.length; i++){
+	let images = []
+	for(let i = 0; i < event.photo_url.length; i++){
 		S3Client
-	    .uploadFile(event.pictures[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(
+	    .uploadFile(event.photo_url[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(
 	    	))
-		.then(data => console.log(data.location))
+		.then(data => {
+			images.push(data.location)
+			console.log(typeof(data.location))
+			console.log(data.location)})
 		.catch(err => console.log(err))
 	}
-	console.log("uploading files", event.pictures[0])
+	// console.log("uploading files", event.pictures[0])
+	let stringofPictures = images.join(" ")
+	console.log({images});
+	console.log({stringofPictures});
 	
-
+	
+	let preparedEvent = {...event}
+	preparedEvent.photo_url = stringofPictures
+	const body = JSON.stringify(preparedEvent);
+	console.log({body});
+	
 	return getEvents(null)
 }
 

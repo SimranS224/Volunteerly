@@ -179,13 +179,13 @@ class AdminPage extends React.Component {
         console.log({newEvent});
 
         
-        // try { 
-        //     await userService.addEvent({event: newEvent, token: this.props.curUser.token});
-        //     this.props.addEvent(newEvent)
+        try { 
+            await userService.addEvent({event: newEvent, token: this.props.curUser.token});
+            // this.props.addEvent(newEvent)
 
-        // } catch (err) {
-        //     console.log(`Error adding event: ${err}`)
-        // }
+        } catch (err) {
+            console.log(`Error adding event: ${err}`)
+        }
 
 
         // reset state 
