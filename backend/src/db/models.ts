@@ -90,6 +90,7 @@ export class StatCategory extends Model<StatCategory>{
 
 @Table({ createdAt: false, updatedAt: false })
 export class Event extends Model<Event>{
+  
   @AllowNull(false)
   @Column
   name:string;
