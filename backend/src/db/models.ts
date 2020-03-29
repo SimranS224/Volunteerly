@@ -60,8 +60,6 @@ export class Organization extends Model<Organization>{
 
 @Table({ createdAt: false, updatedAt: false })
 export class EventType extends Model<EventType>{
-  @Column(DataType.TEXT)
-  photo_url: string;
   @AllowNull(false)
   @Column
   text: string;
@@ -108,6 +106,8 @@ export class Event extends Model<Event>{
   event_category_id:number;
   @Column(DataType.TEXT)
   photo_url: string;
+  @Column(DataType.TEXT)
+  time_range: string;
   @ForeignKey(() => Organization)
   @Column
   organization_id: number;
