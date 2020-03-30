@@ -40,18 +40,17 @@ function userReducer(state = initialState, action) {
     case allConstants.ADD_EVENT:
       return {
         ...state,
-        events: addedEvents
+        events: action.newEvents
       };
     case allConstants.DELETE_EVENT:
-      const deletedEvents = deleteEvent(action.event, state.curUser)
       return {
         ...state,
-        events: deletedEvents
+        events: action.newEvents
       };
     case allConstants.UPDATE_EVENTS:
       return {
         ...state,
-        events: action.event
+        events: action.events
       };
     case allConstants.SEARCH_EVENTS:
       newEvents = filterEvents(state._allEvents, state.searchQuery)

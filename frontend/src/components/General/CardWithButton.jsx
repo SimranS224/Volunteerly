@@ -24,7 +24,7 @@ class CardWithButton extends React.Component {
                 <CardContent>
                     {this.props.event.description}
                 </CardContent>
-                <Button style={{marginBottom: "-20%"}} onClick={this.props.buttonFunc} variant="contained" color="primary">
+                <Button style={{marginBottom: "-20%"}} onClick={() => this.props.onClick(this.props.event)} variant="contained" color="primary">
                     {this.props.buttonText}
                 </Button>
                 <QRCode style={{float: "right"}} value="google.com"/>

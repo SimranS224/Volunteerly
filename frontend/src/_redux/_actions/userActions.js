@@ -55,15 +55,15 @@ const logout = () => {
 }
 
 const deleteEvent = (event) => {
-  return {type: allConstants.DELETE_EVENT, event: event} 
+  return {type: allConstants.DELETE_EVENT, newEvents: event} 
 }
 
 const addEvent = (event) => {
-  return {type: allConstants.ADD_EVENT, event: event} 
+  return {type: allConstants.ADD_EVENT, newEvents: event} 
 }
 
 const updateEvents = (events) => {
-  return {type: allConstants.UPDATE_EVENTS, event: events} 
+  return {type: allConstants.UPDATE_EVENTS, events: events} 
 }
 
 const setPreferences = (preferencesState) => {

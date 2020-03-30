@@ -12,7 +12,7 @@ const getEvents = async (req: Request, res: Response) => {
       const events = await sequelize.sync().then(()=>Event.findAll({}));
       return res.send({
           statusCode: 200,
-          body: events
+          body: JSON.stringify(events)
       });
   } catch (err) {
       console.log(`Failed to get events - ${err.message}`)
@@ -23,6 +23,32 @@ const getEvents = async (req: Request, res: Response) => {
       })
   }
 }
+
+
+const getEventsByUser = async (req: Request, res: Response) => {
+  //const { userId, availability, timeRanges } = req.body;
+  const { id } = req.params;
+  console.log(`Getting events`)
+  try {
+      const events = await sequelize.sync().then(()=>Event.findAll({
+        where: {
+          organization_id: id
+        }
+      }));
+      return res.send({
+          statusCode: 200,
+          body: JSON.stringify(events)
+      });
+  } catch (err) {
+      console.log(`Failed to get events - ${err.message}`)
+      return res.send({
+          statusCode: err.statusCode || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message || 'Could not fetch the Enrollment.'
+      })
+  }
+}
+
 
 const addEvent = async (req: Request, res: Response) => {
   const event =  req.body;
@@ -84,10 +110,8 @@ const addEvent = async (req: Request, res: Response) => {
   // after creating event send back all events of the organization_id 
 
   allEvents.push(newEvent)
-  return res.send({
-    statusCode: 200,
-    body: allEvents
-  });
+  req.params.id = event.organization_id
+  await getEventsByUser(req, res);
 }
 
 
@@ -114,9 +138,9 @@ const deleteEvent = async (req: Request, res: Response) => {
           body: err.message
       })
   }
-  await getEvents(req, res);
+  await getEventsByUser(req, res);
 
 }
 
 
-export  {addEvent, getEvents, deleteEvent }
+export  { getEventsByUser, addEvent, getEvents, deleteEvent }

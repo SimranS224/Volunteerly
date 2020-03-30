@@ -1,29 +1,16 @@
 import S3 from 'aws-s3';
-import dotenv from "dotenv";
-dotenv.config();
-
 
 const config = {
     bucketName: 'volunteer-app-images',
-    region: process.env.REGION,
-    accessKeyId: process.env.Access_key_ID,
-    secretAccessKey: process.env.Secret_access_key,
+    region: process.env.REACT_APP_REGION,
+    accessKeyId: process.env.REACT_APP_Access_key_ID,
+    secretAccessKey: process.env.REACT_APP_Secret_access_key,
 }
 const S3Client = new S3(config);
-const HOST = process.env.HOST
-
-const getEvents = (user, preferences) => {
-	console.log("getting events");
-	return fetch(`${HOST}/dev/api/events`)
-	.then(res => res.json())
-	.then(res => {
-		if(res.error) {
-			throw(res.error)
-		}
-		console.log(JSON.parse(res.body))
-		return JSON.parse(res.body)
-	})
-}
+const HOST = process.env.REACT_APP_BACKEND_PORT;
+const myHeaders = new Headers({
+  'Content-Type': 'application/json',
+});
 
 const getEvents_fake = (user, preferences) => {
 	// When integrating with backend "user" and "preferences" should be 
@@ -58,7 +45,6 @@ const getEvents_fake = (user, preferences) => {
 
 const addEvent = async (currEvent) => {
 	const event = currEvent.event
-	data.push(event);
 	let images = []
 	for(let i = 0; i < event.photo_url.length; i++){
 		try {
@@ -70,6 +56,7 @@ const addEvent = async (currEvent) => {
 			console.log(err)
 		}
 	}
+	const resolvedImages = await Promise.all(images);
 	let stringofPictures = ''
 
 	for (let i =0; i < images.length;i++){
@@ -79,25 +66,86 @@ const addEvent = async (currEvent) => {
 	console.log({stringofPictures});
 	
 	stringofPictures = stringofPictures.slice(0,-1)
-	console.log({images});
+	console.log({resolvedImages});
 	console.log({stringofPictures});
 	
 	
 	let preparedEvent = {...event}
 	preparedEvent.photo_url = stringofPictures
-	const body = JSON.stringify(preparedEvent);
-	console.log({body});
+	const bodyToSend = JSON.stringify(preparedEvent);
+	console.log({bodyToSend});
+
+	const endpoint = `${HOST}/dev/api/events`;
+	console.log({endpoint});
+	const options = {
+										method: 'POST',
+										headers: myHeaders,
+										mode: 'cors',
+										cache: 'default',
+										body: bodyToSend
+									}
+	const response = await fetch(endpoint, options);
+	let data;
+	try { 
+		const{ body } = await response.json()
+		data = JSON.parse(body)
+		console.log({data});
+	} catch (err) {
+		console.log(`${err}: add Event, response: ${data}`);
+		
+	}
+  return data;
 	
-	return getEvents(null)
+
 }
 
-const deleteEvent = (event, user) => {
-	const index = data.indexOf(event);
-	if (index > -1) {
-		data.splice(index, 1);
+const deleteEvent = async (currEvent) => {
+	const event = currEvent.event
+
+	const endpoint = `${HOST}/dev/api/events/${event.id}/${event.organization_id}`;
+	console.log({endpoint});
+	const options = {
+										method: 'DELETE',
+										headers: myHeaders,
+										mode: 'cors',
+										cache: 'default',
+									}
+	const response = await fetch(endpoint, options);
+	let data;
+	try { 
+		const{ body } = await response.json()
+		data = JSON.parse(body)
+		console.log({data});
+	} catch (err) {
+		console.log(`${err}: delete Event, response: ${data}`);
+		
 	}
-	return getEvents(user)
+  return data;
 }
+
+
+const getEvents = async (user, preferences) => {
+	const endpoint = `${HOST}/dev/api/events/${user.id}`;
+	console.log({endpoint});
+	const options = {
+										method: 'GET',
+										headers: myHeaders,
+										mode: 'cors',
+										cache: 'default',
+									}
+	const response = await fetch(endpoint, options);
+	let data;
+	try { 
+		const{ body } = await response.json()
+		data = JSON.parse(body)
+		console.log({data});
+	} catch (err) {
+		console.log(`${err}: getEvents, response: ${data}`);
+		
+	}
+  return data;
+}
+
 
 /**
  * Returns the events that a user has enrolled in 
@@ -114,6 +162,8 @@ const getEnrolledEvents = (userId) => {
 		})
 }
 
+
+
 export const userService = {
-	getEvents, addEvent, deleteEvent, getEnrolledEvents
+	 getEvents, addEvent, deleteEvent, getEnrolledEvents
 }

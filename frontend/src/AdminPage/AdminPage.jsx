@@ -42,7 +42,8 @@ const initialState = {
     startTime: new Date(),
     endTime: new Date(),
     currentDateTime: new Date(), 
-    error: false
+    error: false,
+    alert: ""
 };
 
 const intialEventTypes = {
@@ -74,15 +75,15 @@ class AdminPage extends React.Component {
     }
     
 
-    componentDidMount() {
-        let events =  userService.getEvents(); // update
-        this.props.updateEvents(events)
-
+    async componentDidMount() {
+        let events =  await userService.getEvents(this.props.curUser); 
+        console.log({events});
+        
+        this.props.updateEvents(events, true)
+        
         if (this.props.globalEvents) {
           this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
-        } else {
-          this.setState({data: events, filtered: events})
-        }
+        } 
 
         if (!this.state.error){
             this.setState({error: false});
@@ -186,8 +187,8 @@ class AdminPage extends React.Component {
 
         
         try { 
-            await userService.addEvent({event: newEvent, token: this.props.curUser.token});
-            // this.props.addEvent(newEvent)
+            const updatedEvents = await userService.addEvent({event: newEvent, token: this.props.curUser.token});
+            this.props.addEvent(updatedEvents)
 
         } catch (err) {
             console.log(`Error adding event: ${err}`)
@@ -206,17 +207,28 @@ class AdminPage extends React.Component {
             addEventErrors: [],
             filtered: this.props.globalEvents,
             addEventErrors: [],
-            _image_key: this.state._image_key +1
+            _image_key: this.state._image_key +1,
+            alert: "Added Event"
            });
         console.log({initialState});
         console.log({intialEventTypes});
-        
-        // console.log({curUser})
-        // this.props.addEvent({user: this.props.curUser.user, title: this.state.eventTitle, desc: this.state.eventDescription, type:'Clean Up', date:this.state.eventDate, pictures: this.state.pictures})
     }
 
-    deleteEvent(event){
-        this.props.deleteEvent(event)
+    deleteEvent = async (event) => {
+        console.log({event});
+        
+        try { 
+            const updatedEvents = await userService.deleteEvent({event: event, token: this.props.curUser.token});
+            console.log({updatedEvents});
+            this.props.deleteEvent(updatedEvents)
+        } catch (err) {
+            console.log(`Error adding event: ${err}`)
+        }
+
+        this.setState({ alert: "Deleted Event",
+                        data: this.props.globalEvents
+                     })
+
     }
 
     titleChange(e){
@@ -427,7 +439,7 @@ class AdminPage extends React.Component {
                     {
                         this.state.data.length > 0 && this.state.data.map((event, i) =>{
                         return <ListItem key={'event' + i.toString()} >
-                            <CardWithButton event={event} buttonText="Delete" buttonFunc={this.deleteEvent.bind(this)} ></CardWithButton>
+                            <CardWithButton event={event} buttonText="Delete" onClick={this.deleteEvent} ></CardWithButton>
                         </ListItem>
                         })}
                 </List> 
