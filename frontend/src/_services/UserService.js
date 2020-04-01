@@ -51,6 +51,40 @@ const getEvents = (user, preferences) => {
 	})
 }
 
+const updatePreferences = (user, preferences) => {
+	console.log("update events")
+	return fetch(`http://localhost:3004/dev/api/preferences/` + user,
+	{
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		body: JSON.stringify(preferences)
+	})
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log(JSON.parse(res.body))
+		return JSON.parse(res.body)
+	})
+
+}
+
+const getPreferences = (user) => {
+	console.log("update events")
+	return fetch(`http://localhost:3004/dev/api/preferences/` + user)
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log(JSON.parse(res.body))
+		return JSON.parse(res.body)
+	})
+}
+
 const getEvents_fake = (user, preferences) => {
 	// When integrating with backend "user" and "preferences" should be 
 	// sent as parameters to the backend, and the backend will retrieve the
@@ -88,7 +122,7 @@ const addEvent = (event, user) => {
 		S3Client
 	    .uploadFile(event.pictures[i], JSON.stringify(event.date) + "-" + event.user + "-" + event.title + "-" + i.toString(
 	    	))
-		.then(data => console.log(data))
+		.then(data => {console.log("data is: ", data); console.log("data location is: ", data.location)})
 		.catch(err => console.log(err))
 	}
 	console.log("uploading files", event.pictures[0])
@@ -140,5 +174,5 @@ const enrollInEvent = (userId, eventId) => {
 }
 
 export const userService = {
-	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent
+	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent, updatePreferences, getPreferences
 }
