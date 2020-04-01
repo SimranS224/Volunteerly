@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "name": "Finstone Beaches",
     "start_date": "11/13/2019",
     "end_date": "11/13/2019",
@@ -13,7 +12,6 @@
     "time_range": "10 AM-11PM"
   },
   {
-    "id": 2,
     "name": "Autism Ontario",
     "start_date": "5/26/2019",
     "end_date": "5/26/2019",
@@ -26,7 +24,6 @@
     "time_range": "1 PM-4PM"
   },
   {
-    "id": 3,
     "name": "The Amazon Challenge",
     "start_date": "1/16/2020",
     "end_date": "1/16/2020",
@@ -39,7 +36,6 @@
     "time_range": "10 AM-1PM"
   },
   {
-    "id": 4,
     "name": "A friend in need",
     "start_date": "9/18/2019",
     "end_date": "9/18/2019",
@@ -52,7 +48,6 @@
     "time_range": "11 AM-2PM"
   },
   {
-    "id": 5,
     "name": "Retail Cat Care",
     "start_date": "2/15/2020",
     "end_date": "2/15/2020",
@@ -65,7 +60,6 @@
     "time_range": "9 AM-1PM"
   },
   {
-    "id": 6,
     "name": "Virtual Volunteer Summit",
     "start_date": "11/20/2019",
     "end_date": "11/20/2019",
@@ -78,7 +72,6 @@
     "time_range": "1 PM-5PM"
   },
   {
-    "id": 7,
     "name": "TWC2 Heatbeat 2020",
     "start_date": "9/23/2019",
     "end_date": "9/23/2019",
@@ -91,7 +84,6 @@
     "time_range": "10 AM-5PM"
   },
   {
-    "id": 8,
     "name": "London IronMan",
     "start_date": "2/25/2020",
     "end_date": "2/25/2020",
@@ -104,7 +96,6 @@
     "time_range": "9 AM-11PM"
   },
   {
-    "id": 9,
     "name": "Utah Water Watch Tier",
     "start_date": "3/3/2020",
     "end_date": "3/3/2020",
@@ -117,7 +108,6 @@
     "time_range": "8 AM-1PM"
   },
   {
-    "id": 10,
     "name": "Domestic Violence Advocate Training",
     "start_date": "2/25/2020",
     "end_date": "2/25/2020",
@@ -130,7 +120,6 @@
     "time_range": "10 AM-1PM"
   }, 
   {
-    "id": 11,
     "name": "Toronto Island Cleanup",
     "start_date": "2020-08-18 04:00:00+00",
     "end_date": "2020-08-18 04:00:00+00",

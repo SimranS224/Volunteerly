@@ -72,29 +72,13 @@ const addEvent = async (req: Request, res: Response) => {
   // use id to create event
   event.event_category_id = eventId
   event.time_range = event.timeRange
-  console.log({event});
-  let allEvents;
-  try {
-    allEvents = await sequelize.sync().then(()=> Event.findAll())
-    console.log({allEvents});
-    
-  } catch (err) {
-      console.log(`Failed to find all events - ${err.message}`)
-      console.log({err});
-      
-      return res.send({
-          statusCode: err.statusCode,
-          headers: { 'Content-Type': 'text/plain' },
-          body: err.message
-      })
-  }
-  event.id = allEvents.length + 1
-  
+  delete event.timeRange
+  delete event.eventType
+  console.log("this is the event I will send",event);
   let newEvent;
 
   try {
     newEvent = await sequelize.sync().then(()=> Event.create(event))
-    console.log({newEvent});
     
   } catch (err) {
       console.log(`Failed to create events - ${err.message}`)
@@ -109,7 +93,6 @@ const addEvent = async (req: Request, res: Response) => {
 
   // after creating event send back all events of the organization_id 
 
-  allEvents.push(newEvent)
   req.params.id = event.organization_id
   await getEventsByUser(req, res);
 }
