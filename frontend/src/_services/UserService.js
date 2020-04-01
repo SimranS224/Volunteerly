@@ -42,8 +42,10 @@ const getEvents_fake = (user, preferences) => {
 	return new_data
 	
 }
-
+// fix bug when adding 
 const addEvent = async (currEvent) => {
+	console.log({config});
+	
 	const event = currEvent.event
 	let images = []
 	for(let i = 0; i < event.photo_url.length; i++){

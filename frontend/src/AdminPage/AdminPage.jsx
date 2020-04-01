@@ -52,7 +52,7 @@ const intialEventTypes = {
     "Translation": false,
     "Fundraising": false,
     "Homeless": false,
-    "Elderly or Disabled": false,
+    "Elderly and Disabled": false,
     "Research": false, 
     "Refugees or Migrants": false,
     "Trustee": false 
