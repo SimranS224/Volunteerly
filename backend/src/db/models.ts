@@ -1,14 +1,14 @@
 
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique, BelongsToMany} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, HasOne, Default, Unique, BelongsToMany, HasMany} from 'sequelize-typescript';
  
 // remove createdAt and updatedAt from all tables
 
-@Table({ createdAt: false, updatedAt: false })
-export class Volunteer extends Model<Volunteer>{
+@Table({ createdAt: true, updatedAt: false })
+export class User extends Model<User>{
   @AllowNull(false)
   @Column
   first_name: string;
-  @AllowNull(false)
+  // @AllowNull(false)
   @Column
   last_name: string;
   @AllowNull(false)
@@ -33,7 +33,7 @@ export class Volunteer extends Model<Volunteer>{
 @Table({ createdAt: false, updatedAt: false })
 export class VolunteerAvailability extends Model<VolunteerAvailability>{
 
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @Column
   volunteer_id:number;
   @AllowNull(false)
@@ -63,11 +63,15 @@ export class EventType extends Model<EventType>{
   @AllowNull(false)
   @Column
   text: string;
+  @HasMany(()=>Event)
+  events: Event[];
+  @HasMany(()=>VolunteerEventPreference)
+  volunteer_preferences: VolunteerEventPreference[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
 export class Stat extends Model<Stat>{
-  @ForeignKey(()=>Volunteer)
+  @ForeignKey(()=>User)
   @Column
   volunteer_id:number;
   @ForeignKey(()=>StatCategory)
@@ -105,6 +109,8 @@ export class Event extends Model<Event>{
   @ForeignKey(() => EventType)
   @Column
   event_category_id:number;
+  @BelongsTo(()=>EventType)
+  event_type:EventType;
   @Column(DataType.TEXT)
   photo_url: string;
   @Column
@@ -116,20 +122,23 @@ export class Event extends Model<Event>{
   organization_id: number;
   @Column
   duration:number;
-  @BelongsToMany(() => Volunteer, () => Enrollment, 'event_id')
-  volunteers: Volunteer[];
+  @BelongsToMany(() => User, () => Enrollment, 'event_id')
+  volunteers: User[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
 export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;
-  @ForeignKey(() => Event)
+  @ForeignKey(() => EventType)
   @PrimaryKey
   @Column
   event_type_id:number;
+  @BelongsTo(()=>EventType)
+  event_type: EventType;
+  
 }
 @Table({ createdAt: false, updatedAt: false })
 export class Achievement extends Model<Achievement>{
@@ -144,7 +153,7 @@ export class Achievement extends Model<Achievement>{
 }
 @Table({ createdAt: false, updatedAt: false })
 export class AchievementEarned extends Model<AchievementEarned>{
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;
@@ -161,7 +170,7 @@ export class Enrollment extends Model<Enrollment>{
   // @BelongsTo(()=>Volunteer,{
   //   onDelete: "CASCADE"
   // })
-  @ForeignKey(() => Volunteer)
+  @ForeignKey(() => User)
   @PrimaryKey
   @Column
   volunteer_id: number;

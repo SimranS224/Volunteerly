@@ -66,3 +66,48 @@
 .profile .stat-row .AchivementCard {
     height: 100%;
 }
+
+
+
+.profile .opp-card {
+    width: 100%;
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border: 1px solid #E8DDFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(163, 124, 244, 0.17);
+    border-radius: 4px;
+    margin-top: 28px;
+}
+.profile .opp-card-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0px !important;
+}
+.profile .opp-card-content .info {
+    margin-left: 16px;
+    color: #120431;
+}
+.profile .opp-card-content .info h3 {
+   margin: 0;
+   font-size: 24px;
+   margin-bottom: 9px;
+   font-weight: 500;
+}
+.profile .opp-card-content .info p {
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 400;
+ }
+.profile .opp-card-content .date {
+    color: #A37CF4;
+    text-align: center;
+}
+.profile .opp-card-content .month {
+    font-size: 16px;
+}
+.profile .opp-card-content .day {
+    font-size: 24px;
+}

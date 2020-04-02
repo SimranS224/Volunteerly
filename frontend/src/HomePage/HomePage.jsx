@@ -15,10 +15,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import OppCard from '../components/OppCard/OppCard';
 import MapContainer from '../components/Maps/MapContainer'
 import HeroImage from './welcome-2.png';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import './HomePage.css';
 import { userActions } from "../_redux/_actions";
 var hdate = require('human-date');
  
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,10 +35,12 @@ class HomePage extends React.Component {
       data: [],
       dialog_open: false,
       filtered: [],
-      selected: null
+      selected: null,
+      showEnrollmentSuccess: false,
     }
     userService.getEvents()
       .then((events) => {
+        console.log(events);
         this.props.setEvents(events);
       });
   }
@@ -57,10 +64,38 @@ class HomePage extends React.Component {
     this.props.searchEvents(e.target.value)
   } 
 
+  enrollUser = (elem) => {
+    userService.enrollInEvent(this.props.curUser.id, 1)
+      .then((res) => {
+        if(res.statusCode !== 200) {
+          this.setState({
+            showEnrollmentSuccess: true,
+            dialog_open: false, 
+            selected: null
+          })
+        }
+      });
+  }
+
+  handleClose = () => {
+    this.setState({
+      showEnrollmentSuccess: false
+    })
+  }
+
   render() {
      let { events } = this.state
       return (
           <div className="HomePage">
+              <Snackbar open={this.state.showEnrollmentSuccess} 
+                    autoHideDuration={6000}
+                    onClose={this.handleClose.bind(this)}
+                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                <Alert onClose={this.handleClose.bind(this)} severity="success">
+                    Successfully enrolled in event
+                </Alert>
+              </Snackbar>
+
               <div className="hero-section">
                 <div className="hero-container">
                   <div className="hero-content">
@@ -95,7 +130,7 @@ class HomePage extends React.Component {
         <Typography className="event-title" variant="h2"> 
         {this.state.selected !== null ? this.props.events[this.state.selected].name : null}
         </Typography>
-        <Button className="primary-button" variant="contained" disableElevation>
+        <Button className="primary-button" variant="contained" onClick={this.enrollUser} data-id={event.id} disableElevation>
           Enroll
         </Button>
         <Typography className="event-desc" variant="h4"> 

@@ -13,6 +13,7 @@ module.exports = () => {
 
   return {
   mode: "development",
+  cache: false,
    entry: ['babel-polyfill', './src/index.jsx'],
   resolve: {
     extensions: [".js", ".jsx"],
@@ -64,7 +65,7 @@ module.exports = () => {
     new webpack.DefinePlugin(envKeys)
   ],
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   externals: {
     config: JSON.stringify({

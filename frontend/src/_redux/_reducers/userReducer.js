@@ -7,9 +7,10 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
-  _allEvents: [], // _events is the master list of events
-  events: [], // events is a filtered list of events from searching
-  searchQuery: ''
+  _allEvents: [], // list of all events 
+  events: [], // When logged in as a user should be enrolled events and when logged in as an organization should be the organization events, when logged in as a admin needs to be all events 
+  searchQuery: '',
+  enrolledEvents: [],
 }
 
 function userReducer(state = initialState, action) {
@@ -60,11 +61,15 @@ function userReducer(state = initialState, action) {
         searchQuery: action.searchQuery
       }
     case allConstants.SET_EVENTS:
-      console.log(action);
       return {
         ...state,
         _allEvents: action.events,
         events: action.events,
+      }
+    case allConstants.SET_ENROLLED_EVENTS:
+      return {
+        ...state,
+        enrolledEvents: action.enrolledEvents
       }
     default:
       return state;
