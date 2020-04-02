@@ -9,7 +9,8 @@
     "photo_url": "http://dummyimage.com/142x223.jpg/dddddd/000000",
     "organization_id": "2",
     "duration": 13,
-    "time_range": "10 AM-11PM"
+    "start_time": 10,
+    "end_time": 23
   },
   {
     "name": "Autism Ontario",
@@ -21,7 +22,8 @@
     "photo_url": "http://dummyimage.com/202x176.png/5fa2dd/ffffff",
     "organization_id": "4",
     "duration": 3,
-    "time_range": "1 PM-4PM"
+    "start_time": 13,
+    "end_time": 16
   },
   {
     "name": "The Amazon Challenge",
@@ -33,7 +35,8 @@
     "photo_url": "http://dummyimage.com/225x242.jpg/ff4444/ffffff",
     "organization_id": "4",
     "duration": 3,
-    "time_range": "10 AM-1PM"
+    "start_time": 10,
+    "end_time": 13
   },
   {
     "name": "A friend in need",
@@ -45,7 +48,8 @@
     "photo_url": "http://dummyimage.com/229x240.jpg/ff4444/ffffff",
     "organization_id": "4",
     "duration": 3,
-    "time_range": "11 AM-2PM"
+    "start_time": 11,
+    "end_time": 14
   },
   {
     "name": "Retail Cat Care",
@@ -57,7 +61,8 @@
     "photo_url": "http://dummyimage.com/159x117.bmp/5fa2dd/ffffff",
     "organization_id": "4",
     "duration": 4,
-    "time_range": "9 AM-1PM"
+    "start_time": 9,
+    "end_time": 13
   },
   {
     "name": "Virtual Volunteer Summit",
@@ -69,7 +74,8 @@
     "photo_url": "http://dummyimage.com/230x230.png/dddddd/000000",
     "organization_id": "4",
     "duration": 4,
-    "time_range": "1 PM-5PM"
+    "start_time": 13,
+    "end_time": 17
   },
   {
     "name": "TWC2 Heatbeat 2020",
@@ -81,7 +87,8 @@
     "photo_url": "http://dummyimage.com/118x108.png/ff4444/ffffff",
     "organization_id": "4",
     "duration": 7,
-    "time_range": "10 AM-5PM"
+    "start_time": 10,
+    "end_time": 17
   },
   {
     "name": "London IronMan",
@@ -93,7 +100,8 @@
     "photo_url": "http://dummyimage.com/129x160.jpg/ff4444/ffffff",
     "organization_id": "4",
     "duration": 14,
-    "time_range": "9 AM-11PM"
+    "start_time": 9,
+    "end_time": 23
   },
   {
     "name": "Utah Water Watch Tier",
@@ -105,7 +113,8 @@
     "photo_url": "http://dummyimage.com/139x229.bmp/5fa2dd/ffffff",
     "organization_id": "4",
     "duration": 5,
-    "time_range": "8 AM-1PM"
+    "start_time": 8,
+    "end_time": 13
   },
   {
     "name": "Domestic Violence Advocate Training",
@@ -117,7 +126,8 @@
     "photo_url": "http://dummyimage.com/247x163.png/dddddd/000000",
     "organization_id": "4",
     "duration": 3,
-    "time_range": "10 AM-1PM"
+    "start_time": 10,
+    "end_time": 13
   }, 
   {
     "name": "Toronto Island Cleanup",
@@ -129,6 +139,7 @@
     "photo_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-1.jpeg https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-0.jpeg",
     "organization_id": "6",
     "duration": 1,
-    "time_range": "8 PM-9PM"
+    "start_time": 20,
+    "end_time": 21
   }
 ]

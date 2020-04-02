@@ -144,9 +144,10 @@ class AdminPage extends React.Component {
     }
 
     getTimeRange() {
-        const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
-        const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
-        return startTimeAsString + "-" + endTimeAsString
+        const startTimeAsInt = parseInt(this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: false }), 10);
+        const endTimeAsInt =  parseInt(this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: false }), 10);
+        // const time =  startTimeAsString + "-" + endTimeAsString
+        return [startTimeAsInt, endTimeAsInt]
     }
    
 
@@ -177,7 +178,8 @@ class AdminPage extends React.Component {
                             }
                         }),
             duration: this.getDuration(),
-            timeRange: this.getTimeRange()
+            start_time: this.getTimeRange()[0],
+            end_time: this.getTimeRange()[1]
         }
 
 
@@ -310,7 +312,7 @@ class AdminPage extends React.Component {
     console.log({addErrors})
     const afterState = this.state
     console.log({afterState});
-    
+    console.log(this.props.curUser)
     // const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const timeRange = startTimeAsString + "-" + endTimeAsString

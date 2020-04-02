@@ -107,8 +107,10 @@ export class Event extends Model<Event>{
   event_category_id:number;
   @Column(DataType.TEXT)
   photo_url: string;
-  @Column(DataType.TEXT)
-  time_range: string;
+  @Column
+  start_time:number;
+  @Column
+  end_time:number;
   @ForeignKey(() => Organization)
   @Column
   organization_id: number;
