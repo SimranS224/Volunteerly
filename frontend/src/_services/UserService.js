@@ -39,7 +39,7 @@ const data = [{user: 'admin', title: 'Beach Cleanup', desc: 'Clean the beach of 
 
 
 const getEvents = (user, preferences) => {
-	console.log("getting events");
+	console.log("getting events UserService");
 	return fetch(`http://localhost:3004/dev/api/events`)
 	.then(res => res.json())
 	.then(res => {
@@ -52,7 +52,7 @@ const getEvents = (user, preferences) => {
 }
 
 const updatePreferences = (user, preferences) => {
-	console.log("update events")
+	console.log("updating preferences UserService")
 	return fetch(`http://localhost:3004/dev/api/preferences/` + user,
 	{
 		headers: {
@@ -72,16 +72,29 @@ const updatePreferences = (user, preferences) => {
 
 }
 
-const getPreferences = (user) => {
-	console.log("update events")
-	return fetch(`http://localhost:3004/dev/api/preferences/` + user)
+const getPreferences = (userId) => {
+	console.log("getting preferences UserService")
+	return fetch(`http://localhost:3004/dev/api/preferences/` + userId)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
 			throw(res.error)
 		}
-		console.log(JSON.parse(res.body))
-		return JSON.parse(res.body)
+		console.log("the body is: ", res.body)
+		return (res.body)
+	})
+}
+
+const getEventTypes = (userId) => {
+	console.log("get all event types")
+	return fetch(`http://localhost:3004/dev/api/event_types`)
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log("the body is: ", res.body)
+		return (res.body)
 	})
 }
 
@@ -174,5 +187,5 @@ const enrollInEvent = (userId, eventId) => {
 }
 
 export const userService = {
-	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent, updatePreferences, getPreferences
+	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent, updatePreferences, getPreferences, getEventTypes
 }
