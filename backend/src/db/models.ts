@@ -1,5 +1,5 @@
 
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique, BelongsToMany} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, HasOne, Default, Unique, BelongsToMany, HasMany} from 'sequelize-typescript';
  
 // remove createdAt and updatedAt from all tables
 
@@ -65,6 +65,10 @@ export class EventType extends Model<EventType>{
   @AllowNull(false)
   @Column
   text: string;
+  @HasMany(()=>Event)
+  events: Event[];
+  @HasMany(()=>VolunteerEventPreference)
+  volunteer_preferences: VolunteerEventPreference[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -106,6 +110,8 @@ export class Event extends Model<Event>{
   @ForeignKey(() => EventType)
   @Column
   event_category_id:number;
+  @BelongsTo(()=>EventType)
+  event_type:EventType;
   @Column(DataType.TEXT)
   photo_url: string;
   @ForeignKey(() => User)
@@ -123,10 +129,13 @@ export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
   @PrimaryKey
   @Column
   volunteer_id: number;
-  @ForeignKey(() => Event)
+  @ForeignKey(() => EventType)
   @PrimaryKey
   @Column
   event_type_id:number;
+  @BelongsTo(()=>EventType)
+  event_type: EventType;
+  
 }
 @Table({ createdAt: false, updatedAt: false })
 export class Achievement extends Model<Achievement>{
