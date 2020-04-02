@@ -35,8 +35,14 @@ const initialize_db = async (req:Request , res: Response) =>  {
     await event.forEach(el => Event.create(el))
     await volunteer_event_preferences.forEach(el => VolunteerEventPreference.create(el))
     await enrollment.forEach(el => Enrollment.create(el))
-    await achievement.forEach(el => Achievement.create(el))
-    await achievement_earned.forEach(el => AchievementEarned.create(el))
+    for(let i=0;i<achievement.length;i++){
+        let el = achievement[i]
+        await Achievement.create(el)
+    }
+    for(let i=0;i<achievement_earned.length;i++){
+        let el = achievement_earned[i]
+        await AchievementEarned.create(el)
+    }
     await organization.forEach(el => Organization.create(el))
 
 

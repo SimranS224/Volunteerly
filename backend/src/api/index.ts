@@ -8,6 +8,7 @@ import { router as stats } from "./stats";
 import { router as enrollments } from "./enrollments";
 import { router as events } from "./events";
 import {router as preferences} from "./preferences"
+import {router as achievements} from "./achievements/index"
 import {router as organizations} from "./organizations";
 import {router as statistics} from "./stats";
 
@@ -32,7 +33,7 @@ app.use("/*/enrollments", enrollments)
 app.use("/*/volunteers", volunteers)
 app.use("/*/database", db_calls)
 app.use("/*/login", login)
-app.use("/*/achievements", stats)
+app.use("/*/achievements", achievements)
 app.use("/*/preferences", preferences)
 app.use("/*/organizations", organizations)
 app.use("/*/statistics", statistics)

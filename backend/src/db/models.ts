@@ -79,6 +79,9 @@ export class StatCategory extends Model<StatCategory>{
   text: string;
   @HasMany(()=>Stat)
   statistics: Stat[];
+  @HasMany(()=>Achievement)
+  achievements: Achievement[]
+  
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -153,10 +156,14 @@ export class Achievement extends Model<Achievement>{
   photo_url: string;
   @ForeignKey(()=> StatCategory)
   @Column
-  stat_category_id: string;
+  stat_category_id: number;
   @Default(0)
   @Column
   quantity: number
+  @HasMany(()=>AchievementEarned)
+  achievementsEarned: AchievementEarned[]
+  @BelongsTo(() => StatCategory)
+  statCategory: StatCategory
 }
 @Table({ createdAt: false, updatedAt: false })
 export class AchievementEarned extends Model<AchievementEarned>{
@@ -168,6 +175,8 @@ export class AchievementEarned extends Model<AchievementEarned>{
   @PrimaryKey
   @Column
   achievement_id: number;
+  @BelongsTo(()=>Achievement)
+  achievement: Achievement
 
 }
 
