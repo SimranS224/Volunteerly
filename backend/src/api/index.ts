@@ -9,6 +9,8 @@ import { router as enrollments } from "./enrollments";
 import { router as events } from "./events";
 import {router as preferences} from "./preferences"
 import {router as organizations} from "./organizations";
+import {router as statistics} from "./stats";
+
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -33,6 +35,8 @@ app.use("/*/login", login)
 app.use("/*/achievements", stats)
 app.use("/*/preferences", preferences)
 app.use("/*/organizations", organizations)
+app.use("/*/statistics", statistics)
+
 
 
 export const handler = serverless(app)

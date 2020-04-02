@@ -27,8 +27,11 @@ const initialize_db = async (req:Request , res: Response) =>  {
     await volunteer_availabilities.forEach(el => VolunteerAvailability.create(el))
     // await organizations.forEach(el => Organization.create(el))
     await event_type.forEach(el => EventType.create(el))
+    for(let i=0;i<stat_category.length;i++){
+        let el = stat_category[i]
+        await StatCategory.create(el)
+    }
     await stat.forEach(el => Stat.create(el))
-    await stat_category.forEach(el => StatCategory.create(el))
     await event.forEach(el => Event.create(el))
     await volunteer_event_preferences.forEach(el => VolunteerEventPreference.create(el))
     await enrollment.forEach(el => Enrollment.create(el))

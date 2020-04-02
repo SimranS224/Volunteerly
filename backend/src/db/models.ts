@@ -70,19 +70,6 @@ export class EventType extends Model<EventType>{
 }
 
 @Table({ createdAt: false, updatedAt: false })
-export class Stat extends Model<Stat>{
-  @ForeignKey(()=>User)
-  @Column
-  volunteer_id:number;
-  @ForeignKey(()=>StatCategory)
-  @Column
-  stat_category_id:number;
-  @Default(0)
-  @Column
-  quantity:number;
-}
-
-@Table({ createdAt: false, updatedAt: false })
 export class StatCategory extends Model<StatCategory>{
   @Column(DataType.TEXT)
   photo_url: string;
@@ -90,7 +77,27 @@ export class StatCategory extends Model<StatCategory>{
   @AllowNull(false)
   @Column
   text: string;
+  @HasMany(()=>Stat)
+  statistics: Stat[];
 }
+
+@Table({ createdAt: false, updatedAt: false })
+export class Stat extends Model<Stat>{
+  @ForeignKey(()=>User)
+  @PrimaryKey
+  @Column
+  volunteer_id:number;
+  @ForeignKey(()=>StatCategory)
+  @PrimaryKey
+  @Column
+  stat_category_id:number;
+  @Default(0)
+  @Column
+  quantity:number;
+  @BelongsTo(()=>StatCategory)
+  stat_category:StatCategory;
+}
+
 
 @Table({ createdAt: false, updatedAt: false })
 export class Event extends Model<Event>{
