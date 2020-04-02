@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import {sequelize} from "../../db"
-import {VolunteerEventPreference, VolunteerAvailability} from "../../db/models"
+import {VolunteerEventPreference, VolunteerAvailability, EventType} from "../../db/models"
 import { DataType } from "sequelize-typescript";
 
 
 const getPreferences = async (req:Request , res: Response) =>  {
-    console.log("getting volunteers")
+    console.log("getting preferences for volunteers")
     const { user_id } = req.params;
     console.log({user_id});
   
@@ -13,7 +13,7 @@ const getPreferences = async (req:Request , res: Response) =>  {
         const event_preference = await sequelize.sync().then(()=>VolunteerEventPreference.findAll({
             where: {
                 volunteer_id: user_id
-            }
+            },include:[EventType]
           }));
           const availability = await sequelize.sync().then(()=>VolunteerAvailability.findAll({
             where: {
@@ -23,7 +23,7 @@ const getPreferences = async (req:Request , res: Response) =>  {
 
           res.send({
             statusCode: 200,
-            body: ({availability:availability, event_preference:event_preference})
+            body: {availability:availability, event_preference:event_preference}
         });
     } catch (err) {
         res.send({
