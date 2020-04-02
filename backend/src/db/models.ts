@@ -47,21 +47,19 @@ export class VolunteerAvailability extends Model<VolunteerAvailability>{
   end_hour: Date;
 }
 
-// @Table({ createdAt: false, updatedAt: false })
-// export class Organization extends Model<Organization>{
-//   @AllowNull(false)
-//   @Column
-//   organization_name: string;
-//   @Column(DataType.TEXT)
-//   bio: string;
-//   @Column
-//   organization_logo_url: string;
-// }
+@Table({ createdAt: false, updatedAt: false })
+export class Organization extends Model<Organization>{
+  @AllowNull(false)
+  @Column
+  organization_name: string;
+  @Column(DataType.TEXT)
+  bio: string;
+  @Column
+  organization_logo_url: string;
+}
 
 @Table({ createdAt: false, updatedAt: false })
 export class EventType extends Model<EventType>{
-  @Column(DataType.TEXT)
-  photo_url: string;
   @AllowNull(false)
   @Column
   text: string;
@@ -96,6 +94,7 @@ export class StatCategory extends Model<StatCategory>{
 
 @Table({ createdAt: false, updatedAt: false })
 export class Event extends Model<Event>{
+  
   @AllowNull(false)
   @Column
   name:string;
@@ -114,7 +113,11 @@ export class Event extends Model<Event>{
   event_type:EventType;
   @Column(DataType.TEXT)
   photo_url: string;
-  @ForeignKey(() => User)
+  @Column
+  start_time:number;
+  @Column
+  end_time:number;
+  @ForeignKey(() => Organization)
   @Column
   organization_id: number;
   @Column

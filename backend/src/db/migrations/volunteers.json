@@ -1,7 +1,67 @@
-[{"id":7,"first_name":"Thedrick","last_name":"Yeend","email":"tyeend0@telegraph.co.uk","password":"MyYOnncRKR","bio":"Optional real-time focus group", "level": 0},
-{"id":2,"first_name":"Adolphus","last_name":"Alentyev","email":"aalentyev1@howstuffworks.com","password":"DiI7cx","bio":"Implemented zero tolerance capacity", "level": 0},
-{"id":3,"first_name":"Darryl","last_name":"Carvil","email":"dcarvil2@bing.com","password":"ayUjsC","bio":"Function-based bi-directional moderator", "level": 0},
-{"id":4,"first_name":"Nicki","last_name":"Clemitt","email":"nclemitt3@pcworld.com","password":"Dmp0CwZB","bio":"Streamlined attitude-oriented functionalities", "level": 0},
-{"id":5,"first_name":"Anna-diane","last_name":"Pellew","email":"apellew4@reference.com","password":"Etdbn5MBr","bio":"Phased incremental implementation", "level": 0},
-{"id":6,"first_name":"admin","last_name":"admin","email":"admin","password":"$2a$08$foRihhNQJ3B9RD.nA0A7QudxKLP.NhS0qw.kQyGQSnpIK.mpPD2ru","bio":"Admin", "level": 1, "profile_picture_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/temp-profile.jpeg"},
-{"id":1,"first_name":"Mark","last_name":"Zuckerberg","email":"user","password":"$2a$08$yRu3zmuOkQlJSVUTS4zlquwthSRyJuvoa5nJpkPbdKjG1N9aSmmJW","bio":"Founder of Facebook", "level": 0, "profile_picture_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/user@user.com-profile.jpeg"}]
+[
+  {
+    "id": 7,
+    "first_name": "Thedrick",
+    "last_name": "Yeend",
+    "email": "tyeend0@telegraph.co.uk",
+    "password": "MyYOnncRKR",
+    "bio": "Optional real-time focus group",
+    "level": 0
+  },
+  {
+    "id": 2,
+    "first_name": "Adolphus",
+    "last_name": "Alentyev",
+    "email": "aalentyev1@howstuffworks.com",
+    "password": "DiI7cx",
+    "bio": "Implemented zero tolerance capacity",
+    "level": 0
+  },
+  {
+    "id": 3,
+    "first_name": "Darryl",
+    "last_name": "Carvil",
+    "email": "dcarvil2@bing.com",
+    "password": "ayUjsC",
+    "bio": "Function-based bi-directional moderator",
+    "level": 0
+  },
+  {
+    "id": 4,
+    "first_name": "Nicki",
+    "last_name": "Clemitt",
+    "email": "nclemitt3@pcworld.com",
+    "password": "Dmp0CwZB",
+    "bio": "Streamlined attitude-oriented functionalities",
+    "level": 0
+  },
+  {
+    "id": 5,
+    "first_name": "Anna-diane",
+    "last_name": "Pellew",
+    "email": "apellew4@reference.com",
+    "password": "Etdbn5MBr",
+    "bio": "Phased incremental implementation",
+    "level": 0
+  },
+  {
+    "id": 6,
+    "first_name": "admin",
+    "last_name": "admin",
+    "email": "admin",
+    "password": "$2a$08$foRihhNQJ3B9RD.nA0A7QudxKLP.NhS0qw.kQyGQSnpIK.mpPD2ru",
+    "bio": "Admin",
+    "level": 1,
+    "profile_picture_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/temp-profile.jpeg"
+  },
+  {
+    "id": 1,
+    "first_name": "Mark",
+    "last_name": "Zuckerberg",
+    "email": "user",
+    "password": "$2a$08$yRu3zmuOkQlJSVUTS4zlquwthSRyJuvoa5nJpkPbdKjG1N9aSmmJW",
+    "bio": "Founder of Facebook",
+    "level": 0,
+    "profile_picture_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/user@user.com-profile.jpeg"
+  }
+]
