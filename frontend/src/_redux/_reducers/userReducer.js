@@ -8,7 +8,7 @@ const initialState = {
   curUser: null , 
   preferences: null, 
   _allEvents: [], // list of all events 
-  events: [], // When logged in as a user should be enrolled events and when logged in as an organization should be the organization events, when logged in as a admin needs to be all events 
+  events: [], // When logged in as a user should be enrolled events and when logged in as admin should be all events 
   searchQuery: '',
   enrolledEvents: [],
 }
@@ -83,15 +83,6 @@ const updateUser = (success, newUser) => {
     return null
   }
 }
-
-const deleteEvent = (event, curUser) => {
-  const updatedData = userService.deleteEvent(event, curUser.user);
-  return updatedData;
-}
-
-// const addEvent = (event, curUser) => {
-//   return updatedData;
-// }
 
 const filterEvents = (events, searchQuery) => {
   console.log("searchquery", searchQuery)

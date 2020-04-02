@@ -51,7 +51,7 @@
     "email": "admin",
     "password": "$2a$08$foRihhNQJ3B9RD.nA0A7QudxKLP.NhS0qw.kQyGQSnpIK.mpPD2ru",
     "bio": "Admin",
-    "level": 2,
+    "level": 1,
     "profile_picture_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/temp-profile.jpeg"
   },
   {

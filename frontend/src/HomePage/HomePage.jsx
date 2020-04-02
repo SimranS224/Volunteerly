@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {userService} from '../_services/UserService.js'
+import { eventService } from '../_services/EventsService.js'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Dialog from '@material-ui/core/Dialog';
@@ -38,7 +39,7 @@ class HomePage extends React.Component {
       selected: null,
       showEnrollmentSuccess: false,
     }
-    userService.getEvents()
+    eventService.getEvents()
       .then((events) => {
         console.log(events);
         this.props.setEvents(events);

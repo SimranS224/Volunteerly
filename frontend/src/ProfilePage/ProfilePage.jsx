@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {userService} from '../_services/UserService.js'
+import {userService } from '../_services/UserService.js'
+import { eventService } from '../_services/EventsService.js'
 import { userActions } from "../_redux/_actions";
 import CardList from '../components/General/CardList'
 import UserStatistics from '../components/General/UserStatistics'
@@ -51,8 +52,8 @@ class ProfilePage extends React.Component {
             })
         }
 
-        let pastEvents =  userService.getEvents('past');
-        let futureEvents =  userService.getEvents('future');
+        let pastEvents =  eventService.getEvents('past');
+        let futureEvents =  eventService.getEvents('future');
       return (
           <div className="profile">
             <div className="profile-header">

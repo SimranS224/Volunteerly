@@ -6,4 +6,4 @@ export const router = express.Router();
 router.get("/:id", getEventsByUser)
 router.get("/", getEvents)
 router.post("/", addEvent)
-router.delete("/:event_id/:id", deleteEvent) // id is organization id
+router.delete("/:event_id", deleteEvent) // id is organization id

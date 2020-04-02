@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {userService} from '../_services/UserService.js'
+import { eventService } from '../_services/EventsService'
 import CardWithButton from '../components/General/CardWithButton'
 import List from '@material-ui/core/List';
 import { ListItem } from '@material-ui/core';
@@ -43,6 +43,7 @@ const initialState = {
     endTime: new Date(),
     currentDateTime: new Date(), 
     error: false,
+    organizationError: false,
     alert: ""
 };
 
@@ -70,24 +71,28 @@ class AdminPage extends React.Component {
                       pictures: [],
                       addEventErrors: [],
                       _image_key: 0,
-                      addEventErrors: []// use for displaying to the user when an event 
+                      addEventErrors: [],// use for displaying to the user when an event ,
+                      organizations: []
                      };
     }
     
 
     async componentDidMount() {
-        let events =  await userService.getEvents(this.props.curUser); 
+        let events =  await eventService.getEvents(); 
         console.log({events});
         
         this.props.updateEvents(events, true)
         
-        if (this.props.globalEvents) {
-          this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents})
-        } 
+        // set organizations array to give options to choose which organization to add event for 
+        let fetched_organizations = await eventService.getOrganizations()
 
-        if (!this.state.error){
-            this.setState({error: false});
-        }
+        if (this.props.globalEvents) {
+            this.setState({data: this.props.globalEvents, filtered: this.props.globalEvents, organizations:fetched_organizations })
+          } 
+          if (!this.state.error){
+              this.setState({error: false});
+          }
+
     }
 
     verifyValidEvent = () => {
@@ -189,7 +194,7 @@ class AdminPage extends React.Component {
 
         
         try { 
-            const updatedEvents = await userService.addEvent({event: newEvent, token: this.props.curUser.token});
+            const updatedEvents = await eventService.addEvent({event: newEvent, token: this.props.curUser.token});
             this.props.addEvent(updatedEvents)
 
         } catch (err) {
@@ -220,7 +225,7 @@ class AdminPage extends React.Component {
         console.log({event});
         
         try { 
-            const updatedEvents = await userService.deleteEvent({event: event, token: this.props.curUser.token});
+            const updatedEvents = await eventService.deleteEvent({event: event, token: this.props.curUser.token});
             console.log({updatedEvents});
             this.props.deleteEvent(updatedEvents)
         } catch (err) {
@@ -294,6 +299,26 @@ class AdminPage extends React.Component {
         })
     };
 
+    updateOrganizationHandler = name => event =>{
+        let curName = name
+        console.log({curName});
+        let newState = Object.assign({}, this.state);
+
+        for (let i = 0; i < this.state.organizations; i++){
+            if (newState.organizations[i].name == curName){
+                newState.organizations[i].check = event.target.checked;
+            }
+        }
+        this.setState(newState); 
+        let count_orgnaizations = 0;
+        for (let i = 0; i < newState.organizations.length;i++){
+            if (newState.organizations[i].check == true){
+                count_orgnaizations +=1
+            }
+        }
+        this.setState({organizationError: count_orgnaizations === 1 ? false : true})
+    }
+
 
   render() {
     // const eventTypes = this.state.eventTypes;
@@ -312,7 +337,10 @@ class AdminPage extends React.Component {
     console.log({addErrors})
     const afterState = this.state
     console.log({afterState});
-    console.log(this.props.curUser)
+    // console.log(this.props.curUser)
+    const orgs = this.state.organizations
+    console.log({orgs});
+    
     // const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const timeRange = startTimeAsString + "-" + endTimeAsString
@@ -344,13 +372,28 @@ class AdminPage extends React.Component {
                     <div className="root">
 
                     <FormControl required error={!this.state.error} component="fieldset" className="formControl">
-                        <FormLabel component="legend">Pick one (i.e the one that matches your event the most) </FormLabel>
+                        <FormLabel component="legend">Pick the one that matches the event your adding the most) </FormLabel>
                         <FormGroup>
                         {
                             Object.keys(this.state.eventTypes).map((event, i) =>{
                                 return <FormControlLabel key={`${event}`}
                                     control={<Checkbox checked={this.state.eventTypes[event]} onChange={this.updateHandler(event)} name={`${event}`} />}
                                     label={`${event}`}
+                                />
+                        })}
+                        </FormGroup>
+                        <FormHelperText>Please only choose one</FormHelperText>
+                    </FormControl>
+                    <FormControl required error={!this.state.organizationError} component="fieldset" className="formControl">
+                        <FormLabel component="legend">Pick one organization to add an event for  </FormLabel>
+                        <FormGroup>
+                        {
+                            this.state.organizations.map((organization, i) =>{
+                                const cur_name = this.state.organizations[i].name
+                                console.log({cur_name})
+                                return <FormControlLabel key={`${organization} + ${i}`}
+                                    control={<Checkbox checked={this.state.organizations[i].check} onChange={this.updateOrganizationHandler(event)} name={cur_name} />}
+                                    label={cur_name}
                                 />
                         })}
                         </FormGroup>
