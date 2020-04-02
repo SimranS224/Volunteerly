@@ -20,6 +20,7 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "date-fns": "^2.10.0",
+    "dotenv": "^8.2.0",
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "human-date": "^1.4.0",

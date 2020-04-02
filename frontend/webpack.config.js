@@ -1,12 +1,26 @@
 var HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack'); // remember to require this, because we DefinePlugin is a webpack plugin
+const dotenv = require('dotenv');
 
-module.exports = {
+module.exports = () => {
+
+  const env = dotenv.config().parsed;
+
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {});
+
+  return {
   mode: "development",
   cache: false,
    entry: ['babel-polyfill', './src/index.jsx'],
   resolve: {
     extensions: [".js", ".jsx"],
     modules: ["node_modules"]
+  },
+  node: {
+    fs: 'empty'
   },
   
   module: {
@@ -47,7 +61,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
-    })
+    }),
+    new webpack.DefinePlugin(envKeys)
   ],
   devServer: {
     historyApiFallback: true,
@@ -57,4 +72,5 @@ module.exports = {
       apiUrl: "http://localhost:8080"
     })
   }
+};
 };

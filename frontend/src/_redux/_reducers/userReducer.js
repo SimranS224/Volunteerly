@@ -39,21 +39,19 @@ function userReducer(state = initialState, action) {
         preferences: action.newPreferenceState
       };
     case allConstants.ADD_EVENT:
-      const addedEvents = addEvent(action.event, state.curUser)
       return {
         ...state,
-        events: addedEvents
+        events: action.newEvents
       };
     case allConstants.DELETE_EVENT:
-      const deletedEvents = deleteEvent(action.event, state.curUser)
       return {
         ...state,
-        events: deletedEvents
+        events: action.newEvents
       };
     case allConstants.UPDATE_EVENTS:
       return {
         ...state,
-        events: action.event
+        events: action.events
       };
     case allConstants.SEARCH_EVENTS:
       newEvents = filterEvents(state._allEvents, state.searchQuery)
@@ -91,10 +89,9 @@ const deleteEvent = (event, curUser) => {
   return updatedData;
 }
 
-const addEvent = (event, curUser) => {
-  const updatedData = userService.addEvent(event, curUser.user);
-  return updatedData;
-}
+// const addEvent = (event, curUser) => {
+//   return updatedData;
+// }
 
 const filterEvents = (events, searchQuery) => {
   console.log("searchquery", searchQuery)
