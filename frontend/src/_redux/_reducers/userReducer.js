@@ -7,8 +7,8 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
-  _allEvents: [], // _events is the master list of events
-  events: [], // events is a filtered list of events from searching
+  _allEvents: [], // list of all events 
+  events: [], // When logged in as a user should be enrolled events and when logged in as an organization should be the organization events, when logged in as a admin needs to be all events 
   searchQuery: '',
   enrolledEvents: [],
 }
