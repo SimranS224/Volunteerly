@@ -37,7 +37,32 @@ class ProfilePage extends React.Component {
         super(props)
         this.state = {
             loadedEnrolledEvents: false,
-            enrolledEvents: []
+            enrolledEvents: [],
+            statistics:{numOrganizations:0,numEvents:0, numHours:0}
+        }
+    }
+    componentDidMount(){
+        // if user is logged in
+        if(this.props.curUser){
+            // get the statistics for him
+            userService.getUserStatistics(this.props.curUser.id).then(userStats => {
+                console.log("user stats are: ", userStats)
+                // first filter only the things you need, quantity and type of stats
+                const stats = userStats.statistics.map(el => {
+                    return {
+                        text: el.stat_category.text,
+                        quantity: el.quantity
+                    }
+                })
+                const statistics = {
+                    numOrganizations:stats.filter(el => el.text === "organizations")[0].quantity,
+                    numEvents:stats.filter(el => el.text === "events")[0].quantity,
+                    numHours:stats.filter(el => el.text === "hours")[0].quantity                  
+                }
+                this.setState({...this.state,statistics: statistics})
+                console.log("finished setUp in ProfilePage")
+
+            })
         }
     }
 
@@ -69,12 +94,15 @@ class ProfilePage extends React.Component {
             <div className="profile-stats">
                 <h1 className="header">Stats</h1>
                 <div className="stat-row row">
-                    {statsRows.map((stat, i) => {
-                        return (
-                            <div className="col-md-4" key={'stats-' + i.toString()}>
-                                <StatCard icon={stat.icon} number={stat.result} text={stat.title}></StatCard>
-                            </div>)
-                    })}
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
+                    </div>
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
+                    </div>
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
+                    </div>
                 </div>
                 <h1 className="header">Achievements</h1>
                 <div className="stat-row row">

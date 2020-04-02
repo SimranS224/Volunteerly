@@ -53,9 +53,22 @@ const getPreferences = (userId) => {
 	})
 }
 
-const getEventTypes = (userId) => {
+const getEventTypes = () => {
 	console.log("get all event types")
 	return fetch(`http://localhost:3004/dev/api/event_types`)
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log("the body is: ", res.body)
+		return (res.body)
+	})
+}
+
+const getUserStatistics = (userId) => {
+	console.log("fetching user statistics")
+	return fetch(`http://localhost:3004/dev/api/statistics/` + userId)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -102,5 +115,6 @@ const enrollInEvent = (userId, eventId) => {
 
 
 export const userService = {
-	getEvents, addEvent, deleteEvent, getEnrolledEvents, enrollInEvent, updatePreferences, getPreferences, getEventTypes
+	getEvents, getEnrolledEvents, enrollInEvent,
+	updatePreferences, getPreferences, getEventTypes, getUserStatistics
 }
