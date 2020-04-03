@@ -43,9 +43,7 @@ const registerUser = async (user_first_name, user_last_name, user_email, user_pa
 	const response = await fetch(endpoint, options);
 	let data;
 	try { 
-		const body = await response.json()
-		data = JSON.parse(body)
-		console.log({data});
+		data = await response.json()
 	} catch (err) {
 		console.log(`${err}: register user, response: ${data}`);
 		
