@@ -7,15 +7,9 @@ import { FormControl } from '@material-ui/core';
 import { userActions } from "../_redux/_actions";
 import './RegisterPage.css'
 import ImageUploader from "react-images-upload";
-import S3 from 'aws-s3';
-const config = {
-    bucketName: 'volunteer-app-images',
-    region: 'ca-central-1',
-    accessKeyId: 'AKIA2ZJCVHTCYEEVWUKV',
-    secretAccessKey: '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',
-}
-const S3Client = new S3(config);
 import store from 'store'
+import { userService } from '../_services';
+
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
@@ -28,32 +22,13 @@ class RegisterPage extends React.Component {
         pictures: []
     };
   }
-  uploadPhoto = async () => {
-    try{
-    const data = await S3Client.uploadFile(this.state.pictures[0], this.state.email + "-profile")
-    console.log(data)
-    return data
-    }
-    catch(err){
-      console.log(err)
-    }
 
-  }
   register = async (first_name, last_name, email, password) =>{
-    let profile_picture_url = ""
-    if(this.state.pictures.length > 0){
-      let data = await this.uploadPhoto()
-      profile_picture_url = data.location
-    }
-    let res = await fetch('http://localhost:3004/dev/api/volunteers/', {
-        method: 'post',
-        body:  JSON.stringify({first_name: first_name, last_name: last_name, email: email, password: password, profile_picture_url: profile_picture_url}),
-        headers: { 'Content-Type': 'application/json' },
-    })
-    res = await res.json()
+    
+    const res = await userService.registerUser(first_name, last_name, email, password, this.state.pictures)
     console.log("register res", res)
-    this.props.register(res.statusCode)
-    this.props.login(res.id, res.statusCode, res.email, res.token, res.level, first_name, last_name, profile_picture_url)
+    this.props.register(res.body.statusCode)
+    this.props.login(res.body.id, res.body.statusCode, res.body.email, res.body.token, res.body.level, first_name, last_name, res.photo_url)
 
 
   }

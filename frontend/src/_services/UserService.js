@@ -1,7 +1,69 @@
+import S3 from 'aws-s3';
+
+const config = {
+	bucketName: process.env.REACT_APP_buckt_name,
+	region: process.env.REACT_APP_REGION,
+	accessKeyId: process.env.REACT_APP_Access_key_ID,
+	secretAccessKey: process.env.REACT_APP_Secret_access_key,
+}
+const S3Client = new S3(config);
 const HOST = process.env.REACT_APP_BACKEND_PORT;
 const myHeaders = new Headers({
-  'Content-Type': 'application/json',
+'Content-Type': 'application/json',
 });
+
+
+const registerUser = async (user_first_name, user_last_name, user_email, user_password, pictures) => {
+
+	// upload photo
+	let profile_picture_url = ""
+	if(pictures.length > 0){
+		let data = await uploadPhoto(pictures, email)
+		profile_picture_url = data.location
+	}
+	// regist user
+	const endpoint = `${HOST}/dev/api/volunteers`;
+	console.log({endpoint});
+	const newUser = {
+		first_name: user_first_name,
+		last_name: user_last_name,
+		email: user_email,
+		password: user_password,
+		profile_picture_url: profile_picture_url
+	}
+	const bodyToSend = JSON.stringify(newUser);
+	console.log({bodyToSend});
+
+	const options = {
+										method: 'POST',
+										headers: { 'Content-Type': 'application/json' },
+										body: bodyToSend,
+									}
+
+	const response = await fetch(endpoint, options);
+	let data;
+	try { 
+		data = await response.json()
+	} catch (err) {
+		console.log(`${err}: register user, response: ${data}`);
+		
+	}
+  return { body: data, photo_url: profile_picture_url };
+
+}
+
+const uploadPhoto = async (pictures, email) => {
+	try{
+		const data = await S3Client.uploadFile(pictures[0], email + "-profile")
+		console.log(data)
+		return data
+	} catch(err){
+		console.log(err)
+	}
+
+}
+
+
 
 
 
@@ -129,5 +191,6 @@ const enrollInEvent = (userId, eventId) => {
 
 export const userService = {
 	getEvents, getEnrolledEvents, enrollInEvent, getUserAchievements,
-	updatePreferences, getPreferences, getEventTypes, getUserStatistics
+	updatePreferences, getPreferences, getEventTypes, getUserStatistics,
+	registerUser
 }
