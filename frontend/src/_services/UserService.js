@@ -13,7 +13,7 @@ const myHeaders = new Headers({
 });
 
 
-const registerUser = async (first_name, last_name, email, password, pictures) => {
+const registerUser = async (user_first_name, user_last_name, user_email, user_password, pictures) => {
 
 	// upload photo
 	let profile_picture_url = ""
@@ -24,19 +24,20 @@ const registerUser = async (first_name, last_name, email, password, pictures) =>
 	// regist user
 	const endpoint = `${HOST}/dev/api/volunteers`;
 	console.log({endpoint});
-	const bodyToSend = JSON.stringify({first_name: first_name,
-																			last_name: last_name,
-																			email: email,
-																			password: password,
-																			profile_picture_url: profile_picture_url});
+	const newUser = {
+		first_name: user_first_name,
+		last_name: user_last_name,
+		email: user_email,
+		password: user_password,
+		profile_picture_url: profile_picture_url
+	}
+	const bodyToSend = JSON.stringify(newUser);
 	console.log({bodyToSend});
 
 	const options = {
 										method: 'POST',
-										headers: myHeaders,
-										mode: 'cors',
-										cache: 'default',
-										body: JSON.stringify(bodyToSend),
+										headers: { 'Content-Type': 'application/json' },
+										body: bodyToSend,
 									}
 
 	const response = await fetch(endpoint, options);
