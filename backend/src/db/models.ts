@@ -1,5 +1,5 @@
 
-import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, Default, Unique, BelongsToMany} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, AllowNull, ForeignKey, PrimaryKey, BelongsTo, HasOne, Default, Unique, BelongsToMany, HasMany} from 'sequelize-typescript';
  
 // remove createdAt and updatedAt from all tables
 
@@ -47,37 +47,26 @@ export class VolunteerAvailability extends Model<VolunteerAvailability>{
   end_hour: Date;
 }
 
-// @Table({ createdAt: false, updatedAt: false })
-// export class Organization extends Model<Organization>{
-//   @AllowNull(false)
-//   @Column
-//   organization_name: string;
-//   @Column(DataType.TEXT)
-//   bio: string;
-//   @Column
-//   organization_logo_url: string;
-// }
-
 @Table({ createdAt: false, updatedAt: false })
-export class EventType extends Model<EventType>{
-  @Column(DataType.TEXT)
-  photo_url: string;
+export class Organization extends Model<Organization>{
   @AllowNull(false)
   @Column
-  text: string;
+  organization_name: string;
+  @Column(DataType.TEXT)
+  bio: string;
+  @Column
+  organization_logo_url: string;
 }
 
 @Table({ createdAt: false, updatedAt: false })
-export class Stat extends Model<Stat>{
-  @ForeignKey(()=>User)
+export class EventType extends Model<EventType>{
+  @AllowNull(false)
   @Column
-  volunteer_id:number;
-  @ForeignKey(()=>StatCategory)
-  @Column
-  stat_category_id:number;
-  @Default(0)
-  @Column
-  quantity:number;
+  text: string;
+  @HasMany(()=>Event)
+  events: Event[];
+  @HasMany(()=>VolunteerEventPreference)
+  volunteer_preferences: VolunteerEventPreference[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -88,10 +77,34 @@ export class StatCategory extends Model<StatCategory>{
   @AllowNull(false)
   @Column
   text: string;
+  @HasMany(()=>Stat)
+  statistics: Stat[];
+  @HasMany(()=>Achievement)
+  achievements: Achievement[]
+  
 }
 
 @Table({ createdAt: false, updatedAt: false })
+export class Stat extends Model<Stat>{
+  @ForeignKey(()=>User)
+  @PrimaryKey
+  @Column
+  volunteer_id:number;
+  @ForeignKey(()=>StatCategory)
+  @PrimaryKey
+  @Column
+  stat_category_id:number;
+  @Default(0)
+  @Column
+  quantity:number;
+  @BelongsTo(()=>StatCategory)
+  stat_category:StatCategory;
+}
+
+
+@Table({ createdAt: false, updatedAt: false })
 export class Event extends Model<Event>{
+  
   @AllowNull(false)
   @Column
   name:string;
@@ -106,9 +119,15 @@ export class Event extends Model<Event>{
   @ForeignKey(() => EventType)
   @Column
   event_category_id:number;
+  @BelongsTo(()=>EventType)
+  event_type:EventType;
   @Column(DataType.TEXT)
   photo_url: string;
-  @ForeignKey(() => User)
+  @Column
+  start_time:number;
+  @Column
+  end_time:number;
+  @ForeignKey(() => Organization)
   @Column
   organization_id: number;
   @Column
@@ -123,10 +142,13 @@ export class VolunteerEventPreference extends Model<VolunteerEventPreference>{
   @PrimaryKey
   @Column
   volunteer_id: number;
-  @ForeignKey(() => Event)
+  @ForeignKey(() => EventType)
   @PrimaryKey
   @Column
   event_type_id:number;
+  @BelongsTo(()=>EventType)
+  event_type: EventType;
+  
 }
 @Table({ createdAt: false, updatedAt: false })
 export class Achievement extends Model<Achievement>{
@@ -134,10 +156,14 @@ export class Achievement extends Model<Achievement>{
   photo_url: string;
   @ForeignKey(()=> StatCategory)
   @Column
-  stat_category_id: string;
+  stat_category_id: number;
   @Default(0)
   @Column
   quantity: number
+  @HasMany(()=>AchievementEarned)
+  achievementsEarned: AchievementEarned[]
+  @BelongsTo(() => StatCategory)
+  statCategory: StatCategory
 }
 @Table({ createdAt: false, updatedAt: false })
 export class AchievementEarned extends Model<AchievementEarned>{
@@ -149,6 +175,8 @@ export class AchievementEarned extends Model<AchievementEarned>{
   @PrimaryKey
   @Column
   achievement_id: number;
+  @BelongsTo(()=>Achievement)
+  achievement: Achievement
 
 }
 

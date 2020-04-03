@@ -1,7 +1,6 @@
 import express from "express";
-
+import {getStatistics} from "./stats"
 export const router = express.Router();
 
 
-// router.get("/", getAllVolunteers)
-// router.post("/",addVolunteer)
+router.get("/:user_id", getStatistics)

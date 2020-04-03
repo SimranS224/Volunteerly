@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {userService} from '../_services/UserService.js'
+import {userService } from '../_services/UserService.js'
+import { eventService } from '../_services/EventsService.js'
 import { userActions } from "../_redux/_actions";
 import CardList from '../components/General/CardList'
 import UserStatistics from '../components/General/UserStatistics'
@@ -19,16 +20,21 @@ function createData(title, result, icon) {
     return { title, result, icon };
 }
 
-const statsRows = [
-createData('Organizations volunteered at', 5, HouseIcon),
-createData('Events volunteered at', 10, HouseIcon),
-createData('Hours spent volunteering', 28, HouseIcon),
-];
-const achievementRows = [
-createData('Ran 10 miles for Terry Fox', undefined, badge1),
-createData('Colleced 45 lbs of garbage from Lake Ontario', undefined, badge2),
-createData('Tutored 10 high school students', undefined, badge3),
-];
+
+const categoryToText = {
+    "hours": {
+        part_1: "Volunteered for",
+        part_2: 'Hours'
+    },
+    "organizations":{
+        part_1: "Helped",
+        part_2: 'Nonprofits'
+    },
+    "events":{
+        part_1: "Participated in",
+        part_2: "Events!"
+    }
+}
 
 
 class ProfilePage extends React.Component {
@@ -36,7 +42,49 @@ class ProfilePage extends React.Component {
         super(props)
         this.state = {
             loadedEnrolledEvents: false,
-            enrolledEvents: []
+            enrolledEvents: [],
+            statistics:{numOrganizations:0,numEvents:0, numHours:0},
+            achievements:[]
+        }
+    }
+    componentDidMount(){
+        // if user is logged in
+        if(this.props.curUser){
+            // get the user statistics
+            userService.getUserStatistics(this.props.curUser.id).then(userStats => {
+                console.log("user stats are: ", userStats)
+                // first filter only the things you need, quantity and type of stats
+                const stats = userStats.statistics.map(el => {
+                    return {
+                        category: el.stat_category.text,
+                        quantity: el.quantity
+                    }
+                })
+                const statistics = {
+                    numOrganizations:stats.filter(el => el.category === "organizations")[0].quantity,
+                    numEvents:stats.filter(el => el.category === "events")[0].quantity,
+                    numHours:stats.filter(el => el.category === "hours")[0].quantity                  
+                }
+                this.setState({...this.state,statistics: statistics})
+                console.log("user statistics are: ", statistics)
+                console.log("finished setUp in ProfilePage")
+
+            })
+            // get the user achievements
+            userService.getUserAchievements(this.props.curUser.id)
+            .then(userAchievements => {
+
+                const achievements = userAchievements.achievements.map(el => {
+                    return {
+                        category: el.achievement.statCategory.text,
+                        quantity: el.achievement.quantity,
+                        photo_url: el.achievement.photo_url
+                    }
+                })
+                this.setState({...this.state,achievements: achievements})
+                console.log("user achievements are: ", achievements)
+            })
+
         }
     }
 
@@ -51,8 +99,8 @@ class ProfilePage extends React.Component {
             })
         }
 
-        let pastEvents =  userService.getEvents('past');
-        let futureEvents =  userService.getEvents('future');
+        let pastEvents =  eventService.getEvents('past');
+        let futureEvents =  eventService.getEvents('future');
       return (
           <div className="profile">
             <div className="profile-header">
@@ -68,19 +116,23 @@ class ProfilePage extends React.Component {
             <div className="profile-stats">
                 <h1 className="header">Stats</h1>
                 <div className="stat-row row">
-                    {statsRows.map((stat, i) => {
-                        return (
-                            <div className="col-md-4" key={'stats-' + i.toString()}>
-                                <StatCard icon={stat.icon} number={stat.result} text={stat.title}></StatCard>
-                            </div>)
-                    })}
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
+                    </div>
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
+                    </div>
+                    <div className="col-md-4">
+                                <StatCard icon={HouseIcon} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
+                    </div>
                 </div>
                 <h1 className="header">Achievements</h1>
                 <div className="stat-row row">
-                    {achievementRows.map((achievement, i) => {
+                    {this.state.achievements.length > 0 && this.state.achievements.map((achievement, i) => {
                         return (
                             <div className="col-md-4" key={'achievement-' + i.toString()}>
-                                <AchievementCard icon={achievement.icon} text={achievement.title}></AchievementCard>
+                                <AchievementCard icon={achievement.photo_url} part_1={categoryToText[achievement.category].part_1}
+                                 quantity={achievement.quantity} part_2={categoryToText[achievement.category].part_2}></AchievementCard>
                             </div>)
                     })}
                 </div>

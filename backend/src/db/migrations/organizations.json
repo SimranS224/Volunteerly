@@ -1,4 +1,25 @@
-[{"id":"1","organization_name":"Dickinson Inc"},
-{"id":"2","organization_name":"Erdman-Lakin"},
-{"id":"3","organization_name":"Bayer-Strosin"},
-{"id":"4","organization_name":"Kertzmann LLC"}]
+[
+  {
+    "id": "1",
+    "organization_name": "Dickinson Inc",
+    "bio": "Senior Centre Organization"
+  },
+  {
+    "id": "2",
+    "organization_name": "Erdman-Lakin",
+    "bio": "Beach Clean Up Organization",
+    "organization_logo_url": "http://dummyimage.com/204x104.png/dddddd/000000"
+  },
+  {
+    "id": "3",
+    "organization_name": "Bayer-Strosin",
+    "bio": "National NGO",
+    "organization_logo_url": "http://dummyimage.com/204x104.png/dddddd/000000"
+  },
+  {
+    "id": "4",
+    "organization_name": "Kertzmann LLC",
+    "bio": "Provincial NGO",
+    "organization_logo_url": "http://dummyimage.com/204x104.png/dddddd/000000"
+  }
+]

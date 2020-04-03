@@ -1,9 +1,9 @@
-[{"id":1,"photo_url":"http://dummyimage.com/127x141.bmp/dddddd/000000","text":"Cleanup"},
-{"id":2,"photo_url":"http://dummyimage.com/217x153.jpg/dddddd/000000","text":"Hospital"},
-{"id":3,"photo_url":"http://dummyimage.com/101x161.bmp/5fa2dd/ffffff","text":"Translation"},
-{"id":4,"photo_url":"http://dummyimage.com/178x122.bmp/5fa2dd/ffffff","text":"Fundraising"},
-{"id":5,"photo_url":"http://dummyimage.com/245x107.png/cc0000/ffffff","text":"Homeless"},
-{"id":6,"photo_url":"http://dummyimage.com/150x120.png/5fa2dd/ffffff","text":"Elderly and Disabled"},
-{"id":7,"photo_url":"http://dummyimage.com/179x166.png/ff4444/ffffff","text":"Research"},
-{"id":8,"photo_url":"http://dummyimage.com/160x235.png/dddddd/000000","text":"Refugees/Migrants"},
-{"id":9,"photo_url":"http://dummyimage.com/234x192.png/ff4444/ffffff","text":"Trustee"}]
+[{"id":1 ,"text":"Cleanup"},
+{"id":2 ,"text":"Hospital"},
+{"id":3 ,"text":"Translation"},
+{"id":4 ,"text":"Fundraising"},
+{"id":5 ,"text":"Homeless"},
+{"id":6 ,"text":"Elderly and Disabled"},
+{"id":7 ,"text":"Research"},
+{"id":8 ,"text":"Refugees/Migrants"},
+{"id":9 ,"text":"Trustee"}]

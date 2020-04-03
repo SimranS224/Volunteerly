@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import {sequelize} from "../db"
 import {User, VolunteerAvailability, EventType, Stat, StatCategory, Event,
-    VolunteerEventPreference, Achievement, AchievementEarned, Enrollment} from "../db/models"
+    VolunteerEventPreference, Achievement, AchievementEarned, Enrollment, Organization} from "../db/models"
 
 import volunteers from "../db/migrations/volunteers.json"
 import volunteer_availabilities from "../db/migrations/volunteer_availability.json"
@@ -13,7 +13,7 @@ import volunteer_event_preferences from "../db/migrations/volunteer_event_prefer
 import enrollment from "../db/migrations/enrollment.json"
 import achievement from "../db/migrations/achievement.json"
 import achievement_earned from "../db/migrations/achievement_earned.json"  
-
+import organization from "../db/migrations/organizations.json"
 
 export const router = express.Router();
 // import * as fs from "fs";
@@ -27,14 +27,23 @@ const initialize_db = async (req:Request , res: Response) =>  {
     await volunteer_availabilities.forEach(el => VolunteerAvailability.create(el))
     // await organizations.forEach(el => Organization.create(el))
     await event_type.forEach(el => EventType.create(el))
+    for(let i=0;i<stat_category.length;i++){
+        let el = stat_category[i]
+        await StatCategory.create(el)
+    }
     await stat.forEach(el => Stat.create(el))
-    await stat_category.forEach(el => StatCategory.create(el))
     await event.forEach(el => Event.create(el))
     await volunteer_event_preferences.forEach(el => VolunteerEventPreference.create(el))
     await enrollment.forEach(el => Enrollment.create(el))
-    await achievement.forEach(el => Achievement.create(el))
-    await achievement_earned.forEach(el => AchievementEarned.create(el))
-
+    for(let i=0;i<achievement.length;i++){
+        let el = achievement[i]
+        await Achievement.create(el)
+    }
+    for(let i=0;i<achievement_earned.length;i++){
+        let el = achievement_earned[i]
+        await AchievementEarned.create(el)
+    }
+    await organization.forEach(el => Organization.create(el))
 
 
 
