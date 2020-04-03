@@ -1,7 +1,7 @@
-[{"id":1,"photo_url":"http://dummyimage.com/200x147.jpg/cc0000/ffffff","stat_category_id":"1","quantity":"1"},
-{"id":2,"photo_url":"http://dummyimage.com/214x193.bmp/cc0000/ffffff","stat_category_id":"1","quantity":"5"},
+[{"id":1,"photo_url":"https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-0.png","stat_category_id":"1","quantity":"1"},
+{"id":2,"photo_url":"https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-0.png","stat_category_id":"1","quantity":"5"},
 {"id":3,"photo_url":"http://dummyimage.com/214x193.bmp/cc0000/ffffff","stat_category_id":"1","quantity":"10"},
-{"id":5,"photo_url":"http://dummyimage.com/124x130.jpg/5fa2dd/ffffff","stat_category_id":"2","quantity":"5"},
+{"id":5,"photo_url":"https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-0.png","stat_category_id":"2","quantity":"5"},
 {"id":6,"photo_url":"http://dummyimage.com/169x225.bmp/ff4444/ffffff","stat_category_id":"2","quantity":"10"},
 {"id":7,"photo_url":"http://dummyimage.com/217x246.jpg/ff4444/ffffff","stat_category_id":"3","quantity":"5"},
 {"id":9,"photo_url":"http://dummyimage.com/204x104.png/dddddd/000000","stat_category_id":"3","quantity":"10"}]

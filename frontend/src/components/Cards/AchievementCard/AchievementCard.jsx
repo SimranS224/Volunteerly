@@ -9,10 +9,12 @@ class AchievementCard extends React.Component {
     render() {
      
         return (
-            <div className="Card AchivementCard">
+            <div className="Card AchievementCard">
               <div className="ach-card-container">
                 <div className="icon"><img src={this.props.icon}></img></div>
-                <div className="description">{this.props.text}</div>
+                <div className="description">{this.props.part_1} </div>               
+                <div className="number">{this.props.quantity}</div>               
+                <div className="description">{this.props.part_2}</div>               
               </div>
             </div>
         );

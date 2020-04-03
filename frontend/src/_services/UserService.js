@@ -79,6 +79,19 @@ const getUserStatistics = (userId) => {
 	})
 }
 
+const getUserAchievements = (userId) => {
+	console.log("fetching user achievements")
+	return fetch(`http://localhost:3004/dev/api/achievements/` + userId)
+	.then(res => res.json())
+	.then(res => {
+		if(res.error) {
+			throw(res.error)
+		}
+		console.log("the body is: ", res.body)
+		return (res.body)
+	})
+}
+
 /**
  * Returns the events that a user has enrolled in 
  * @param {integer} userId 
@@ -115,6 +128,6 @@ const enrollInEvent = (userId, eventId) => {
 
 
 export const userService = {
-	getEvents, getEnrolledEvents, enrollInEvent,
+	getEvents, getEnrolledEvents, enrollInEvent, getUserAchievements,
 	updatePreferences, getPreferences, getEventTypes, getUserStatistics
 }
