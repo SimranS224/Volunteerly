@@ -297,24 +297,22 @@ class AdminPage extends React.Component {
         })
     };
 
-    updateOrganizationHandler = name => event =>{
+    updateOrganizationHandler = name => event => {
         let curName = name
-        console.log({curName});
-        let newState = Object.assign({}, this.state);
-
-        for (let i = 0; i < this.state.organizations; i++){
-            if (newState.organizations[i].name == curName){
-                newState.organizations[i].check = event.target.checked;
+        console.log(event.target.checked, event.target.name);
+        for (let i = 0; i < this.state.organizations.length; i++){
+            if (this.state.organizations[i].name == event.target.name){
+                this.state.organizations[i].check = event.target.checked;
             }
         }
-        this.setState(newState); 
+     
         let count_orgnaizations = 0;
-        for (let i = 0; i < newState.organizations.length;i++){
-            if (newState.organizations[i].check == true){
+        for (let i = 0; i < this.state.organizations.length;i++){
+            if (this.state.organizations[i].check == true){
                 count_orgnaizations +=1
             }
         }
-        this.setState({organizationError: count_orgnaizations === 1 ? false : true})
+        this.setState({organizations: this.state.organizations, organizationError: count_orgnaizations === 1 ? false : true})
     }
 
 
@@ -388,7 +386,7 @@ class AdminPage extends React.Component {
                         {
                             this.state.organizations.map((organization, i) =>{
                                 const cur_name = this.state.organizations[i].name
-                                console.log({cur_name})
+                                console.log('cur_name!!', cur_name)
                                 console.log(this.state.organizations[0].check);
                                 
                                 return <FormControlLabel key={`${organization} + ${i}`}
