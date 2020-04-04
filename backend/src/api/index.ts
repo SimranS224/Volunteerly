@@ -37,10 +37,10 @@ const authenticateJWT = (req, res, next) => {
             req.user = user;
             next();
         });
-    } else if(rpath == '/dev/api/login' || rpath == '/dev/api/register' || rpath == '/dev/api/events' || rpath == '/dev/api/events/undefined' || rpath == '/dev/api/event_types'){
+    } else if(rpath == '/dev/api/enrollments/attended' || rpath == '/dev/api/login' || rpath == '/dev/api/register' || rpath == '/dev/api/events' || rpath == '/dev/api/events/undefined' || rpath == '/dev/api/event_types'){
     	next()
     }
-    else if(rpath == '/api/login' || rpath == '/api/register' || rpath == '/api/events' || rpath == '/api/events/undefined' || rpath == '/api/event_types'){
+    else if(rpath == '/api/enrollments/attended' || rpath == '/api/register' || rpath == '/api/events' || rpath == '/api/events/undefined' || rpath == '/api/event_types'){
         next()
     }
      else {

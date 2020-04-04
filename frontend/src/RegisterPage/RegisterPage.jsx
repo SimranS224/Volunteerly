@@ -9,7 +9,8 @@ import './RegisterPage.css'
 import ImageUploader from "react-images-upload";
 import store from 'store'
 import { userService } from '../_services';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +29,16 @@ class RegisterPage extends React.Component {
     const res = await userService.registerUser(first_name, last_name, email, password, this.state.pictures)
     console.log("register res", res)
     this.props.register(res.body.statusCode)
+    if(res.body.statusCode === 200){
+      toast('Login success!', {
+      position: "top-right"
+      autoClose: 5000
+      hideProgressBar: false
+      closeOnClick: true
+      pauseOnHover: true
+      draggable: true
+      });
+    }
     this.props.login(res.body.id, res.body.statusCode, res.body.email, res.body.token, res.body.level, first_name, last_name, res.photo_url)
 
 

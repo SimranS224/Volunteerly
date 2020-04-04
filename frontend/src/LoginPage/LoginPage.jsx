@@ -9,7 +9,8 @@ import './LoginPage.css'
 import store from 'store'
 import { browserHistory } from '../_helpers'; 
 import {userService} from '../_services/UserService.js'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -33,7 +34,16 @@ class LoginPage extends React.Component {
     })
     res = await res.json()
     console.log("login res", res)
-
+    if(res.statusCode === 200){
+      toast('Login success!', {
+      position: "top-right"
+      autoClose: 5000
+      hideProgressBar: false
+      closeOnClick: true
+      pauseOnHover: true
+      draggable: true
+      });
+    }
     this.props.login(res.id, res.statusCode, email, res.token, res.level, res.first_name, res.last_name, res.profile_picture_url)
   
   }
@@ -42,6 +52,7 @@ class LoginPage extends React.Component {
     return (
       <div className="container">
         <div className="login">
+        <ToastContainer />
           <FormControl className="form">
             <TextField id="email"  required placeholder="Email" variant="outlined" onChange={(e)=> {this.setState({'email': e.target.value})}}/>
             <TextField id="password" required type="password" onChange={(e)=> {this.setState({'password': e.target.value})}} autoComplete="current-password" required placeholder="password" variant="outlined" />
