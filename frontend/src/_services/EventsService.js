@@ -1,7 +1,7 @@
 import S3 from 'aws-s3';
 
 const config = {
-    bucketName: 'volunteer-app-images',
+    bucketName: process.env.REACT_APP_buckt_name,
     region: process.env.REACT_APP_REGION,
     accessKeyId: process.env.REACT_APP_Access_key_ID,
     secretAccessKey: process.env.REACT_APP_Secret_access_key,

@@ -1,10 +1,6 @@
 import express, { Request, Response } from "express";
 export const router = express.Router();
-<<<<<<< HEAD
-import {Volunteer, Event, Enrollment} from "../../db/models"
-=======
-import {User, Event} from "../../db/models"
->>>>>>> 3ced5a3dbeccd1f1e1a45bd57fb5ba44ee3b2b3d
+import {User, Event,Enrollment} from "../../db/models"
 import {sequelize} from "../../db"
 
 const getEnrollments = async (req: Request, res: Response) => {
@@ -40,25 +36,25 @@ const getEnrollments = async (req: Request, res: Response) => {
 }
 
 const addEnrollment = async (req: Request, res: Response) => {
-    const { user_id, event_id } = req.body;
-    console.log(`Getting enrollments - user_id: ${user_id} - event_id: ${event_id}`)
+    const { event_id, user_id } = req.body;
+
+    console.log(`adding enrollments - user_id: ${user_id} - event_id: ${event_id}`)
     try {
-        const user = await sequelize.sync().then(()=>User.findAll({
-            where: {
-                id: user_id
-            },
-            include: [Event]
-        }));
+        await sequelize.sync()
+            .then(() => Enrollment.create({
+                volunteer_id: user_id,
+                event_id: event_id
+            }));
         res.send({
             statusCode: 200,
-            body: "Successfully created enrollment"
+            body: "Successfully added enrollment"
         });
     } catch (err) {
-        console.log(`Failed to get enrollments - user_id: ${user_id} - ${err.message}`)
+        console.log(`Failed to added enrollments - user_id: ${user_id} - ${err.message}`)
         res.send({
             statusCode: err.statusCode || 500,
             headers: { 'Content-Type': 'text/plain' },
-            body: err.message || 'Could not fetch the Enrollment.'
+            body: err.message || 'Could not add the Enrollment.'
         })
     }
 }

@@ -31,7 +31,15 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     console.log(newVolunteer)
     const token = jwt.sign({ id: email }, "volunteer_secret!!!")
 
-    return res.send({statusCode: 200, email: email, id: users.length, token: token, level: 0, msg: ""})
+    return res.send({
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/plain' },
+      email: email, 
+      id: users.length,
+      token: token,
+      level: 0,
+      msg: ""
+    })
 }
 
 const getAllVolunteers = async (req:Request , res: Response) =>  {
