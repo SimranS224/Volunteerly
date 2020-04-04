@@ -1,6 +1,5 @@
 node_modules
 .npm
-dist
 *.DS_Store
 *.env
 .env
