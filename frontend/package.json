@@ -23,6 +23,7 @@
     "crypto-js": "^4.0.0",
     "date-fns": "^2.10.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "human-date": "^1.4.0",
