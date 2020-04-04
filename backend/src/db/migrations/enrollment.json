@@ -1,4 +1,4 @@
-[{"id":1,"volunteer_id":"1","event_id":"1","attended": "0"},
+[{"id":1,"volunteer_id":"1","event_id":"1","attended": "1"},
 {"id":2,"volunteer_id":"1","event_id":"2","attended": "0"},
 {"id":3,"volunteer_id":"2","event_id":"4","attended": "0"},
 {"id":4,"volunteer_id":"2","event_id":"5","attended": "0"},
