@@ -11,7 +11,11 @@ import {router as preferences} from "./preferences"
 import {router as achievements} from "./achievements/index"
 import {router as organizations} from "./organizations";
 import {router as statistics} from "./stats";
+<<<<<<< HEAD
 import jwt from 'jsonwebtoken'
+=======
+import {router as healthcheck} from "./healthcheck";
+>>>>>>> 9c88b5b93f10c535bbe3a04df4d809beb0820b3a
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -46,7 +50,10 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
+
 app.use(authenticateJWT)
+
+app.use("/*/healthcheck", healthcheck)
 app.use("/*/events", events)
 app.use("/*/event_types", event_types)
 app.use("/*/enrollments", enrollments)
