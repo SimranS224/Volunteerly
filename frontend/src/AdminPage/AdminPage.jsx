@@ -152,6 +152,26 @@ class AdminPage extends React.Component {
         // const time =  startTimeAsString + "-" + endTimeAsString
         return [startTimeAsInt, endTimeAsInt]
     }
+
+    getOrganization() {
+        let currOrganizationId;
+        const orgnanization = this.state.organizations.filter((curOrg) => {
+            console.log({curOrg});
+            
+            if (curOrg.check === true) {
+                console.log("in here");
+                console.log(curOrg.organization_id);
+                
+                
+                return curOrg.organization_id
+            }
+        })
+        if (orgnanization.length !== 0){
+            console.log("getting organization id");
+            currOrganizationId = orgnanization[0].organization_id
+        }
+        return currOrganizationId;
+    }
    
 
     addEvent = async () => {
@@ -173,7 +193,7 @@ class AdminPage extends React.Component {
             description: state.eventDescription,
             location:state.location,
             photo_url: state.pictures,
-            organization_id: this.props.curUser.id,
+            organization_id: this.getOrganization(),
             eventType: Object.keys(state.eventTypes).filter((key) => { 
                             console.log(state.eventTypes[`${key}`] );
                             if (state.eventTypes[`${key}`]){
@@ -213,7 +233,9 @@ class AdminPage extends React.Component {
             filtered: this.props.globalEvents,
             addEventErrors: [],
             _image_key: this.state._image_key +1,
-            alert: "Added Event"
+            alert: "Added Event",
+            organizations: [],
+            organizationError: false
            });
         console.log({initialState});
         console.log({intialEventTypes});
@@ -297,24 +319,22 @@ class AdminPage extends React.Component {
         })
     };
 
-    updateOrganizationHandler = name => event =>{
+    updateOrganizationHandler = name => event => {
         let curName = name
-        console.log({curName});
-        let newState = Object.assign({}, this.state);
-
-        for (let i = 0; i < this.state.organizations; i++){
-            if (newState.organizations[i].name == curName){
-                newState.organizations[i].check = event.target.checked;
+        console.log(event.target.checked, event.target.name);
+        for (let i = 0; i < this.state.organizations.length; i++){
+            if (this.state.organizations[i].name == event.target.name){
+                this.state.organizations[i].check = event.target.checked;
             }
         }
-        this.setState(newState); 
+     
         let count_orgnaizations = 0;
-        for (let i = 0; i < newState.organizations.length;i++){
-            if (newState.organizations[i].check == true){
+        for (let i = 0; i < this.state.organizations.length;i++){
+            if (this.state.organizations[i].check == true){
                 count_orgnaizations +=1
             }
         }
-        this.setState({organizationError: count_orgnaizations === 1 ? false : true})
+        this.setState({organizations: this.state.organizations, organizationError: count_orgnaizations === 1 ? true : false})
     }
 
 
@@ -338,7 +358,9 @@ class AdminPage extends React.Component {
     // console.log(this.props.curUser)
     const orgs = this.state.organizations
     console.log({orgs});
+  
     
+
     // const startTimeAsString = this.state.startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const endTimeAsString =  this.state.endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     // const timeRange = startTimeAsString + "-" + endTimeAsString
@@ -388,7 +410,9 @@ class AdminPage extends React.Component {
                         {
                             this.state.organizations.map((organization, i) =>{
                                 const cur_name = this.state.organizations[i].name
-                                console.log({cur_name})
+                                // console.log('cur_name!!', cur_name)
+                                // console.log(this.state.organizations[0].check);
+                                
                                 return <FormControlLabel key={`${organization} + ${i}`}
                                     control={<Checkbox checked={this.state.organizations[i].check} onChange={this.updateOrganizationHandler(event)} name={cur_name} />}
                                     label={cur_name}

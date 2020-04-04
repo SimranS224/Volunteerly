@@ -29,7 +29,7 @@ const addVolunteer = async (req:Request , res: Response) =>  {
     console.log(v_body)
     const newVolunteer = await User.create(v_body)
     console.log(newVolunteer)
-    const token = jwt.sign({ id: email }, "volunteer_secret!!!")
+    const token = jwt.sign({ id: email }, process.env.SECRET)
 
     return res.send({
       statusCode: 200,

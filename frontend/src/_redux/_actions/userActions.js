@@ -1,6 +1,6 @@
 import { browserHistory } from '../../_helpers'; 
 import { allConstants } from './constants';
-
+import Cookie from "js-cookie"
 const register = (statusCode) => {
  
     console.log("registering")
@@ -26,12 +26,12 @@ const login = (id, statusCode, username, token, level, first_name, last_name, pr
     
     if (statusCode === 200) {
       browserHistory.push('/home')
+      Cookie.set("token", token);
       // save user data so they don't have to login for future page reloads
       localStorage.setItem('userData', JSON.stringify({
         id: id,
         statusCode: statusCode, 
         username: username,
-        token: token,
         level: level,
         first_name: first_name,
         last_name: last_name,

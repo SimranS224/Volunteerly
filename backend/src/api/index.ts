@@ -11,7 +11,8 @@ import {router as preferences} from "./preferences"
 import {router as achievements} from "./achievements/index"
 import {router as organizations} from "./organizations";
 import {router as statistics} from "./stats";
-
+import jwt from 'jsonwebtoken'
+import {router as healthcheck} from "./healthcheck";
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -21,12 +22,35 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+const authenticateJWT = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    console.log("request deets", req.path)
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
 
+        jwt.verify(token, process.env.SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+
+            req.user = user;
+            next();
+        });
+    } else if(req.path == '/dev/api/login' || req.path == '/dev/api/register' || req.path == '/dev/api/events' || req.path == '/dev/api/events/undefined' || req.path == '/dev/api/event_types'){
+    	next()
+    }
+     else {
+        res.sendStatus(401);
+    }
+};
 app.use(cors());
 app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
 
+app.use(authenticateJWT)
+
+app.use("/*/healthcheck", healthcheck)
 app.use("/*/events", events)
 app.use("/*/event_types", event_types)
 app.use("/*/enrollments", enrollments)

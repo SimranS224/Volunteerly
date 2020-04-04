@@ -1,10 +1,22 @@
 service: volunteer-app
 
+custom:
+  secrets: ${file(sample_secrets.json)}
+
 provider:
   name: aws
   runtime: nodejs12.x
   stage: dev
   region: us-east-1
+  environment:
+    DB_NAME: ${self:custom.secrets.DB_NAME}
+    DB_USER: ${self:custom.secrets.DB_USER}
+    DB_PASSWORD: ${self:custom.secrets.DB_PASSWORD}
+    DB_HOST: ${self:custom.secrets.DB_HOST}
+    DB_PORT: ${self:custom.secrets.DB_PORT}
+    SSL_MODE:  ${self:custom.secrets.SSL_MODE}
+    CHECK: ${self:custom.secrets.CHECK}
+    SECRET: ${self:custom.secrets.SECRET}
 
 functions: 
   volunteers:  
@@ -14,7 +26,6 @@ functions:
         cors: true
       - http:         ANY /{proxy+}
         cors: true
-
 plugins:
   - serverless-offline
   - serverless-plugin-typescript

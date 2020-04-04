@@ -1,5 +1,5 @@
 
-import { Event, EventType } from "../../db/models"
+import { Event, EventType, Organization } from "../../db/models"
 import {sequelize} from "../../db"
 import { Request, Response } from "express";
 
@@ -9,7 +9,8 @@ const getEvents = async (req: Request, res: Response) => {
 
   console.log(`Getting events`)
   try {
-      const events = await sequelize.sync().then(()=>Event.findAll({}));
+      const events = await sequelize.sync().then(()=>Event.findAll({
+        include: [Organization]}));
       return res.send({
           statusCode: 200,
           body: JSON.stringify(events)
@@ -106,7 +107,8 @@ const getEventsByUser = async (req: Request, res: Response) => {
       const events = await sequelize.sync().then(()=>Event.findAll({
         where: {
           organization_id: id
-        }
+        },
+        include: [Organization]
       }));
       return res.send({
           statusCode: 200,

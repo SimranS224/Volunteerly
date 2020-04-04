@@ -14,8 +14,8 @@ class CardWithButton extends React.Component {
     }
 
     render() {
-     console.log("window loc",window.location.origin )
-     console.log("encrypt",CryptoJS.AES.encrypt(this.props.event.id.toString(), 'secretKey').toString())
+    //  console.log("window loc",window.location.origin )
+    //  console.log("encrypt",CryptoJS.AES.encrypt(this.props.event.id.toString(), 'secretKey').toString())
         return (
             <div className="container">
                 <Card className="test">
