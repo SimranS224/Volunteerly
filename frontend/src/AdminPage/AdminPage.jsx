@@ -234,7 +234,6 @@ class AdminPage extends React.Component {
             addEventErrors: [],
             _image_key: this.state._image_key +1,
             alert: "Added Event",
-            organizations: [],
             organizationError: false
            });
         console.log({initialState});
