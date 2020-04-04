@@ -16,6 +16,11 @@ import { AdminPage } from '../AdminPage'
 import "./General.css";
 import store from 'store'
 
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const PrivateRoute = ({ admin, userReducer, component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
       (userReducer.loggedIn === true && ((userReducer.isAdmin === true && admin === true) || (admin === false))) ? <Component {...props} />

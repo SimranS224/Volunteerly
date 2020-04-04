@@ -173,6 +173,7 @@ const getEnrolledEvents = (userId) => {
 }
 
 const enrollInEvent = (userId, eventId) => {
+	console.log(userId, eventId)
 	return fetch(`http://localhost:3004/dev/api/enrollments/add`, {
         method: 'post',
         body:    JSON.stringify({event_id: eventId, user_id: userId, attended: 0}),
@@ -183,6 +184,7 @@ const enrollInEvent = (userId, eventId) => {
 		if(res.error) {
 			throw(res.error)
 		}
+		console.log("result: ", res)
 		return res
 	})
 }

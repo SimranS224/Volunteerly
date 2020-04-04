@@ -65,8 +65,11 @@ class HomePage extends React.Component {
     this.props.searchEvents(e.target.value)
   } 
 
-  enrollUser = (elem) => {
-    userService.enrollInEvent(this.props.curUser.id, 1)
+  enrollUser = (event) => {
+    if(event === undefined && event === null) {
+      return
+    }
+    userService.enrollInEvent(this.props.curUser.id, event.id)
       .then((res) => {
         if(res.statusCode !== 200) {
           this.setState({
@@ -131,7 +134,8 @@ class HomePage extends React.Component {
         <Typography className="event-title" variant="h2"> 
         {this.state.selected !== null ? this.props.events[this.state.selected].name : null}
         </Typography>
-        <Button className="primary-button" variant="contained" onClick={this.enrollUser} data-id={event.id} disableElevation>
+        <Button className="primary-button" variant="contained" onClick={() => this.enrollUser(this.props.events[this.state.selected])} 
+          disableElevation>
           Enroll
         </Button>
         <Typography className="event-desc" variant="h4"> 
