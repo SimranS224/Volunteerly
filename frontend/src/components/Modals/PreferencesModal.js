@@ -143,14 +143,20 @@ function PreferencesModal(props) {
         }
         // first sort all of the preferences
         let availability = []
+        console.log({schedule});
+        
         for (let i = 0; i < schedule.length; i++) {
+            console.log("inwefionawewofejw");
+            
             const date = schedule[i]
             const weekDay = int2day[date.getDay()]
-            const hour = date.getHours()
+            const inthour = parseInt(date.toLocaleString('en-US', { hour: 'numeric', hour12: false }), 10);
+            console.log({inthour});
+            
             availability.push({
                 day_of_week: weekDay,
-                start_hour: hour.toString() + ':00:00',
-                end_hour: (hour + 1).toString() + ':00:00'
+                start_hour: inthour,
+                end_hour: inthour + 1
             })
         }
         console.log("the schedule is: ", schedule)
@@ -158,7 +164,7 @@ function PreferencesModal(props) {
         return availability;
     }
 
-    const saveCloseHandler = () => {
+    const saveCloseHandler = async () => {
         // first create the preference state we will be sending to Redux Store to update
         // the user preferences globally
         console.log("saving settings")
@@ -173,6 +179,8 @@ function PreferencesModal(props) {
                 userEventTypes.push(element.type)
             }
         }
+        console.log({dateCopies});
+        
         const reduxPreferenceState = {
             event_preference: userEventTypes,
             selectedDate: state.selectedDate,
@@ -206,7 +214,9 @@ function PreferencesModal(props) {
                 event_preference: eventPrefForDb
             }
             console.log("prefForDb is: ", prefForDb)
-            userService.updatePreferences(props.curUser.id, prefForDb)
+            const preferredEvents = await userService.updatePreferences(props.curUser.id, prefForDb)
+            console.log({preferredEvents});
+            
         }
         // close the modal
         setState({
@@ -231,7 +241,7 @@ function PreferencesModal(props) {
 
     // const {eventTypes, selectedDate } = state;
 
-    return (
+    return  (
         <div className="preference">
             <Button variant="outlined" color="primary" onClick={openHandler}>
                 Preferences
