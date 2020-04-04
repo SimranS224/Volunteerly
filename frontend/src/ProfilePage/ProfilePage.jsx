@@ -45,6 +45,7 @@ class ProfilePage extends React.Component {
         this.state = {
             loadedEnrolledEvents: false,
             enrolledEvents: [],
+            attendedEvents: [],
             statistics:{numOrganizations:0,numEvents:0, numHours:0},
             achievements:[]
         }
@@ -97,6 +98,14 @@ class ProfilePage extends React.Component {
                 })
             })
         }
+        if(this.props.curUser) {
+            userService.getAttendedEvents(this.props.curUser.id).then((events) => {
+                console.log("attende events: ", events)
+                this.setState({
+                    attendedEvents: events
+                })
+            })
+        }
     }
 
     render() {
@@ -142,6 +151,21 @@ class ProfilePage extends React.Component {
                 <div className="stat-row row">
                     <ul className="participated-events">
                         {this.state.enrolledEvents.map((event, i) => {
+                            return (<li key={'event' + i.toString()}>
+                                        <OppCard 
+                                        date={event.start_date}
+                                        title={event.name}
+                                        description={event.description}
+                                        />
+                                    </li>)
+                        })}
+                    </ul>
+                </div>
+
+                <h1 className="header">Attended Events</h1>
+                <div className="stat-row row">
+                    <ul className="participated-events">
+                        {this.state.attendedEvents.map((event, i) => {
                             return (<li key={'event' + i.toString()}>
                                         <OppCard 
                                         date={event.start_date}
