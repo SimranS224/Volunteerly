@@ -16,6 +16,10 @@ import { AdminPage } from '../AdminPage'
 import "./General.css";
 import store from 'store'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
