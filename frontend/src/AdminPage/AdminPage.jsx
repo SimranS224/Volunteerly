@@ -391,6 +391,8 @@ class AdminPage extends React.Component {
                             this.state.organizations.map((organization, i) =>{
                                 const cur_name = this.state.organizations[i].name
                                 console.log({cur_name})
+                                console.log(this.state.organizations[0].check);
+                                
                                 return <FormControlLabel key={`${organization} + ${i}`}
                                     control={<Checkbox checked={this.state.organizations[i].check} onChange={this.updateOrganizationHandler(event)} name={cur_name} />}
                                     label={cur_name}
