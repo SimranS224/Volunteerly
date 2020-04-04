@@ -88,9 +88,6 @@ class ProfilePage extends React.Component {
             })
 
         }
-    }
-
-    render() {
         if(!this.state.loadedEnrolledEvents && this.props.curUser) {
             this.setState({loadedEnrolledEvents: true});
             userService.getEnrolledEvents(this.props.curUser.id).then((events) => {
@@ -100,9 +97,11 @@ class ProfilePage extends React.Component {
                 })
             })
         }
+    }
 
-        let pastEvents =  eventService.getEvents('past');
-        let futureEvents =  eventService.getEvents('future');
+    render() {
+      let pastEvents =  eventService.getEvents('past');
+      let futureEvents =  eventService.getEvents('future');
       return (
           <div className="profile">
             <div className="profile-header">

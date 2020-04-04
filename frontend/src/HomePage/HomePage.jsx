@@ -41,7 +41,6 @@ class HomePage extends React.Component {
     }
     eventService.getEvents()
       .then((events) => {
-        console.log(events);
         this.props.setEvents(events);
       });
   }
