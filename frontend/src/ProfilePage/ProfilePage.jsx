@@ -12,6 +12,8 @@ import './ProfilePage.css'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import HouseIcon from './HouseCircle.svg';
+import PinkHouseCircle from './PinkHouseCircle.svg';
+import LightPinkHouseCircle from './LightPinkHouseCircle.svg';
 import badge1 from './badge1.png';
 import badge2 from './badge2.png';
 import badge3 from './badge3.png';
@@ -120,10 +122,10 @@ class ProfilePage extends React.Component {
                                 <StatCard icon={HouseIcon} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
-                                <StatCard icon={HouseIcon} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
+                                <StatCard icon={LightPinkHouseCircle} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
-                                <StatCard icon={HouseIcon} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
+                                <StatCard icon={PinkHouseCircle} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
                     </div>
                 </div>
                 <h1 className="header">Achievements</h1>

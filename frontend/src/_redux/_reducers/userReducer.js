@@ -7,6 +7,7 @@ const initialState = {
   isAdmin: false, 
   curUser: null , 
   preferences: null, 
+  preferredEvents: [],
   _allEvents: [], // list of all events 
   events: [], // When logged in as a user should be enrolled events and when logged in as admin should be all events 
   searchQuery: '',
