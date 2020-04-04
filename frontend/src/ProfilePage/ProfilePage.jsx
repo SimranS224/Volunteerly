@@ -89,7 +89,7 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        if(!this.state.loadedEnrolledEvents) {
+        if(!this.state.loadedEnrolledEvents && this.props.curUser) {
             this.setState({loadedEnrolledEvents: true});
             userService.getEnrolledEvents(this.props.curUser.id).then((events) => {
                 console.log("setting events: ", events);
@@ -147,9 +147,9 @@ class ProfilePage extends React.Component {
                 </div>
                 <CardList elementList={pastEvents}></CardList> */}
 
-                <div>
-                    <h1>Events {this.props.curUser.first_name} has enrolled in</h1>
-                </div>
+                <h1 className="header">Events {this.props.curUser.first_name} has enrolled in</h1>
+                <div className="stat-row row">
+                    
                 <List>
                     {this.state.enrolledEvents.map((event, i) => {
                         return (<ListItem key={'event' + i.toString()}>
