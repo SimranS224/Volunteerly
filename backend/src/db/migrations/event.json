@@ -137,7 +137,7 @@
     "location": "Toronto",
     "event_category_id": "1",
     "photo_url": "https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-1.jpeg https://volunteer-app-images.s3-ca-central-1.amazonaws.com/undefined-undefined-undefined-0.jpeg",
-    "organization_id": "6",
+    "organization_id": "1",
     "duration": 1,
     "start_time": 20,
     "end_time": 21
