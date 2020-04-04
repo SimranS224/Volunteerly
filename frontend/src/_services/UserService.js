@@ -1,5 +1,5 @@
 import S3 from 'aws-s3';
-
+import Cookie from "js-cookie"
 const config = {
 	bucketName: process.env.REACT_APP_buckt_name,
 	region: process.env.REACT_APP_REGION,
@@ -69,7 +69,7 @@ const uploadPhoto = async (pictures, email) => {
 
 const getEvents = (user, preferences) => {
 	console.log("getting events UserService");
-	return fetch(`http://localhost:3004/dev/api/events`)
+	return fetch(`${HOST}/dev/api/events`)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -83,10 +83,13 @@ const getEvents = (user, preferences) => {
 
 const updatePreferences = (user, preferences) => {
 	console.log("updating preferences UserService")
-	return fetch(`http://localhost:3004/dev/api/preferences/` + user,
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/preferences/` + user,
 	{
 		headers: {
 		  'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`,
+
 		},
 		method: 'POST',
 		body: JSON.stringify(preferences)
@@ -104,7 +107,7 @@ const updatePreferences = (user, preferences) => {
 
 const getPreferences = (userId) => {
 	console.log("getting preferences UserService")
-	return fetch(`http://localhost:3004/dev/api/preferences/` + userId)
+	return fetch(`${HOST}/dev/api/preferences/` + userId)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -117,7 +120,7 @@ const getPreferences = (userId) => {
 
 const getEventTypes = () => {
 	console.log("get all event types")
-	return fetch(`http://localhost:3004/dev/api/event_types`)
+	return fetch(`${HOST}/dev/api/event_types`)
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -130,7 +133,8 @@ const getEventTypes = () => {
 
 const getUserStatistics = (userId) => {
 	console.log("fetching user statistics")
-	return fetch(`http://localhost:3004/dev/api/statistics/` + userId)
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/statistics/` + userId, {method: 'GET', headers: {'Authorization': `Bearer ${token}`}})
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -143,7 +147,8 @@ const getUserStatistics = (userId) => {
 
 const getUserAchievements = (userId) => {
 	console.log("fetching user achievements")
-	return fetch(`http://localhost:3004/dev/api/achievements/` + userId)
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/achievements/` + userId, {method: 'GET', headers: {'Authorization': `Bearer ${token}`}})
 	.then(res => res.json())
 	.then(res => {
 		if(res.error) {
@@ -159,7 +164,8 @@ const getUserAchievements = (userId) => {
  * @param {integer} userId 
  */
 const getEnrolledEvents = (userId) => {
-	return fetch(`${HOST}/dev/api/enrollments/${userId}`)
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/enrollments/${userId}`, {method: 'GET', headers: {'Authorization': `Bearer ${token}`}})
 		.then(res => res.json())
 		.then(res => {
 			if(res.statusCode !== 200) {
@@ -176,7 +182,8 @@ const getEnrolledEvents = (userId) => {
  * @param {integer} userId 
  */
 const getAttendedEvents = (userId) => {
-	return fetch(`${HOST}/dev/api/enrollments/attended/${userId}`)
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/enrollments/attended/${userId}`, {method: 'GET', headers: {'Authorization': `Bearer ${token}`}})
 		.then(res => res.json())
 		.then(res => {
 			if(res.statusCode !== 200) {
@@ -191,10 +198,11 @@ const getAttendedEvents = (userId) => {
 
 const enrollInEvent = (userId, eventId) => {
 	console.log(userId, eventId)
-	return fetch(`http://localhost:3004/dev/api/enrollments/add`, {
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	return fetch(`${HOST}/dev/api/enrollments/add`, {
         method: 'post',
         body:    JSON.stringify({event_id: eventId, user_id: userId, attended: 0}),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
     })
 	.then(res => res.json())
 	.then(res => {

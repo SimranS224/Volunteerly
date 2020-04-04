@@ -1,4 +1,5 @@
 import S3 from 'aws-s3';
+import Cookie from "js-cookie"
 
 const config = {
     bucketName: process.env.REACT_APP_buckt_name,
@@ -45,15 +46,16 @@ const addEvent = async (currEvent) => {
 	preparedEvent.photo_url = stringofPictures
 	const bodyToSend = JSON.stringify(preparedEvent);
 	console.log({bodyToSend});
-
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
 	const endpoint = `${HOST}/dev/api/events`;
 	console.log({endpoint});
 	const options = {
 										method: 'POST',
-										headers: myHeaders,
+										headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json'},
 										mode: 'cors',
 										cache: 'default',
-										body: bodyToSend
+										body: bodyToSend,
+
 									}
 	const response = await fetch(endpoint, options);
 	let data;
@@ -72,14 +74,15 @@ const addEvent = async (currEvent) => {
 
 const deleteEvent = async (currEvent) => {
 	const event = currEvent.event
-
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
 	const endpoint = `${HOST}/dev/api/events/${event.id}`;
 	console.log({endpoint});
 	const options = {
 										method: 'DELETE',
-										headers: myHeaders,
+										headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json'},
 										mode: 'cors',
 										cache: 'default',
+										
 									}
 	const response = await fetch(endpoint, options);
 	let data;
@@ -125,11 +128,13 @@ const getEvents = async (user, preferences) => {
 const getOrganizations = async () => {
   const endpoint = `${HOST}/dev/api/organizations`;
 	console.log({endpoint});
+	const token =  Cookie.get("token") ? Cookie.get("token") : null
 	const options = {
 										method: 'GET',
-										headers: myHeaders,
+										headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json'},
 										mode: 'cors',
 										cache: 'default',
+										
 									}
 	const response = await fetch(endpoint, options);
   let data;
