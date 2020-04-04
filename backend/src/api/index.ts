@@ -11,7 +11,7 @@ import {router as preferences} from "./preferences"
 import {router as achievements} from "./achievements/index"
 import {router as organizations} from "./organizations";
 import {router as statistics} from "./stats";
-
+import {router as healthcheck} from "./healthcheck";
 import bodyParser from "body-parser";
 import compression from "compression";
 import morgan from "morgan";
@@ -26,6 +26,8 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
+
+app.use("/*/healthcheck", healthcheck)
 
 app.use("/*/events", events)
 app.use("/*/event_types", event_types)
