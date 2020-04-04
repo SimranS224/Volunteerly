@@ -68,6 +68,23 @@
 }
 
 
+.profile .stat-row .participated-events {
+    list-style-type: none;
+    margin-left: 0px;
+    padding-left: 0px;
+    width: 100%;
+}
+
+.profile .stat-row .participated-events li{
+    margin-bottom: 28px;
+}
+
+
+.profile .stat-row .participated-events .opp-card {
+    margin-top: 0px;
+}
+
+
 
 .profile .opp-card {
     width: 100%;

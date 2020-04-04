@@ -118,7 +118,7 @@ class HomePage extends React.Component {
                  <OppCard 
                   date={event.start_date}
                   title={event.name}
-                  desc={event.description}
+                  description={event.description}
                   onClick={() => {this.setState({dialog_open: true, selected: i})}} 
                   />
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>

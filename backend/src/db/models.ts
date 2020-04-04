@@ -56,6 +56,8 @@ export class Organization extends Model<Organization>{
   bio: string;
   @Column
   organization_logo_url: string;
+  @HasMany(()=>Event)
+  events: Event[];
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -134,6 +136,10 @@ export class Event extends Model<Event>{
   duration:number;
   @BelongsToMany(() => User, () => Enrollment, 'event_id')
   volunteers: User[];
+  @HasMany(()=>Enrollment)
+  enrollments: Enrollment[];
+  @BelongsTo(()=>Organization)
+  organization:Organization;
 }
 
 @Table({ createdAt: false, updatedAt: false })
@@ -199,5 +205,7 @@ export class Enrollment extends Model<Enrollment>{
   @PrimaryKey
   @Column
   event_id:number;
+  @BelongsTo(()=>Event)
+  event: Event;
 
 }

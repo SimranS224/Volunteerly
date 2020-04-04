@@ -18,7 +18,7 @@ class OppCard extends React.Component {
                     </div>
                     <div className="info">
                         <h3 >{this.props.title}</h3>
-                        <p >{this.props.desc}</p>
+                        <p >{this.props.description}</p>
                     </div>
                 </CardContent>
             </Card>

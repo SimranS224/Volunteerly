@@ -12,8 +12,8 @@ import './ProfilePage.css'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import HouseIcon from './HouseCircle.svg';
-import PinkHouseCircle from './PinkHouseCircle.svg';
-import LightPinkHouseCircle from './LightPinkHouseCircle.svg';
+import HouseIconGreen from './House-Icon-Green.svg';
+import HouseIconPurple from './House-Icon-Purple.svg';
 import badge1 from './badge1.png';
 import badge2 from './badge2.png';
 import badge3 from './badge3.png';
@@ -119,13 +119,13 @@ class ProfilePage extends React.Component {
                 <h1 className="header">Stats</h1>
                 <div className="stat-row row">
                     <div className="col-md-4">
-                                <StatCard icon={HouseIcon} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
+                                <StatCard icon={HouseIconPurple} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
                                 <StatCard icon={LightPinkHouseCircle} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
-                                <StatCard icon={PinkHouseCircle} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
+                                <StatCard icon={HouseIconGreen} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
                     </div>
                 </div>
                 <h1 className="header">Achievements</h1>
@@ -139,30 +139,21 @@ class ProfilePage extends React.Component {
                     })}
                 </div>
 
-                {/* <UserStatistics rows={achievementRows}></UserStatistics>
-                <div>
-                    <h1>Future Events</h1>
-                </div>
-                <CardList elementList={futureEvents}></CardList>
-                <div>
-                    <h1>Past Events</h1>
-                </div>
-                <CardList elementList={pastEvents}></CardList> */}
-
-                <h1 className="header">Events {this.props.curUser.first_name} has enrolled in</h1>
+                <h1 className="header">Enrolled Events</h1>
                 <div className="stat-row row">
-                    
-                <List>
-                    {this.state.enrolledEvents.map((event, i) => {
-                        return (<ListItem key={'event' + i.toString()}>
-                                    <OppCard 
-                                    date={event.start_date}
-                                    title={event.name}
-                                    description={event.description}
-                                    />
-                                </ListItem>)
-                    })}
-                </List>
+                    <ul className="participated-events">
+                        {this.state.enrolledEvents.map((event, i) => {
+                            return (<li key={'event' + i.toString()}>
+                                        <OppCard 
+                                        date={event.start_date}
+                                        title={event.name}
+                                        description={event.description}
+                                        />
+                                    </li>)
+                        })}
+                    </ul>
+                </div>
+                
             </div>
           </div>
         );
