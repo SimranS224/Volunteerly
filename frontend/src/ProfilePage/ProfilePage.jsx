@@ -148,7 +148,7 @@ class ProfilePage extends React.Component {
                 <CardList elementList={pastEvents}></CardList> */}
 
                 <h1 className="header">Events {this.props.curUser.first_name} has enrolled in</h1>
-                <div className="stat-row row">
+                <div className="stat-row row"> </div>
                     
                 <List>
                     {this.state.enrolledEvents.map((event, i) => {
