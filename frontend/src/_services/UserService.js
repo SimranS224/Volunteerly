@@ -171,6 +171,23 @@ const getEnrolledEvents = (userId) => {
 			console.error(error);
 		})
 }
+/**
+ * Returns the events that a user has attended
+ * @param {integer} userId 
+ */
+const getAttendedEvents = (userId) => {
+	return fetch(`${HOST}/dev/api/enrollments/attended/${userId}`)
+		.then(res => res.json())
+		.then(res => {
+			if(res.statusCode !== 200) {
+				throw(`Problem getting event for user: ${res.body}`)
+			}
+			return JSON.parse(res.body)
+		})
+		.catch(error => {
+			console.error(error);
+		})
+}
 
 const enrollInEvent = (userId, eventId) => {
 	console.log(userId, eventId)
@@ -192,7 +209,7 @@ const enrollInEvent = (userId, eventId) => {
 
 
 export const userService = {
-	getEvents, getEnrolledEvents, enrollInEvent, getUserAchievements,
+	getEvents, getEnrolledEvents, getAttendedEvents, enrollInEvent, getUserAchievements,
 	updatePreferences, getPreferences, getEventTypes, getUserStatistics,
 	registerUser
 }

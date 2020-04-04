@@ -35,6 +35,34 @@ const getEnrollments = async (req: Request, res: Response) => {
     }
 }
 
+
+const getAttendedEvents = async (req: Request, res: Response) => {
+    const { user_id } = req.params;
+
+    console.log(`Getting attended events - user_id: ${user_id}`)
+    try {
+        const enrollments = await sequelize.sync().then(()=>Enrollment.findAll({
+            where: {
+                volunteer_id: user_id,
+                attended: 1
+            }, include:[Event]
+        }));
+
+        res.send({
+            statusCode: 200,
+            body: JSON.stringify(enrollments.map(el => el.event))
+        });
+    }
+    catch (err) {
+        console.log(`Failed to get attended events for  - user_id: ${user_id} - ${err.message}`)
+        res.send({
+            statusCode: err.statusCode || 500,
+            headers: { 'Content-Type': 'text/plain' },
+            body: err.message || 'Could not fetch the Enrollment.'
+        })
+    }
+}
+
 const addEnrollment = async (req: Request, res: Response) => {
     const { event_id, user_id } = req.body;
 
@@ -58,6 +86,6 @@ const addEnrollment = async (req: Request, res: Response) => {
         })
     }
 }
-
+router.get("/attended/:user_id", getAttendedEvents)
 router.get("/:user_id", getEnrollments)
 router.post("/add", addEnrollment)
