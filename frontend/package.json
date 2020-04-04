@@ -6,8 +6,7 @@
     "url": "https://github.com/csc309-winter-2020/team48.git"
   },
   "scripts": {
-    "build": "webpack --mode production",
-    "heroku-postbuild": "webpack --mode production",
+    "build": "npm install && webpack --mode production",
     "dev": "webpack-dev-server --open --port 5000",
     "start": "node server.js"
   },
