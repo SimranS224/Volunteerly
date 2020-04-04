@@ -16,6 +16,7 @@ provider:
     DB_PORT: ${self:custom.secrets.DB_PORT}
     SSL_MODE:  ${self:custom.secrets.SSL_MODE}
     CHECK: ${self:custom.secrets.CHECK}
+    SECRET: ${self:custom.secrets.SECRET}
 
 functions: 
   volunteers:  

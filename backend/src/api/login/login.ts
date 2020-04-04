@@ -20,7 +20,7 @@ const login = async (req:Request , res: Response) =>  {
               if(!passwordIsValid){
                 return res.send({ statusCode: 401, msg: "Invalid login!", token: null })
               }
-              const token = jwt.sign({ id: email }, process.env.secret )
+              const token = jwt.sign({ id: email }, process.env.SECRET )
 
               return res.send({statusCode: 200, msg: "", id: users[i].id, token: token, level: users[i].level, first_name: users[i].first_name, last_name: users[i].last_name, profile_picture_url: users[i].profile_picture_url})
           }
