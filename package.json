@@ -1,0 +1,11 @@
+{
+  "name": "TEAM48",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csc309-winter-2020/team48.git"
+  },
+  "scripts": {
+    "postinstall": "npm install --prefix frontend"
+  }
+}

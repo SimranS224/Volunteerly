@@ -1,2 +1,2 @@
 $ heroku git:remote -a csc309-volunteer-web
-git subtree push --prefix pythonapp heroku master
+git subtree push --prefix frontend heroku master
