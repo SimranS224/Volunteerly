@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {userService} from '../_services/UserService.js'
 import { eventService } from '../_services/EventsService.js'
@@ -14,13 +12,12 @@ import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from '@material-ui/core/DialogContent';
 import OppCard from '../components/OppCard/OppCard';
-import MapContainer from '../components/Maps/MapContainer'
+import Event from '../components/Event/Event';
 import HeroImage from './welcome-2.png';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import './HomePage.css';
 import { userActions } from "../_redux/_actions";
-var hdate = require('human-date');
  
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -31,20 +28,38 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 class HomePage extends React.Component {
   constructor(props){
+    const events = [
+      {id: 3,
+      name: "Autism Ontario",
+      start_date: "2019-05-26T04:00:00.000Z",
+      end_date: "2019-05-26T04:00:00.000Z",
+      description: "Fundraise for educational centers for children with Autism in Ontario",
+      location: "Sasa",
+      event_category_id: 9,
+      photo_url: "https://volunteer-app-images.s3.ca-central-1.amazonaws.com/autismontario.jpg",
+      start_time: 13,
+      end_time: 16,
+      organization_id: 4,
+      duration: 3}]
+
     super(props)
     this.state = {
-      dialog_open: false,
+      dialog_open: true,
       filtered: [],
       data: [],
-      selected: null,
+      selected: 0,
       showEnrollmentSuccess: false,
-    }
-    eventService.getEvents()
-      .then((events) => {
-        this.props.setEvents(events);
-        this.setState({filtered:events, data:events})
 
-      });
+      filtered:events,
+      data:events
+    }
+    this.props.setEvents(events)
+    // eventService.getEvents()
+    //   .then((events) => {
+    //     this.props.setEvents(events);
+    //     this.setState({filtered:events, data:events})
+
+    //   });
   }
   
   componentDidMount() {
@@ -95,7 +110,7 @@ class HomePage extends React.Component {
 
   render() {
      let { filtered } = this.state
-  
+
       return (
           <div className="HomePage">
               <Snackbar open={this.state.showEnrollmentSuccess} 
@@ -138,7 +153,7 @@ class HomePage extends React.Component {
         </AppBar>
 
         <DialogContent>
-        <Typography className="event-title" variant="h2"> 
+        {/* <Typography className="event-title" variant="h2"> 
         {this.state.selected !== null ? filtered[this.state.selected].name : null}
         </Typography>
         <Button className="primary-button" variant="contained" onClick={() => this.enrollUser(filtered[this.state.selected])} 
@@ -154,9 +169,8 @@ class HomePage extends React.Component {
         Ends {this.state.selected !== null ? hdate.prettyPrint(filtered[this.state.selected].end_date, { showTime: true }) : null} 
         <br/>
         Location:
-        </Typography>
-        <MapContainer selectedPlace={filtered[this.state.selected]}/>
-        
+        </Typography> */}
+          <Event event={this.state.selected !== null ? filtered[this.state.selected] : null}></Event>
         </DialogContent>
       </Dialog>
                 </ListItem>
