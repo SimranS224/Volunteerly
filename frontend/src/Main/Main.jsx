@@ -16,10 +16,9 @@ import { AdminPage } from '../AdminPage'
 import "./General.css";
 import store from 'store'
 
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-toast.configure()
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+ 
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -55,6 +54,7 @@ class Main extends React.Component {
         <Router history={browserHistory}>
             <div className="App">   
                 <Navbar />
+                <ToastContainer/>
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <Route path="/event_login/:encrypted_id"  render={(props) => <EventLoginPage  {...props}  />} />

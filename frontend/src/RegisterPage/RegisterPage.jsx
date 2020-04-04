@@ -30,12 +30,12 @@ class RegisterPage extends React.Component {
     console.log("register res", res)
     this.props.register(res.body.statusCode)
     if(res.body.statusCode === 200){
-      toast('Login success!', {
-      position: "top-right"
-      autoClose: 5000
-      hideProgressBar: false
-      closeOnClick: true
-      pauseOnHover: true
+      toast('Register success!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
       draggable: true
       });
     }
