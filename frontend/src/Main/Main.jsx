@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Router, Redirect, Switch } from 'react-router-dom';
+import { Route, Router as Router, Redirect, Switch, useParams} from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import { userActions } from "../_redux/_actions";
 
@@ -37,7 +37,8 @@ class Main extends React.Component {
 
       // Log the user in automatically if we saved their data from a previous login
       const userData = localStorage.getItem('userData');
-      if(userData !== undefined && userData !== null) {
+      console.log("NODE_ENV", process.env.NODE_ENV)
+      if(false && userData !== undefined && userData !== null) {
         let user = JSON.parse(userData);
         this.props.login(user.id, user.statusCode, user.username, user.token, user.level,
            user.first_name, user.last_name, user.profile_picture_url)
@@ -52,7 +53,7 @@ class Main extends React.Component {
                 <Navbar />
                     <Switch>
                         <Route path="/home" component={HomePage} />
-                        <Route path="/event_login/:id" component={EventLoginPage} />
+                        <Route path="/event_login/:encrypted_id"  render={(props) => <EventLoginPage  {...props}  />} />
                         <PrivateRoute admin={false} userReducer={this.props.userReducer} path="/profile" component={ProfilePage} />
 
                         <Route path="/login" component={LoginPage} />

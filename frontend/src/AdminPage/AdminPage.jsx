@@ -19,7 +19,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import '../components/Modals/PreferencesModal.css';
-
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -58,7 +57,6 @@ const intialEventTypes = {
     "Refugees or Migrants": false,
     "Trustee": false 
 }
-
 
 class AdminPage extends React.Component {
 

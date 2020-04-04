@@ -1,7 +1,7 @@
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require('webpack'); // remember to require this, because we DefinePlugin is a webpack plugin
 const dotenv = require('dotenv');
-
+var path = require('path')
 module.exports = () => {
 
   const env = dotenv.config().parsed;
@@ -13,7 +13,6 @@ module.exports = () => {
 
   return {
   mode: "development",
-  cache: false,
    entry: ['babel-polyfill', './src/index.jsx'],
   resolve: {
     extensions: [".js", ".jsx"],
@@ -22,7 +21,10 @@ module.exports = () => {
   node: {
     fs: 'empty'
   },
-  
+  output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+    },
   module: {
     rules: [
       {
@@ -60,7 +62,7 @@ module.exports = () => {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      filename: "./index.html"
+      filename: "index.html"
     }),
     new webpack.DefinePlugin(envKeys)
   ],
