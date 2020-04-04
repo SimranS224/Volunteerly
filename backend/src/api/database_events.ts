@@ -22,19 +22,48 @@ const path = require("path");
 // const file = fs.readFileSync(path.resolve(__dirname, "../file.xml"));
 const initialize_db = async (req:Request , res: Response) =>  {
     console.log("calling initialize_db")
-    // console.log("the volunteers are:", volunteers)
+
     await sequelize.sync({force:true}).then(() => volunteers.forEach(volunteer => User.create(volunteer)))
-    await volunteer_availabilities.forEach(el => VolunteerAvailability.create(el))
-    // await organizations.forEach(el => Organization.create(el))
-    await event_type.forEach(el => EventType.create(el))
+
+    for(let i=0;i<organization.length;i++){
+        let el = organization[i]
+        await Organization.create(el)
+    }
+
+    for(let i=0; i<volunteer_availabilities.length; i++){
+        let el = volunteer_availabilities[i]
+        await VolunteerAvailability.create(el)
+    }
+
+    for(let i=0; i<event_type.length; i++){
+        let el = event_type[i]
+        await EventType.create(el)
+    }
+
     for(let i=0;i<stat_category.length;i++){
         let el = stat_category[i]
         await StatCategory.create(el)
     }
-    await stat.forEach(el => Stat.create(el))
-    await event.forEach(el => Event.create(el))
-    await volunteer_event_preferences.forEach(el => VolunteerEventPreference.create(el))
-    await enrollment.forEach(el => Enrollment.create(el))
+
+    for(let i=0; i<stat.length; i++){
+        let el = stat[i]
+        await Stat.create(el)
+    }
+
+    for(let i=0; i<event.length; i++){
+        let el = event[i]
+        await Event.create(el)
+    }
+
+    for(let i=0; i<volunteer_event_preferences.length; i++){
+        let el = volunteer_event_preferences[i]
+        await VolunteerEventPreference.create(el)
+    }
+
+    for(let i=0; i<enrollment.length; i++){
+        let el = enrollment[i]
+        await Enrollment.create(el)
+    }
     for(let i=0;i<achievement.length;i++){
         let el = achievement[i]
         await Achievement.create(el)
@@ -43,7 +72,6 @@ const initialize_db = async (req:Request , res: Response) =>  {
         let el = achievement_earned[i]
         await AchievementEarned.create(el)
     }
-    await organization.forEach(el => Organization.create(el))
 
 
 
