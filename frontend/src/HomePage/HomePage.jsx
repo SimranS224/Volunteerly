@@ -33,15 +33,17 @@ class HomePage extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      data: [],
       dialog_open: false,
       filtered: [],
+      data: [],
       selected: null,
       showEnrollmentSuccess: false,
     }
     eventService.getEvents()
       .then((events) => {
         this.props.setEvents(events);
+        this.setState({filtered:events, data:events})
+
       });
   }
   
@@ -50,18 +52,23 @@ class HomePage extends React.Component {
   }
 
   handleSearch = (e) =>{
-    // e = e.target.value
-    // let filtered = this.state.data.filter(event => {
-    //   let keys = Object.keys(event)
-    //   for(let i = 0; i < keys.length; i++){
-    //     if(event[keys[i]].toLowerCase().indexOf(e.toLowerCase()) > -1){
-    //       return true
-    //     }
-    //   }
-    //   return false
-    // })
-    // this.setState({filtered: filtered})
-    this.props.searchEvents(e.target.value)
+    e = e.target.value
+    if(e.trim() == ''){
+      this.setState({filtered: this.state.data})
+    }
+    let filtered = this.state.data.filter(event => {
+      let keys = Object.keys(event)
+      for(let i = 0; i < keys.length; i++){
+        console.log(event[keys[i]])
+
+        if(event[keys[i]].toString().toLowerCase().indexOf(e.toLowerCase()) > -1){
+          return true
+        }
+      }
+      return false
+    })
+    this.setState({filtered: filtered})
+    // this.props.searchEvents(e.target.value)
   } 
 
   enrollUser = (event) => {
@@ -87,7 +94,8 @@ class HomePage extends React.Component {
   }
 
   render() {
-     let { events } = this.state
+     let { filtered } = this.state
+  
       return (
           <div className="HomePage">
               <Snackbar open={this.state.showEnrollmentSuccess} 
@@ -112,7 +120,7 @@ class HomePage extends React.Component {
       
       <div className="volunteering-opportunities">
         <List>
-              {this.props.events.length > 0 && this.props.events.map((event, i) =>{
+              {filtered.length > 0 && filtered.map((event, i) =>{
                return <ListItem key={'event' + i.toString()}>
                  <OppCard 
                   date={event.start_date}
@@ -131,23 +139,23 @@ class HomePage extends React.Component {
 
         <DialogContent>
         <Typography className="event-title" variant="h2"> 
-        {this.state.selected !== null ? this.props.events[this.state.selected].name : null}
+        {this.state.selected !== null ? filtered[this.state.selected].name : null}
         </Typography>
-        <Button className="primary-button" variant="contained" onClick={() => this.enrollUser(this.props.events[this.state.selected])} 
+        <Button className="primary-button" variant="contained" onClick={() => this.enrollUser(filtered[this.state.selected])} 
           disableElevation>
           Enroll
         </Button>
         <Typography className="event-desc" variant="h4"> 
-        {this.state.selected !== null ? this.props.events[this.state.selected].description : null}
+        {this.state.selected !== null ? filtered[this.state.selected].description : null}
         </Typography>
         <Typography className="event-date" variant="h4"> 
-        Starts {this.state.selected !== null ? hdate.prettyPrint(this.props.events[this.state.selected].start_date, { showTime: true }) : null} 
+        Starts {this.state.selected !== null ? hdate.prettyPrint(filtered[this.state.selected].start_date, { showTime: true }) : null} 
         <br/>
-        Ends {this.state.selected !== null ? hdate.prettyPrint(this.props.events[this.state.selected].end_date, { showTime: true }) : null} 
+        Ends {this.state.selected !== null ? hdate.prettyPrint(filtered[this.state.selected].end_date, { showTime: true }) : null} 
         <br/>
         Location:
         </Typography>
-        <MapContainer selectedPlace={this.props.events[this.state.selected]}/>
+        <MapContainer selectedPlace={filtered[this.state.selected]}/>
         
         </DialogContent>
       </Dialog>
