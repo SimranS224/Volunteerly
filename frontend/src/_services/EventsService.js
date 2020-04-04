@@ -8,7 +8,7 @@ const config = {
     secretAccessKey: process.env.REACT_APP_Secret_access_key,
 }
 const S3Client = new S3(config);
-const HOST = process.env.REACT_APP_BACKEND_PORT;
+const HOST = process.env.NODE_ENV !== 'development' ? process.env.REACT_APP_BACKEND_PROD : process.env.REACT_APP_BACKEND_PORT;
 const myHeaders = new Headers({
   'Content-Type': 'application/json',
 });

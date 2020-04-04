@@ -11,12 +11,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/dist', 'index.html'));
 });
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    // dev code
-} else {
-    // production code
-    console.log("in production")
-	process.env.REACT_APP_BACKEND_PORT = process.env.REACT_APP_BACKEND_PROD
-}
+
 
 app.listen(port);

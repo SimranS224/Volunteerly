@@ -24,7 +24,9 @@ class LoginPage extends React.Component {
   }
   login = async (email, password) =>{
     console.log("login")
-    let res = await fetch(process.env.REACT_APP_BACKEND_PORT + '/dev/api/login/', {
+    const HOST = process.env.NODE_ENV !== 'development' ? process.env.REACT_APP_BACKEND_PROD : process.env.REACT_APP_BACKEND_PORT;
+
+    let res = await fetch(HOST + '/dev/api/login/', {
         method: 'post',
         body:    JSON.stringify({email: email, password: password}),
         headers: { 'Content-Type': 'application/json' },
