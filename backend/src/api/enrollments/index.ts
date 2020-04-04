@@ -134,19 +134,17 @@ const processStatistics = async (event_id, user_id) =>{
 }
 const processAchievements = async (user_id, num_events, num_hours, num_organizations) => {
     // gets all achievements of the user now
-    // Op.or is sequelize's OR syntax for SQL queries
-    console.log(user_id, num_events, num_hours, num_organizations)
+    // Op.or is sequelize's OR syntax for SQL queries, Op.gte for greater than or equal
     const new_achieved = await Achievement.findAll({
                                                     where: {
                                                         [Op.or]: [
-                                                                    {stat_category_id: "2", quantity: num_events},
-                                                                    {stat_category_id: "1", quantity: num_hours},
-                                                                    {stat_category_id: "3", quantity: num_organizations}
+                                                                    {stat_category_id: "2", quantity: {[Op.gte]: num_events}},
+                                                                    {stat_category_id: "1", quantity: {[Op.gte]: num_hours}},
+                                                                    {stat_category_id: "3", quantity: {[Op.gte]: num_organizations}}
                                                                  ]
                                                     }
 
                                                 })
-
     for(let i = 0; i < new_achieved.length; i++){
         // use findOrCreate, if user already has that achievement it just finds it
         // if user does not have that achievement it creates it
@@ -165,20 +163,30 @@ const addAttendance = async (req: Request, res: Response) => {
         await sequelize.sync()
         // mark event as attended
         // returning: true to return updated enrollment
-        await Enrollment.update({attended: 1}, {
-                                                where: {
-                                                    volunteer_id: user_id, 
-                                                    event_id: event_id
-                                                }
-
-                                            })
-        console.log("BEFORE STATS!!!!!!!!!!!!!!!")
+        const enrolled = await Enrollment.findOne({where: {
+                                        volunteer_id: user_id, 
+                                        event_id: event_id
+                                    }})
+        if(enrolled === null){
+            return res.send({
+                    statusCode: 500,
+                    body: "You are not enrolled in the event!"
+                    });
+        }
+        else if(enrolled.attended == 1){
+            return res.send({
+                    statusCode: 400,
+                    body: "Already attended the event!"
+                    });
+        }else{
+            enrolled.attended = 1
+            await enrolled.save()
+        }
         const [num_events, num_hours, num_organizations] = await processStatistics(event_id, user_id)
-        console.log("FINISHED STATS!!!!!!!!!!!!!!!")
         await processAchievements(user_id, num_events, num_hours, num_organizations)
         return res.send({
             statusCode: 200,
-            body: "Successfully attended event"
+            body: "Successfully attended event!"
         });
     } catch(err) {
         console.log(`Failed to attend event - user_id: ${user_id} - ${err.message}`)
