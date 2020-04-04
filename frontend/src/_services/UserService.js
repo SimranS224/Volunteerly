@@ -85,6 +85,8 @@ const getEvents = (user, preferences) => {
 const updatePreferences = (user, preferences) => {
 	console.log("updating preferences UserService")
 	const token =  Cookie.get("token") ? Cookie.get("token") : null
+	console.log({preferences});
+	
 	return fetch(`${HOST}/dev/api/preferences/` + user,
 	{
 		headers: {

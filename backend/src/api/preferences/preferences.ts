@@ -77,11 +77,15 @@ const updatePreferences = async (req:Request , res: Response) =>  {
     
             })
         }
-                const response = {availability:availability, event_preference:event_preference}
+        // get events based on preferences
+
+
+
+        const response = {availability:availability, event_preference:event_preference}
         console.log("response is:", response)
         res.send({
             statusCode: 200,
-            body: JSON.stringify(response)
+            body: response
         });
     } catch (err) {
         res.send({
