@@ -10,5 +10,7 @@ app.use(express.static(__dirname + '/dist'));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/dist', 'index.html'));
 });
-
+if(process.env.NODE_ENV !== 'development'){
+	process.env.REACT_APP_BACKEND_PORT = process.env.REACT_APP_BACKEND_PROD
+}
 app.listen(port);
