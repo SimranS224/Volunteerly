@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm install && webpack --mode production",
     "dev": "webpack-dev-server --open --port 5000",
-    "start": "node server.js"
+    "start": "npm install && node server.js"
   },
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
