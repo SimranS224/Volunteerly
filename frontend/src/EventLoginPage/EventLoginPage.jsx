@@ -38,7 +38,9 @@ class EventLoginPage extends React.Component {
     res = await res.json()
     console.log("login res", res)
     if(res.statusCode === 200){
-        const bytes  = CryptoJS.AES.decrypt(encrypted_id, 'secretKey');
+        const iv  = CryptoJS.enc.Hex.parse('be410fea41df7162a679875ec131cf2c');
+
+        const bytes  = CryptoJS.AES.decrypt(encrypted_id, 'secretKey', {iv:iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});
         const event_id = bytes.toString(CryptoJS.enc.Utf8);
         let res2 = await fetch(host + '/dev/api/enrollments/attended/', {
             method: 'post',
