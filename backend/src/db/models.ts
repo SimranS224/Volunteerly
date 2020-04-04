@@ -40,11 +40,11 @@ export class VolunteerAvailability extends Model<VolunteerAvailability>{
   @Column
   day_of_week: string;
   @AllowNull(false)
-  @Column(DataType.TIME)
-  start_hour: Date;
+  @Column
+  start_hour:number;
   @AllowNull(false)
-  @Column(DataType.TIME)
-  end_hour: Date;
+  @Column
+  end_hour:number;
 }
 
 @Table({ createdAt: false, updatedAt: false })

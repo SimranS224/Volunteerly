@@ -22,6 +22,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
+
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
     console.log("request deets", req.path)
@@ -51,6 +53,8 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
+app.use("/*/database", db_calls)
+
 
 app.use(authenticateJWT)
 
@@ -59,7 +63,6 @@ app.use("/*/events", events)
 app.use("/*/event_types", event_types)
 app.use("/*/enrollments", enrollments)
 app.use("/*/volunteers", volunteers)
-app.use("/*/database", db_calls)
 app.use("/*/login", login)
 app.use("/*/achievements", achievements)
 app.use("/*/preferences", preferences)
