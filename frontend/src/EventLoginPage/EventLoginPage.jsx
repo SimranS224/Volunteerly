@@ -26,7 +26,7 @@ class EventLoginPage extends React.Component {
   login = async (email, password) =>{
     console.log("login")
     const { encrypted_id } = this.props.match.params
-    console.log("encrypted_id", encrypted_id)
+    // console.log("encrypted_id", encrypted_id)
 
     const host = process.env.REACT_APP_BACKEND_PORT 
     let res = await fetch(host + '/dev/api/login/', {
