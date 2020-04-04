@@ -6,6 +6,7 @@ import { store } from "./_helpers";
 
 import { Main } from "./Main";
 
+
 render(
 <Provider store={store}>
 		<Main />

@@ -28,7 +28,8 @@ class EventLoginPage extends React.Component {
     const { encrypted_id } = this.props.match.params
     // console.log("encrypted_id", encrypted_id)
 
-    const host = process.env.REACT_APP_BACKEND_PORT 
+    const host = process.env.NODE_ENV !== 'development' ? process.env.REACT_APP_BACKEND_PROD : process.env.REACT_APP_BACKEND_PORT;
+
     let res = await fetch(host + '/dev/api/login/', {
         method: 'post',
         body:    JSON.stringify({email: email, password: password}),

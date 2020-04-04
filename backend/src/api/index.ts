@@ -39,6 +39,9 @@ const authenticateJWT = (req, res, next) => {
     } else if(req.path == '/dev/api/login' || req.path == '/dev/api/register' || req.path == '/dev/api/events' || req.path == '/dev/api/events/undefined' || req.path == '/dev/api/event_types'){
     	next()
     }
+    else if(req.path == '/api/login' || req.path == '/api/register' || req.path == '/api/events' || req.path == '/api/events/undefined' || req.path == '/api/event_types'){
+        next()
+    }
      else {
         res.sendStatus(401);
     }
