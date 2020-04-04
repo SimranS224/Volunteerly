@@ -122,10 +122,10 @@ class ProfilePage extends React.Component {
                                 <StatCard icon={HouseIconPurple} number={this.state.statistics.numOrganizations} text={"Organizations volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
-                                <StatCard icon={HouseIcon} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
+                                <StatCard icon={HouseIconGreen} number={this.state.statistics.numEvents} text={"Events volunteered at"}></StatCard>
                     </div>
                     <div className="col-md-4">
-                                <StatCard icon={HouseIconGreen} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
+                                <StatCard icon={HouseIconPurple} number={this.state.statistics.numHours} text={"Hours spent volunteering"}></StatCard>
                     </div>
                 </div>
                 <h1 className="header">Achievements</h1>
