@@ -6,9 +6,9 @@
     "url": "https://github.com/csc309-winter-2020/team48.git"
   },
   "scripts": {
-    "build": "npm install && webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack-dev-server --open --port 5000",
-    "start": "npm install && node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
