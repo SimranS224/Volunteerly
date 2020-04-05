@@ -14,7 +14,7 @@ class OppCard extends React.Component {
                 <CardContent className="opp-card-content">
                     <div className="date">
                         <div className="month">{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(new Date(this.props.date).getMonth())]}</div>
-                        <div className="day"> {new Date(this.props.date).getDay() + 1}</div>
+                        <div className="day"> {new Date(this.props.date).getDate()}</div>
                     </div>
                     <div className="info">
                         <h3 >{this.props.title}</h3>

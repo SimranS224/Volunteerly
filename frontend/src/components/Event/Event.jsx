@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ImageGallery from 'react-image-gallery';
+import MapContainer from '../Maps/MapContainer';
 var hdate = require('human-date');
 
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -15,6 +16,10 @@ import './Event.css';
 export class Event extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            disableEnrollmentButton: false
+        }
     }
 
     transformImages(imageUrls) {
@@ -55,6 +60,13 @@ export class Event extends React.Component {
         }
     }
 
+    handleEnrollClick() {
+        this.setState({
+            disableEnrollmentButton: true
+        })
+        this.props.enrollUser(this.props.event, this.props.curUser)
+    }
+
     render() {
         console.log("event: ", this.props.event)
         return (
@@ -75,8 +87,8 @@ export class Event extends React.Component {
                                 </div>
                                 <div className="text">
                                     <p>{hdate.prettyPrint(this.property(this.props.event, 'start_date'))}</p>
-                                    <p>{this.hourAsTimeStr(this.property(this.props.event, 'start_time'))} - 
-                                     {this.hourAsTimeStr(this.property(this.props.event, 'end_time'))}</p>
+                                    <p>{`${this.hourAsTimeStr(this.property(this.props.event, 'start_time'))} - 
+                                     ${this.hourAsTimeStr(this.property(this.props.event, 'end_time'))}`}</p>
                                 </div>
                             </div>
                             <div className="info-container">
@@ -85,19 +97,22 @@ export class Event extends React.Component {
                                 </div>
                                 <div className="text">
                                     <p>{this.property(this.props.event, 'location')}</p>
-                                    <p>Get directions</p>
+                                    <p><a target="__blank" href={`https://www.google.com/maps/place/${this.props.event.location}`}>Get directions</a></p>
                                 </div>
                             </div>
-                            <Button className="primary-button" variant="contained" onClick={() => this.props.enrollUser(this.props.event.id)} disableElevation>
+                            <Button className="primary-button" variant="contained" onClick={() => this.handleEnrollClick()} 
+                                disabled={this.state.disableEnrollmentButton}
+                                disableElevation>
                                 Enroll
                              </Button>
+                             
 
                             <div className="description">
                                 <p className="subheading">Event Details</p>
                                 <p className="text">{this.property(this.props.event, 'description')}</p>
                             </div>
+                            <MapContainer selectedPlace={this.props.event}/>
                         </div>
-
                     </Grid>
 
                     <Grid item md={4} xs={12}>
@@ -116,11 +131,11 @@ export class Event extends React.Component {
                     <div className="info">
                         <h3 className="subheading">Why Volunteer?</h3>
                         <Grid md={6} xs={12}>
-                        <p className="subtext">“ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                            In pulvinar mauris condimentum hendrerit ultricies. Pellentesque efficitur at felis sed bibendum. 
-                            Cras quam purus, consectetur in efficitur vitae, congue sed urna. 
-                            Fusce vehicula feugiat leo suscipit venenatis.”
-                            - Jenny Liu  </p>
+                        <p className="subtext">“I absolutely love volunteering. Through volunteering at the United way 
+                        and other organizations I made many new friends and also felt good about helping out in my community.
+                        I encourage everybody to volunteer about a cause they are passionate about, you will be rewarded
+                        many times over for your efforts.”
+                            - Jenny Liu (Voluneerly user)  </p>
                         </Grid>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import './HomePage.css';
 import { userActions } from "../_redux/_actions";
+import { toast } from 'react-toastify';
  
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -88,18 +89,39 @@ class HomePage extends React.Component {
     // this.props.searchEvents(e.target.value)
   } 
 
-  enrollUser = (event) => {
-    if(event === undefined && event === null) {
+  enrollUser = (event, curUser) => {
+    if(curUser === undefined || curUser === null) {
+      toast('Please login to enroll in an event', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+      this.setState({
+        dialog_open: false, 
+        selected: null
+      })
       return
     }
-    userService.enrollInEvent(this.props.curUser.id, event.id)
+    userService.enrollInEvent(curUser.id, event.id)
       .then((res) => {
-        if(res.statusCode !== 200) {
+        if(res.statusCode === 200) {
           this.setState({
             showEnrollmentSuccess: true,
             dialog_open: false, 
             selected: null
           })
+        } else {
+          toast('Failed to enroll in event', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+          });
         }
       });
   }
@@ -136,31 +158,31 @@ class HomePage extends React.Component {
               </div>
       
       <div className="volunteering-opportunities">
-        <List>
-              {filtered.length > 0 && filtered.map((event, i) =>{
-               return <ListItem key={'event' + i.toString()}>
-                 <OppCard 
-                  date={event.start_date}
-                  title={event.name}
-                  description={event.description}
-                  onClick={() => {this.setState({dialog_open: true, selected: i})}} 
-                  />
-      <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
-
-        <DialogContent>
-        <AppBar className="EventAppBar">
-            <Toolbar>
-              <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
-                <CloseIcon />
-              </IconButton>
-              </Toolbar>
-          </AppBar>
-          {this.state.selected !== null ? <Event event={filtered[this.state.selected]} enrollUser={this.enrollUser}></Event> : null}
-        </DialogContent>
-      </Dialog>
-                </ListItem>
-              })}
-              </List>
+          <List>
+                {filtered.length > 0 && filtered.map((event, i) =>{
+                return <ListItem key={'event' + i.toString()}>
+                  <OppCard 
+                    date={event.start_date}
+                    title={event.name}
+                    description={event.description}
+                    onClick={() => {this.setState({dialog_open: true, selected: i})}} 
+                    />
+                  </ListItem>
+                })}
+          </List>
+          
+          <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
+            <DialogContent>
+              <AppBar className="EventAppBar">
+                  <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
+                      <CloseIcon />
+                    </IconButton>
+                    </Toolbar>
+                </AppBar>
+                {this.state.selected !== null ? <Event event={filtered[this.state.selected]} enrollUser={this.enrollUser} curUser={this.props.curUser}></Event> : null}
+            </DialogContent>
+          </Dialog>
           </div>
         </div>
       );
