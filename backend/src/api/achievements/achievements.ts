@@ -4,9 +4,7 @@ import {Achievement, AchievementEarned, StatCategory} from "../../db/models"
 
 
 const getAchievements = async (req:Request , res: Response) =>  {
-    console.log("getting achievements for a volunteer")
     const { user_id } = req.params;
-    console.log({user_id});
   
     try {
         const achievements = await sequelize.sync().then(()=>AchievementEarned.findAll({

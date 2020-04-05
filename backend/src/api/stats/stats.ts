@@ -6,7 +6,6 @@ import {Stat, StatCategory} from "../../db/models"
 const getStatistics = async (req:Request , res: Response) =>  {
     console.log("getting statistics for a volunteer")
     const { user_id } = req.params;
-    console.log({user_id});
   
     try {
         const statistics = await sequelize.sync().then(()=>Stat.findAll({

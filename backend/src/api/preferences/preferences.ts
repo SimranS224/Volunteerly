@@ -6,9 +6,7 @@ import { Op } from "sequelize";
 
 
 const getPreferences = async (req:Request , res: Response) =>  {
-    console.log("getting preferences for volunteers")
     const { user_id } = req.params;
-    console.log({user_id});
   
     try {
         const event_preference = await sequelize.sync().then(()=>VolunteerEventPreference.findAll({
@@ -55,7 +53,6 @@ const getAllDaysInRange = (startDate, endDate) => {
 }
 
 const updatePreferences = async (req:Request , res: Response) =>  {
-    console.log("updating volunteers")
     const { user_id } = req.params;
     console.log({user_id});
     const data = req.body;
@@ -85,7 +82,6 @@ const updatePreferences = async (req:Request , res: Response) =>  {
             let ev_pref = data.event_preference[i]
             await VolunteerEventPreference.create(ev_pref).then((new_ev_pref) => {
                 event_preference.push({"volunteer_id": new_ev_pref.volunteer_id, "event_type_id": new_ev_pref.event_type_id})
-                console.log("event preference is: ", event_preference)
             })
         }
         for(let i =0; i< data.availability.length; i++){
@@ -93,7 +89,6 @@ const updatePreferences = async (req:Request , res: Response) =>  {
             delete av["id"]
             await VolunteerAvailability.create(av).then((new_av) => {
                 availability.push({id: new_av.id,volunteer_id:new_av.volunteer_id, day_of_week:new_av.day_of_week, start_hour:new_av.start_hour, end_hour:new_av.end_hour})
-                console.log("availability list is: ", availability)
     
             })
         }
@@ -137,7 +132,6 @@ const updatePreferences = async (req:Request , res: Response) =>  {
                     for (let j = 0; j < daysOfTheWeekAvailbility.length; j++){
                         if (curWeekDay === daysOfTheWeekAvailbility[j][0]){
                         // check evnetstartdate <= availbility start or end of availbilty <= endofEvent
-                            console.log("start availnbily", daysOfTheWeekAvailbility[j][1] , "event starttime ", event.start_time, " evnetendtime",  event.end_time, "availbility end ", daysOfTheWeekAvailbility[j][2]);
                         
                             if ((daysOfTheWeekAvailbility[j][1] <= event.start_time &&  event.start_time <= daysOfTheWeekAvailbility[j][2])
                                 || (daysOfTheWeekAvailbility[j][1] <= event.start_time &&  event.end_time <= daysOfTheWeekAvailbility[j][2]) ){
@@ -152,7 +146,6 @@ const updatePreferences = async (req:Request , res: Response) =>  {
         }
       
         const response = {availability:availability, event_preference:event_preference, newEvents: eventWithValidDates}
-        console.log("response is:", response)
         res.send({
             statusCode: 200,
             body: JSON.stringify(response)

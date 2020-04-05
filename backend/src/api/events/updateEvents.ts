@@ -7,7 +7,6 @@ import { Request, Response } from "express";
 const getEvents = async (req: Request, res: Response) => {
   //const { userId, availability, timeRanges } = req.body;
 
-  console.log(`Getting events`)
   try {
       const events = await sequelize.sync().then(()=>Event.findAll({
         include: [Organization]}));
@@ -49,7 +48,6 @@ const addEvent = async (req: Request, res: Response) => {
   event.time_range = event.timeRange
   delete event.timeRange
   delete event.eventType
-  console.log("this is the event I will send",event);
   let newEvent;
 
   try {
