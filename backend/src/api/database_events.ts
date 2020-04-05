@@ -21,7 +21,6 @@ export const router = express.Router();
 const path = require("path");
 // const file = fs.readFileSync(path.resolve(__dirname, "../file.xml"));
 const initialize_db = async (req:Request , res: Response) =>  {
-    console.log("calling initialize_db")
 
     await sequelize.sync({force:true}).then(() => volunteers.forEach(volunteer => User.create(volunteer)))
 
@@ -79,7 +78,6 @@ const initialize_db = async (req:Request , res: Response) =>  {
 }
 
 const delete_db = async (req:Request , res: Response) =>  {
-    console.log("clearing db")
     await sequelize.sync({force:true})
     return res.send("finished")
 

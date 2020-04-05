@@ -8,14 +8,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const login = async (req:Request , res: Response) =>  { 
-  console.log("login")
   try{
     const {email, password} = req.body;
     await sequelize.sync()
     const users = await User.findAll()
       for(let i = 0; i < users.length; i++){
           if(users[i].email == email){
-              console.log("found existing email")
+        
               const passwordIsValid = bcrypt.compareSync(password, users[i].password);
               if(!passwordIsValid){
                 return res.send({ statusCode: 401, msg: "Invalid login!", token: null })

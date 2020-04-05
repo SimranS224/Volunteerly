@@ -14,41 +14,7 @@ const currPort: number =  process.env.DB_PORT ? process.env.DB_PORT as unknown a
 const getSequelize = () => {
   const modelsList = [User, VolunteerAvailability, EventType, Stat, StatCategory, Event,
     VolunteerEventPreference, Achievement, AchievementEarned, Enrollment, Organization]
-  // if(process.env.NODE_ENV === "production"){
-  //     //TODO implement production Sequelize
-  //     return new Sequelize(prodDbUrl,{operatorsAliases: false,models: modelsList});
-  // }
-  // else{
-      // return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: modelsList });
-    // console.log(process.env)
-    // console.log({dbName,
-    //   userName,
-    //   password,
-    //   other: {
-    //     dialect: 'postgres',
-    //     host: process.env.DB_HOST,
-    //     port: currPort,
-    //     models: modelsList,
-    //     dialectOptions: {
-    //       connectTimeout: 60000,
-    //       ssl:true
-    //     },
-    //   }})
-  //   return new Sequelize(
-  //   dbName,
-  //   userName,
-  //   password,
-  //   {
-  //     dialect: 'postgres',
-  //     host: process.env.host,
-  //     port: currPort,
-  //     models: modelsList,
-  //     dialectOptions: {
-  //       connectTimeout: 60000,
-  //       ssl: true
-  //     },
-  //   },
-  // )
+
   return new Sequelize(
     "d993cdeukh3597",
     "fekvgreotoxbtf",
