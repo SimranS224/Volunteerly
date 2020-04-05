@@ -146,7 +146,6 @@ function PreferencesModal(props) {
         console.log({schedule});
         
         for (let i = 0; i < schedule.length; i++) {
-            console.log("inwefionawewofejw");
             
             const date = schedule[i]
             const weekDay = int2day[date.getDay()]
@@ -159,7 +158,7 @@ function PreferencesModal(props) {
                 end_hour: inthour + 1
             })
         }
-        console.log("the schedule is: ", schedule)
+        // console.log("the schedule is: ", schedule)
         console.log("the availabilities are: ", availability)
         return availability;
     }
@@ -213,10 +212,10 @@ function PreferencesModal(props) {
                 availability: availabilityForDb,
                 event_preference: eventPrefForDb
             }
-            console.log("prefForDb is: ", prefForDb)
+            console.log({prefForDb})
             const preferredEvents = await userService.updatePreferences(props.curUser.id, prefForDb)
             console.log({preferredEvents});
-            proprs.updatePrefferedEvents(preferredEvents.newEvents);
+            props.updatePrefferedEvents(preferredEvents.newEvents);
 
             
         }
@@ -308,7 +307,7 @@ const mapDispatchToProps = dispatch => {
         setPreferences: (curUser, state) => {
             dispatch(userActions.setPreferences(curUser, state))
         },
-        updateEvents: (prefferedEvents) => {
+        updatePrefferedEvents: (prefferedEvents) => {
           dispatch(userActions.updatePrefferedEvents(prefferedEvents))
         }
     }
