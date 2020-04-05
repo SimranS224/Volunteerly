@@ -111,7 +111,6 @@ export class Event extends React.Component {
                                 <p className="subheading">Event Details</p>
                                 <p className="text">{this.property(this.props.event, 'description')}</p>
                             </div>
-                            <MapContainer selectedPlace={this.props.event}/>
                         </div>
                     </Grid>
 
