@@ -8,6 +8,9 @@ var hdate = require('human-date');
 import "react-image-gallery/styles/css/image-gallery.css";
 import CalIcon from './cal-icon.svg';
 import LocIcon from './loc-icon.svg';
+import Smiling from './smiling.png';
+
+import './Event.css';
 
 export class Event extends React.Component {
     constructor(props) {
@@ -42,6 +45,16 @@ export class Event extends React.Component {
         }
     }
 
+    hourAsTimeStr(hour) {
+        if(hour == 12) {
+            return `12:00 PM`
+        } else if (hour < 12) {
+            return `${hour}:00 AM`
+        } else {
+            return `${hour-12}:00 PM`
+        }
+    }
+
     render() {
         console.log("event: ", this.props.event)
         return (
@@ -50,20 +63,23 @@ export class Event extends React.Component {
                     showPlayButton={false}
                     showFullscreenButton={false}
                     showThumbnails={false}/>
-                <Grid container spacing={2}>
-                    <Grid item xs={8}>
+                <Grid container spacing={4}>
+                    <Grid item md={1}></Grid>
+                    <Grid item md={6}>
                         <h1>{this.property(this.props.event, 'name')}</h1>
                         <div className="info">
-                            <div className="container">
+                            <p className="subheading">Time and Location</p>
+                            <div className="info-container">
                                 <div className="icon">
                                     <img src={CalIcon} />
                                 </div>
                                 <div className="text">
-                                    <p>{this.property(this.props.event, 'start_date')}</p>
-                                    <p>{this.property(this.props.event, 'start_time')}:00 - {this.property(this.props.event, 'end_time')}:00</p>
+                                    <p>{hdate.prettyPrint(this.property(this.props.event, 'start_date'))}</p>
+                                    <p>{this.hourAsTimeStr(this.property(this.props.event, 'start_time'))} - 
+                                     {this.hourAsTimeStr(this.property(this.props.event, 'end_time'))}</p>
                                 </div>
                             </div>
-                            <div className="container">
+                            <div className="info-container">
                                 <div className="icon">
                                     <img src={LocIcon} />
                                 </div>
@@ -75,35 +91,39 @@ export class Event extends React.Component {
                             <Button className="primary-button" variant="contained" onClick={() => this.props.enrollUser(this.props.event.id)} disableElevation>
                                 Enroll
                              </Button>
-                            <p className="description">
-                                {this.property(this.props.event, 'description')}
-                            </p>
+
+                            <div className="description">
+                                <p className="subheading">Event Details</p>
+                                <p className="text">{this.property(this.props.event, 'description')}</p>
+                            </div>
                         </div>
 
                     </Grid>
 
-                    <Grid item xs={4}>
-                        <h1>hello</h1>
+                    <Grid item md={4} xs={12}>
+                        <div className="host-organization">
+
+                            <img className="organizationLogo" src={this.props.event.organization.organization_logo_url}></img>
+                            <p className="organizationName">{this.props.event.organization.organization_name}</p>
+                            <p className="bio">{this.props.event.organization.bio}</p>
+                        </div>
                     </Grid>
                 </Grid>
-                <h2> 
-                </h2>
-
-                <Typography className="event-title" variant="h2"> 
-                {this.exists(this.props.event) ? this.props.event.name : null}
-                </Typography>
-
-
-                <Typography className="event-desc" variant="h4"> 
-                    {this.exists(this.props.event) ? this.props.event.description : null}
-                </Typography>
-
-                <Typography className="event-date" variant="h4"> 
-                    Starts {this.exists(this.props.Event) ? hdate.prettyPrint(this.props.event.start_date, { showTime: true }) : null} 
-                    <br/>
-                    Ends {this.exists(this.props.event) ? hdate.prettyPrint(this.props.event.end_date, { showTime: true }) : null} 
-                    <br/>
-                </Typography> 
+            
+                <div className="why-volunteer">
+                    <Grid md={1} ></Grid>
+                    <img src={Smiling}></img>
+                    <div className="info">
+                        <h3 className="subheading">Why Volunteer?</h3>
+                        <Grid md={6} xs={12}>
+                        <p className="subtext">“ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                            In pulvinar mauris condimentum hendrerit ultricies. Pellentesque efficitur at felis sed bibendum. 
+                            Cras quam purus, consectetur in efficitur vitae, congue sed urna. 
+                            Fusce vehicula feugiat leo suscipit venenatis.”
+                            - Jenny Liu  </p>
+                        </Grid>
+                    </div>
+                </div>
             </div>
         )
     } 

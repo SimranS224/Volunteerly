@@ -28,38 +28,23 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 class HomePage extends React.Component {
   constructor(props){
-    const events = [
-      {id: 3,
-      name: "Autism Ontario",
-      start_date: "2019-05-26T04:00:00.000Z",
-      end_date: "2019-05-26T04:00:00.000Z",
-      description: "Fundraise for educational centers for children with Autism in Ontario",
-      location: "Sasa",
-      event_category_id: 9,
-      photo_url: "https://volunteer-app-images.s3.ca-central-1.amazonaws.com/autismontario.jpg",
-      start_time: 13,
-      end_time: 16,
-      organization_id: 4,
-      duration: 3}]
-
     super(props)
     this.state = {
-      dialog_open: true,
-      filtered: [],
-      data: [],
-      selected: 0,
-      showEnrollmentSuccess: false,
-
-      filtered:events,
-      data:events
+        dialog_open: false,
+        filtered: [],
+        data: [],
+        selected: null,
+        showEnrollmentSuccess: false
     }
-    this.props.setEvents(events)
-    // eventService.getEvents()
-    //   .then((events) => {
-    //     this.props.setEvents(events);
-    //     this.setState({filtered:events, data:events})
+    eventService
+        .getEvents()
+        .then((events) => {
+            this
+                .props
+                .setEvents(events);
+            this.setState({filtered: events, data: events})
 
-    //   });
+        });
   }
   
   componentDidMount() {
@@ -144,33 +129,16 @@ class HomePage extends React.Component {
                   onClick={() => {this.setState({dialog_open: true, selected: i})}} 
                   />
       <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
-      <AppBar className="EventAppBar">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            </Toolbar>
-        </AppBar>
 
         <DialogContent>
-        {/* <Typography className="event-title" variant="h2"> 
-        {this.state.selected !== null ? filtered[this.state.selected].name : null}
-        </Typography>
-        <Button className="primary-button" variant="contained" onClick={() => this.enrollUser(filtered[this.state.selected])} 
-          disableElevation>
-          Enroll
-        </Button>
-        <Typography className="event-desc" variant="h4"> 
-        {this.state.selected !== null ? filtered[this.state.selected].description : null}
-        </Typography>
-        <Typography className="event-date" variant="h4"> 
-        Starts {this.state.selected !== null ? hdate.prettyPrint(filtered[this.state.selected].start_date, { showTime: true }) : null} 
-        <br/>
-        Ends {this.state.selected !== null ? hdate.prettyPrint(filtered[this.state.selected].end_date, { showTime: true }) : null} 
-        <br/>
-        Location:
-        </Typography> */}
-          <Event event={this.state.selected !== null ? filtered[this.state.selected] : null}></Event>
+        <AppBar className="EventAppBar">
+            <Toolbar>
+              <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+              </Toolbar>
+          </AppBar>
+          {this.state.selected !== null ? <Event event={filtered[this.state.selected]} enrollUser={this.enrollUser}></Event> : null}
         </DialogContent>
       </Dialog>
                 </ListItem>
