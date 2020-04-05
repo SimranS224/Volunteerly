@@ -15,7 +15,7 @@ Backend url: https://e3fm1d24f2.execute-api.us-east-1.amazonaws.com/dev/api/
 A. Run  the below commands to use in development.
  ```
    npm install
-   npm run start
+   npm run dev
  ```
 B. Run the below commands to build, output will be in dist folder.
  ```
