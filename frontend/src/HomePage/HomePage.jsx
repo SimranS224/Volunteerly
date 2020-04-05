@@ -48,8 +48,25 @@ class HomePage extends React.Component {
         });
   }
   
-  componentDidMount() {
+  areSameObject = (a, b) => {
+    let areSame = true;
+    for(let propertyName in a) {
+       if(a[propertyName] !== b[propertyName]) {
+          areSame = false;
+          break;
+       }
+    }
+    return areSame;
+  }
 
+  componentDidUpdate() {
+    const newEvents = this.props.preferredEvents
+    console.log({newEvents});
+    if (!(this.areSameObject(this.props.preferredEvents,this.state.data)) || !(this.areSameObject(this.props.preferredEvents,this.state.filtered))){
+      if (this.props.preferredEvents.length > 0){
+        this.setState({data: this.props.preferredEvents , filtered: this.props.preferredEvents})
+      }
+    }
   }
 
   handleSearch = (e) =>{
@@ -194,6 +211,7 @@ const mapStateToProps = state => {
   return {
     curUser: state.userReducer.curUser,
     events: state.userReducer.events,
+    preferredEvents: state.userReducer.preferredEvents
     }
 }
 
