@@ -72,6 +72,11 @@ function userReducer(state = initialState, action) {
         ...state,
         enrolledEvents: action.enrolledEvents
       }
+    case allConstants.UPDATE_PREFFERED_EVENTS:
+      return {
+        ...state,
+        preferredEvents: action.newEvents
+      }
     default:
       return state;
   }

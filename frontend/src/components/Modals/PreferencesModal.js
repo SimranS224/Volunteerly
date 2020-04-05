@@ -216,6 +216,8 @@ function PreferencesModal(props) {
             console.log("prefForDb is: ", prefForDb)
             const preferredEvents = await userService.updatePreferences(props.curUser.id, prefForDb)
             console.log({preferredEvents});
+            proprs.updatePrefferedEvents(preferredEvents.newEvents);
+
             
         }
         // close the modal
@@ -305,6 +307,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setPreferences: (curUser, state) => {
             dispatch(userActions.setPreferences(curUser, state))
+        },
+        updateEvents: (prefferedEvents) => {
+          dispatch(userActions.updatePrefferedEvents(prefferedEvents))
         }
     }
 }

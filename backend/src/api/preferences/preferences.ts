@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import {sequelize} from "../../db"
-import {VolunteerEventPreference, VolunteerAvailability, EventType} from "../../db/models"
+import {VolunteerEventPreference, VolunteerAvailability, EventType, Event} from "../../db/models"
 import { DataType } from "sequelize-typescript";
+import { Op } from "sequelize";
 
 
 const getPreferences = async (req:Request , res: Response) =>  {
@@ -32,7 +33,26 @@ const getPreferences = async (req:Request , res: Response) =>  {
             body: err.message || 'Could not fetch Preferences.'
         })
     }
-  }
+}
+
+// https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
+Date.prototype.addDays = function(days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+
+const getAllDaysInRange = (startDate, endDate) => {
+    const weekdays = ["Sunday", "Monday" , "Tuesday", "Wednesday","Thursday" , "Friday", "Saturday"]
+    let allDates = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+        allDates.push(weekdays[currentDate.getDay()]);
+        currentDate = currentDate.addDays(1);
+    }
+    return allDates;
+}
 
 const updatePreferences = async (req:Request , res: Response) =>  {
     console.log("updating volunteers")
@@ -80,12 +100,58 @@ const updatePreferences = async (req:Request , res: Response) =>  {
         // get events based on preferences
 
 
+        const eventTypes = event_preference.map((pref) => {
+            return { event_category_id: pref.event_type_id }
+        })
 
-        const response = {availability:availability, event_preference:event_preference}
+        const daysOfTheWeek = availability.map((pref) => {
+            return pref.day_of_week 
+        })
+
+        const daysOfTheWeekAvailbility = availability.map((pref) => {
+            const day = pref.day_of_week;
+            const start = pref.start_hour;
+            const end = pref.end_hour;
+            const dayOfWeek = [day, start, end ];
+            return dayOfWeek
+        })
+
+        const eventsWithValidType = await sequelize.sync().then(()=>Event.findAll({
+            where: {
+                [Op.or]: eventTypes
+            }
+
+        })
+        
+    
+        const eventWithValidDates = eventsWithValidType.filter((event) => {
+            const daysOfTheEvent = getAllDaysInRange(event.start_date, event.end_date)
+
+            for (let i = 0; i < daysOfTheEvent.length; i++){
+                let curWeekDay = daysOfTheEvent[i];
+                if (daysOfTheWeek.indexOf(curWeekDay) > -1){
+                    for (let j = 0; j < daysOfTheWeekAvailbility.length; j++){
+                        if (curWeekDay === daysOfTheWeekAvailbility[j][0]){
+                        // check evnetstartdate <= availbility start or end of availbilty <= endofEvent
+                            console.log("start availnbily", daysOfTheWeekAvailbility[j][1] , "event starttime ", event.start_time, " evnetendtime",  event.end_time, "availbility end ", daysOfTheWeekAvailbility[j][2]);
+                        
+                            if ((daysOfTheWeekAvailbility[j][1] <= event.start_time &&  event.start_time <= daysOfTheWeekAvailbility[j][2])
+                                || (daysOfTheWeekAvailbility[j][1] <= event.start_time &&  event.end_time <= daysOfTheWeekAvailbility[j][2]) ){
+                                return event;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+      
+        const response = {availability:availability, event_preference:event_preference, newEvents: eventWithValidDates}
         console.log("response is:", response)
         res.send({
             statusCode: 200,
-            body: response
+            body: JSON.stringify(response)
         });
     } catch (err) {
         res.send({

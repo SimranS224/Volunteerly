@@ -62,6 +62,10 @@ const addEvent = (event) => {
   return {type: allConstants.ADD_EVENT, newEvents: event} 
 }
 
+const updatePrefferedEvents = (event) => {
+  return {type: allConstants.UPDATE_PREFFERED_EVENTS, newEvents: event} 
+}
+
 const updateEvents = (events) => {
   return {type: allConstants.UPDATE_EVENTS, events: events} 
 }
@@ -92,5 +96,6 @@ export const userActions = {
   deleteEvent,
   searchEvents,
   setEvents,
-  setEnrolledEvents
+  setEnrolledEvents,
+  updatePrefferedEvents
 }
