@@ -20,20 +20,20 @@ const getSequelize = () => {
   // }
   // else{
       // return new Sequelize(process.env.DEV_DATABASE_URL,{operatorsAliases: false, models: modelsList });
-    console.log(process.env)
-    console.log({dbName,
-      userName,
-      password,
-      other: {
-        dialect: 'postgres',
-        host: process.env.DB_HOST,
-        port: currPort,
-        models: modelsList,
-        dialectOptions: {
-          connectTimeout: 60000,
-          ssl:true
-        },
-      }})
+    // console.log(process.env)
+    // console.log({dbName,
+    //   userName,
+    //   password,
+    //   other: {
+    //     dialect: 'postgres',
+    //     host: process.env.DB_HOST,
+    //     port: currPort,
+    //     models: modelsList,
+    //     dialectOptions: {
+    //       connectTimeout: 60000,
+    //       ssl:true
+    //     },
+    //   }})
   //   return new Sequelize(
   //   dbName,
   //   userName,

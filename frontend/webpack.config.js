@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require("html-webpack-plugin");
+var TerserPlugin = require("terser-webpack-plugin");
 const webpack = require('webpack'); // remember to require this, because we DefinePlugin is a webpack plugin
 const dotenv = require('dotenv');
 var path = require('path')
@@ -12,6 +13,18 @@ module.exports = () => {
   }, {});
 
   return {
+    optimization: {
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: true, // Must be set to true if using source-maps in production
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+        },
+      }),
+    ],
+  },
   mode: "development",
    entry: ['babel-polyfill', './src/index.jsx'],
   resolve: {

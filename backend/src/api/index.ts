@@ -22,9 +22,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
+
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
     console.log("request deets", req.path)
+    const rpath = req.path.charAt(req.path.length - 1) === '/' ? req.path.substring(0, req.path.length - 1) : req.path
     if (authHeader) {
         const token = authHeader.split(' ')[1];
 
@@ -36,10 +39,10 @@ const authenticateJWT = (req, res, next) => {
             req.user = user;
             next();
         });
-    } else if(req.path == '/dev/api/login' || req.path == '/dev/api/register' || req.path == '/dev/api/events' || req.path == '/dev/api/events/undefined' || req.path == '/dev/api/event_types'){
+    } else if(rpath == '/dev/api/enrollments/attended' || rpath == '/dev/api/login' || rpath == '/dev/api/register' || rpath == '/dev/api/events' || rpath == '/dev/api/events/undefined' || rpath == '/dev/api/event_types'){
     	next()
     }
-    else if(req.path == '/api/login' || req.path == '/api/register' || req.path == '/api/events' || req.path == '/api/events/undefined' || req.path == '/api/event_types'){
+    else if(rpath == '/api/enrollments/attended' || rpath == '/api/login' ||  rpath == '/api/register' || rpath == '/api/events' || rpath == '/api/events/undefined' || rpath == '/api/event_types'){
         next()
     }
      else {
@@ -50,6 +53,8 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(compression());
 app.use(bodyParser.json());
+app.use("/*/database", db_calls)
+
 
 app.use(authenticateJWT)
 
@@ -58,7 +63,6 @@ app.use("/*/events", events)
 app.use("/*/event_types", event_types)
 app.use("/*/enrollments", enrollments)
 app.use("/*/volunteers", volunteers)
-app.use("/*/database", db_calls)
 app.use("/*/login", login)
 app.use("/*/achievements", achievements)
 app.use("/*/preferences", preferences)

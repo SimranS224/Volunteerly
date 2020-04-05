@@ -19,6 +19,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import '../components/Modals/PreferencesModal.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -36,8 +38,8 @@ const initialState = {
     eventTitle: '',
     eventDescription: '',
     location: '',
-    startDate: new Date('2019-08-18T21:11:54'),
-    endDate: new Date('2019-08-18T21:11:54'),
+    startDate: new Date('2020-08-18T21:11:54'),
+    endDate: new Date('2020-08-18T21:11:54'),
     startTime: new Date(),
     endTime: new Date(),
     currentDateTime: new Date(), 
@@ -218,7 +220,14 @@ class AdminPage extends React.Component {
         } catch (err) {
             console.log(`Error adding event: ${err}`)
         }
-
+        toast('Successfully added an event!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
+          });
 
         // reset state 
         const previousstate = this.state
@@ -234,7 +243,6 @@ class AdminPage extends React.Component {
             addEventErrors: [],
             _image_key: this.state._image_key +1,
             alert: "Added Event",
-            organizations: [],
             organizationError: false
            });
         console.log({initialState});
@@ -251,7 +259,14 @@ class AdminPage extends React.Component {
         } catch (err) {
             console.log(`Error adding event: ${err}`)
         }
-
+        toast('Successfully deleted an event!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
+          });
         this.setState({ alert: "Deleted Event",
                         data: this.props.globalEvents
                      })
