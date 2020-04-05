@@ -16,6 +16,10 @@ import './Event.css';
 export class Event extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            disableEnrollmentButton: false
+        }
     }
 
     transformImages(imageUrls) {
@@ -56,6 +60,13 @@ export class Event extends React.Component {
         }
     }
 
+    handleEnrollClick() {
+        this.setState({
+            disableEnrollmentButton: true
+        })
+        this.props.enrollUser(this.props.event, this.props.curUser)
+    }
+
     render() {
         console.log("event: ", this.props.event)
         return (
@@ -76,8 +87,8 @@ export class Event extends React.Component {
                                 </div>
                                 <div className="text">
                                     <p>{hdate.prettyPrint(this.property(this.props.event, 'start_date'))}</p>
-                                    <p>{this.hourAsTimeStr(this.property(this.props.event, 'start_time'))} - 
-                                     {this.hourAsTimeStr(this.property(this.props.event, 'end_time'))}</p>
+                                    <p>{`${this.hourAsTimeStr(this.property(this.props.event, 'start_time'))} - 
+                                     ${this.hourAsTimeStr(this.property(this.props.event, 'end_time'))}`}</p>
                                 </div>
                             </div>
                             <div className="info-container">
@@ -86,10 +97,12 @@ export class Event extends React.Component {
                                 </div>
                                 <div className="text">
                                     <p>{this.property(this.props.event, 'location')}</p>
-                                    <p>Get directions</p>
+                                    <p><a target="__blank" href={`https://www.google.com/maps/place/${this.props.event.location}`}>Get directions</a></p>
                                 </div>
                             </div>
-                            <Button className="primary-button" variant="contained" onClick={() => this.props.enrollUser(this.props.event.id)} disableElevation>
+                            <Button className="primary-button" variant="contained" onClick={() => this.handleEnrollClick()} 
+                                disabled={this.state.disableEnrollmentButton}
+                                disableElevation>
                                 Enroll
                              </Button>
                              

@@ -19,6 +19,10 @@
     font-weight: 500;
 }
 
+.Event a {
+    color: #A37CF4;
+}
+
 .Event .info .info-container {
     display: flex;
     padding-left: 0px;
