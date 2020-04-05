@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import {sequelize} from "../../db"
-import {VolunteerEventPreference, VolunteerAvailability, EventType, Event} from "../../db/models"
+import {VolunteerEventPreference, VolunteerAvailability, EventType, Event, Organization} from "../../db/models"
 import { DataType } from "sequelize-typescript";
 import { Op } from "sequelize";
 
@@ -116,11 +116,15 @@ const updatePreferences = async (req:Request , res: Response) =>  {
             return dayOfWeek
         })
 
+        const today = new Date();
         const eventsWithValidType = await sequelize.sync().then(()=>Event.findAll({
             where: {
-                [Op.or]: eventTypes
-            }
-
+                [Op.or]: eventTypes,
+                start_date: {
+                    [Op.gte]: today
+                }
+            },
+            include: [Organization]
         })
         
     
