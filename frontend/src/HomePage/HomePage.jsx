@@ -119,31 +119,31 @@ class HomePage extends React.Component {
               </div>
       
       <div className="volunteering-opportunities">
-        <List>
-              {filtered.length > 0 && filtered.map((event, i) =>{
-               return <ListItem key={'event' + i.toString()}>
-                 <OppCard 
-                  date={event.start_date}
-                  title={event.name}
-                  description={event.description}
-                  onClick={() => {this.setState({dialog_open: true, selected: i})}} 
-                  />
-      <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
-
-        <DialogContent>
-        <AppBar className="EventAppBar">
-            <Toolbar>
-              <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
-                <CloseIcon />
-              </IconButton>
-              </Toolbar>
-          </AppBar>
-          {this.state.selected !== null ? <Event event={filtered[this.state.selected]} enrollUser={this.enrollUser}></Event> : null}
-        </DialogContent>
-      </Dialog>
-                </ListItem>
-              })}
-              </List>
+          <List>
+                {filtered.length > 0 && filtered.map((event, i) =>{
+                return <ListItem key={'event' + i.toString()}>
+                  <OppCard 
+                    date={event.start_date}
+                    title={event.name}
+                    description={event.description}
+                    onClick={() => {this.setState({dialog_open: true, selected: i})}} 
+                    />
+                  </ListItem>
+                })}
+          </List>
+          
+          <Dialog fullScreen open={this.state.dialog_open} onClose={() =>{this.setState({dialog_open: false, selected: null})}} TransitionComponent={Transition}>
+            <DialogContent>
+              <AppBar className="EventAppBar">
+                  <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={() =>{this.setState({dialog_open: false, selected: null})}} aria-label="close">
+                      <CloseIcon />
+                    </IconButton>
+                    </Toolbar>
+                </AppBar>
+                {this.state.selected !== null ? <Event event={filtered[this.state.selected]} enrollUser={this.enrollUser}></Event> : null}
+            </DialogContent>
+          </Dialog>
           </div>
         </div>
       );
