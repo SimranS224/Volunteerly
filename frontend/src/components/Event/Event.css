@@ -1,0 +1,117 @@
+.Event {
+    margin-top: 64px;
+    color: #120431;
+    font-family: 'Roboto', 'Arial', 'Helvetica', 'sans-serif';
+    background-color: white;
+}
+.Event .image-gallery {
+    background-color: #120431;
+    height: 320px;
+}
+.Event .image-gallery-image {
+    height: 320px;
+}
+
+.Event h1 {
+    font-size: 40px;
+    line-height: 60px;
+    margin-top: 32px;
+    font-weight: 500;
+}
+
+.Event .info .info-container {
+    display: flex;
+    padding-left: 0px;
+    margin-bottom: 20px;
+}
+.Event .info .info-container .icon {
+   padding-right: 20px;
+   border-right: 1px solid #120431;
+}
+.Event .info .info-container .text {
+    padding-left: 20px;
+}
+.Event .info .info-container .text p {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 4px;
+}
+.Event .info .info-container .text p:first-child {
+    font-weight: 500;
+}
+.Event .info .info-subheading {
+    margin-bottom: 8px;
+}
+
+
+.Event .primary-button {
+    width: 100%;
+    border-radius: 8px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.Event .primary-button .MuiButton-label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.Event .description {
+    margin-top: 32px;
+}
+.Event .description .text {
+    opacity: 0.6;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+.Event .organizationLogo {
+    height: 48px;
+}
+
+.Event .subheading {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    margin-bottom: 4px;
+}
+
+.Event .host-organization {
+    margin-top: 36px;
+    line-height: 1.5;
+    box-shadow: 0px 0px 4px #A8A0BB;
+    border-radius: 8px;
+    padding: 32px;
+}
+.Event .host-organization .organizationName {
+    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+.Event .host-organization .bio {
+    opacity: 0.6;
+}
+
+.Event .why-volunteer {
+    background-color: #F5F3FA;
+    width: 100%;
+    padding: 64px;
+    margin-top: 64px;
+}
+.Event .why-volunteer img {
+    width: 179px;
+    height: auto;
+}
+.Event .why-volunteer {
+    display: flex;
+}
+.Event .why-volunteer .info {
+    margin-left: 16px;
+}
+.Event .why-volunteer .subtext {
+    font-size: 16px;
+    opacity: 0.6;
+    line-height: 1.5;
+}

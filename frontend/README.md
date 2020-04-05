@@ -1,11 +1,11 @@
-# team48
+# team48: Volunteerly
 
-## Note
+## Deployed Version
 
-We would like you to consider features up until (5db210f1b09830055245641ecc67ad23d72ec5c0).
+https://csc309-volunteer-web.herokuapp.com/home
 
+## Local Usage 
 
-# Usage 
 
 A. Run  the below commands to use in development. 
   ```
@@ -16,7 +16,7 @@ B. Run the below commands to build, output will be in dist folder.
   ```
     npm run build 
   ```
-C. You can access the app at port: ``` http://localhost:3000/```
+C. You can access the app at port: ``` http://localhost:5000/```
 
 D. Login with credentials to be an admin user:
 ```
@@ -30,27 +30,43 @@ password: user
 ```
   
 
-# Features
+## Features
 
-Users can view events on the homepage and also search for specific events. Clicking on an event will show event details and a google maps component of the event's location. To become authenticated, users will have to login at http://localhost:3000/login, which stores the user's status and data in React Redux.
 
-Admin users will have access to http://localhost:3000/admin and all authenticated users can access their profile at http://localhost:3000/profile. Redirected to login if users are not authenticated.
+### User 
 
-## User 
 
-1. Once the app starts the user will see the home page, and events. 
-2. To access other pages the user must first login using the login steps provided above. 
-3. Then the user can see their profile which has hard coded values currently
-4. They can browse events on the homepage by searching an event, when they click on an event they can see more details 
-about it and can also see where it is on a google maps api view. 
+#### Hompage
+
+* On the homepage, the user can see all of the events on the platform. 
+* To filter for specific types of events, the user has to click on preferences, choose the type of events he wants to see + optionally select the time when he is available, and the events on the home-page will be filtered according to that.
+* The user can enroll into an event by clicking on the event, where they see the event details and the enroll button. Once clicked, the event  becomes available on his profile page.
+
+#### Profile Page
+
+* On the profile page, the user can see a list of the Upcoming Events he enrolled in, and a history of past events he attended.
+* Additionally, user can see his statistics: how many hours he volunteered for, how many events he attended and how many organizations he volunteered with.
+* User can also see a list of their achievements, which are based on hitting certain statistics.
+
+#### LogIn Page
+
+* User must log in in order to save their preferences, enrol to events, see his statistics, and achievements. They will be prompted to log in if they try to access any pages other than the homepage, i.e their profile page, or the admin page. 
+* Once authenticated, the user's status and data is stored in React Redux.
+
+#### Attending Events
+
+* When a user attends, the Event organizers will give him a QR code to scan. Once user scans QR code, he will be taken to a login page if he's not already authenticated, at which point the website will automatically check him as attended for the event. Application then updates the user's statistics and achievements, if necessary.
 
 ## Admin
+
+> The entire application has one admin, who manages all of the events. The benefit of this is that the admin can vet the organizations, making sure they are legitimate. This stops spam users, as well as organizations creating events that are not fit for the Volunteerly platform
 
 1. Admin can add an event, specifying the event name, description, and date of the event. Once he modifies it, it becomes available to all users.
 2. All of the events that an admin creates get generated in the "manage events" section.
 3. Admin can delete an event from his events section.
+4. Each event has a QR code. The admin shares the QR code with event organizers, who then display it at their event.
 
-# Folder Structure
+## Folder Structure
 
 ```bash
   ├── src

@@ -22,3 +22,7 @@
 .MuiAlert-message {
     font-size: 1.5rem !important;
 }
+
+.MuiDialogContent-root {
+    padding: 0 !important;
+}
