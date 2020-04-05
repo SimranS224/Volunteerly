@@ -92,9 +92,10 @@ class ProfilePage extends React.Component {
         if(!this.state.loadedEnrolledEvents && this.props.curUser) {
             this.setState({loadedEnrolledEvents: true});
             userService.getEnrolledEvents(this.props.curUser.id).then((events) => {
-                console.log("setting events: ", events);
                 this.setState({
-                    enrolledEvents: events
+                    enrolledEvents: events.filter(event => {
+                        return new Date(event.start_date) - new Date() >= 0
+                    })
                 })
             })
         }
