@@ -12,7 +12,6 @@ Backend url: https://e3fm1d24f2.execute-api.us-east-1.amazonaws.com/dev/api/
 
 
 ## Features
-
  
 #### Homepage
  
@@ -175,3 +174,9 @@ A. Run  the below commands to use in development.
    npm run start
  ```
 B. You can access the app at port: ``` http://localhost:3004/```
+
+# Contributers 
+* [Carlson Lau](https://github.com/carllau999)
+* [Wenqin Ye](https://github.com/wenqinYe)
+* [Nicolae Strincea](https://github.com/nicolae-stroncea)
+* [Simran Singh](https://github.com/SimranS224)
