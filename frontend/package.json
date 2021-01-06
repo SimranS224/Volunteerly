@@ -18,7 +18,7 @@
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",
     "aws-s3": "^2.0.5",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "crypto-js": "^4.0.0",
     "date-fns": "^2.10.0",
