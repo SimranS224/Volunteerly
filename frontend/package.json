@@ -32,7 +32,7 @@
     "material-ui-fullscreen-dialog": "^1.1.0",
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "npm": "^6.14.4",
     "path": "^0.12.7",
     "qrcode.react": "^1.0.0",
